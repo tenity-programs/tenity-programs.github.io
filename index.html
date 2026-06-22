@@ -654,9 +654,12 @@
           <button class="toggle-btn active" id="toggle-cards" onclick="setAppView('cards')">🃏 Cards</button>
           <button class="toggle-btn" id="toggle-table" onclick="setAppView('table')">📋 Airtable</button>
         </div>
-        <a class="open-airtable-btn" href="https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/viwab04l0P5MHlFjN?blocks=hide" target="_blank">
-          Open in Airtable ↗
-        </a>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span id="airtable-sync-time" style="font-size:11px;color:var(--muted)"></span>
+          <a class="open-airtable-btn" href="https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/viwab04l0P5MHlFjN?blocks=hide" target="_blank">
+            Open in Airtable ↗
+          </a>
+        </div>
       </div>
 
       <div id="app-cards-view">
@@ -1036,7 +1039,7 @@ const APPLICATIONS = [
     comment: 'Mature and internationally proven product. 90,000+ users across 150+ countries, 26 languages, clinical validation in peer-reviewed journals. B2B clients: Sabanci ARF, Akbank, DenizBank, Allianz, Turk Telekom, Rixos. Available on Microsoft Teams, Android TV, XR — genuine enterprise readiness. DACH case is well-constructed: corporate wellbeing and burnout prevention are high-priority in Germany and Austria. YK collaboration: employee wellbeing integration, Yapi Kredi Mobil app, premium benefit bundling. Main watch point: crowded European market and long enterprise sales cycles. Clinical differentiation and multi-channel delivery give it a credible edge.',
   },
   {
-    company: 'Forg3t Protocol', sector: 'Enterprise AI Compliance / Governance', color: '#1a1a2e', status: 'review', date: 'Jun 2026', verdict: 'SUGGESTED',
+    company: 'Forg3t Protocol', sector: 'Enterprise AI Compliance / Governance', color: '#1a1a2e', status: 'shortlist', date: 'Jun 2026', verdict: 'SUGGESTED',
     oneliner: 'Enables enterprises to prove AI systems no longer surface deleted or restricted data — addressing a critical GDPR and EU AI Act compliance gap.',
     comment: 'Differentiated and timely candidate. Addresses one of the most pressing unsolved problems in enterprise AI: the inability to prove deleted information no longer influences AI outputs. As banks increasingly deploy AI copilots and RAG systems, this compliance gap is legally consequential under GDPR and the EU AI Act. Specific YK use case: internal AI copilot governance, RAG document revocation, vendor AI risk testing, audit evidence. Founder previously scaled a product to 7M users, has OpenAI/Yandex/Uber background. Founded Dec 2025 — commercial traction is early-stage but the problem is timely and the DACH regulatory environment is highly receptive.',
   },
@@ -1051,22 +1054,22 @@ const APPLICATIONS = [
     comment: 'Unusually strong validation signals for its age. Founded October 2025, already running POCs with M&S and Vakko, selected as Visa\'s agentic commerce partner across Europe and Turkey — a meaningful third-party endorsement. Modelled uplift of $10-15M annual revenue per $1-2B online sales base. YK pathway: through Visa partnership and banking loyalty or marketplace features. Primary risk: retail commerce focus is somewhat adjacent to YK\'s core financial services. Very early but quality of partnerships at this stage is exceptional. B&P is a strong venue for their enterprise retail pipeline.',
   },
   {
-    company: 'Mol-e', sector: 'E-Waste Management SaaS / ClimateTech', color: '#276749', status: 'review', date: 'Jun 2026', verdict: 'SUGGESTED',
+    company: 'Mol-e', sector: 'E-Waste Management SaaS / ClimateTech', color: '#276749', status: 'shortlist', date: 'Jun 2026', verdict: 'SUGGESTED',
     oneliner: 'Corporate e-waste management platform with digital waste passport, IT asset tracking, certified data destruction, and CSRD-compliant ESG reporting.',
     comment: 'Thoughtfully built and well-timed ClimateTech candidate. Seed funding from Racy Ventures and Sabanci ARF. Paying enterprise and SME customers in Turkey. DACH case is well-reasoned: EU WEEE Directive, ESPR, and CSRD create pull demand for digital compliance tools. Double-sided YK collaboration: YK\'s own IT estate (branches, ATMs, equipment) generates significant e-waste, AND Mol-e could be offered as a value-added ESG service to YK corporate banking clients facing supply-chain sustainability reporting requirements. Main uncertainty: navigating the German recycler and WEEE compliance partner ecosystem quickly enough.',
   },
   {
-    company: 'smartIQ', sector: 'Automotive AI / Mobility FinTech', color: '#e53e3e', status: 'review', date: 'Jun 2026', verdict: 'SUGGESTED',
+    company: 'smartIQ', sector: 'Automotive AI / Mobility FinTech', color: '#e53e3e', status: 'shortlist', date: 'Jun 2026', verdict: 'SUGGESTED',
     oneliner: 'AI-powered automotive intelligence platform tracking $9B in annual vehicle transactions across 14 brands and 1,000 business partners - already a YK solution partner in Turkey.',
     comment: 'Highly validated and directly relevant. 14 automotive brands, ~1,000 business partners, $9B annual vehicle transaction volume tracked. Already a solution partner of Yapı Kredi and Is Bankası in Turkey, building an end-to-end ecosystem for 2M+ vehicle owners. Ford Trucks partnership across 40+ countries is first concrete international scale-up step. Analytics reduce sales cycles from 37 days (market avg) to 15 days for integrated partners. Insurance side: 70% improvement in post-accident settlement. Existing YK relationship is both a strong credential and means the collaboration model is already proven. Primary international question: can the partnership template replicate across DACH banking, OEM and insurer ecosystems.',
   },
   {
-    company: 'tarla.io', sector: 'Parametric Insurance / InsurTech', color: '#2b6cb0', status: 'review', date: 'Jun 2026', verdict: 'SUGGESTED',
+    company: 'tarla.io', sector: 'Parametric Insurance / InsurTech', color: '#2b6cb0', status: 'shortlist', date: 'Jun 2026', verdict: 'SUGGESTED',
     oneliner: 'End-to-end parametric insurance infrastructure platform enabling automated payouts triggered by weather, satellite, IoT or operational data without claims processes.',
     comment: 'Well-timed InsurTech with a precise YK collaboration pathway. Founded 2019, 9 people, paying clients include Toros Tarim, AXA, Allianz, Skoda. Parametric insurance triggers instant payouts when predefined conditions are met - eliminating slow claims processes. Specific YK case: embedding parametric climate protection into agricultural loan products so farmers receive automatic payouts when weather events occur, protecting YK loan portfolios from weather-driven defaults. DACH is strong target - Germany\'s mature insurance sector and rising climate-risk awareness create genuine pull demand. Main risk: regulatory path for novel parametric structures varies by market and may require local insurance carrier partnerships.',
   },
   {
-    company: 'Rooca Inc.', sector: 'AI Incident Intelligence / AIOps', color: '#1a202c', status: 'review', date: 'Jun 2026', verdict: 'SUGGESTED',
+    company: 'Rooca Inc.', sector: 'AI Incident Intelligence / AIOps', color: '#1a202c', status: 'shortlist', date: 'Jun 2026', verdict: 'SUGGESTED',
     oneliner: 'Autonomous root cause analysis platform that reduced MTTR from 4.2 hours to 11 minutes at a German critical-infrastructure operator. Audit-defensible verdicts for DORA and NIS2 compliance.',
     comment: 'Exceptional timing and regulatory fit. Already in production with a European energy operator generating six-figure EUR ARR - reduced MTTR 95.5% (4.2h to 11min). Turkish-Canadian founders with CDL and Gözen Holding backgrounds. VPC-native / on-premises deployment satisfies DACH data sovereignty requirements. Tribunal Dialectic Engine (Prosecutor/Defender/Judge architecture) produces reproducible, audit-defensible verdicts directly mapping onto DORA and NIS2 operational resilience requirements. Immediate YK use case: AI copilot incident governance, banking infrastructure root cause analysis, vendor AI audit readiness. Founded May 2026 so commercially very early, but German production reference and regulatory alignment are rare at this stage. One of the strongest sleeper candidates in the cohort.',
   },
@@ -1086,24 +1089,29 @@ const APPLICATIONS = [
     comment: 'Wrong program. PROLİT develops functional confectionery (chewing gum, lozenges) with natural active ingredients. Founded late 2024, minimal traction, founder-funded. Selling functional gum to European distributors requires food safety certifications, retail buyer relationships and FMCG marketing expertise - none of which a bank-backed tech accelerator provides. The suggested YK use case (gum as a loyalty gift) is not a credible collaboration pathway. Better served by food industry trade shows, EU FMCG distribution networks, or programs specifically designed for consumer goods brands.',
   },
   {
-    company: 'Agro Frank', sector: 'Agroforestry / Social Enterprise', color: '#38a169', status: 'rejected', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    company: 'Agro Frank', sector: 'Agroforestry / Social Enterprise', color: '#38a169', status: 'review', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
     oneliner: 'Rwanda-based agroforestry company supporting 200+ smallholder farmers with sustainable farming practices, tree planting and land restoration.',
     comment: 'Completely outside program scope. Agro Frank is a Rwanda-based agroforestry social enterprise with no Turkish connection, no technology product, and no meaningful path to DACH commercial traction. Their challenges - EU food export compliance, distributor networks for African commodities - are not addressable by this program. The YK collaboration angle (impact investing) is abstract and does not constitute a real partnership. A genuinely impactful organisation that would be far better served by development finance institutions, UN Food systems programs, or African agricultural development accelerators.',
   },
   {
-    company: 'Layerscate', sector: 'Vertical Farming Hardware / AgriTech', color: '#2b6cb0', status: 'rejected', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    company: 'Layerscate', sector: 'Vertical Farming Hardware / AgriTech', color: '#2b6cb0', status: 'review', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
     oneliner: 'Patented corridor-less intralogistics hardware for vertical farms using a carousel mechanism that brings crops to the operator, eliminating wasted volume.',
     comment: 'Interesting IP, wrong program. Layerscate has a PCT-patented hardware mechanism (WIPO: WO2024025500A1) and TÜBİTAK funding, targeting TRL 5-6. The product is genuinely novel - a closed-loop mechatronic system that eliminates 40% volume waste in indoor farms. However, CapEx hardware manufacturing scale-up, OEM partnerships with European automation suppliers, and deep-tech hardware VC are entirely outside what a bank-backed market access accelerator can offer. The YK collaboration angle (green equipment leasing) is too thin to anchor a program relationship. Better served by hardware-focused programs like EIT Food, Bits & Pretzels\' hardware track, or TUM Venture Labs deep tech.',
   },
   {
-    company: 'Afrimart', sector: 'Agricultural Trade / Blockchain', color: '#d69e2e', status: 'rejected', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    company: 'Afrimart', sector: 'Agricultural Trade / Blockchain', color: '#d69e2e', status: 'review', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
     oneliner: 'Nigeria-based blockchain marketplace connecting 130+ smallholder farmers to global B2B buyers with AI demand forecasting and cross-border blockchain settlements.',
     comment: 'Not a fit. Afrimart is a Nigerian agricultural export platform with no Turkish connection and a primary focus on Africa-to-DACH commodity trade corridors. While the blockchain trade finance angle and YK payment rail integration pitch is creative, the operational complexity of cross-border African commodity trade (phytosanitary compliance, Nigerian export logistics, EU import controls) far exceeds what a 6-month bank accelerator can address. The tech stack is early and unverified. Better served by trade finance programs, African development institutions, or EU-Africa trade facilitation initiatives.',
   },
   {
-    company: 'Unitas Cons', sector: 'Steel Construction / Engineering', color: '#718096', status: 'rejected', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    company: 'Unitas Cons', sector: 'Steel Construction / Engineering', color: '#718096', status: 'review', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
     oneliner: 'Istanbul-based steel construction and machinery manufacturer. Active in Azerbaijan. Seeking European distributor connections.',
     comment: 'Not a startup and not a fit. Unitas Cons is an established steel construction and machinery manufacturing company, not a technology startup. Founded 2013, their application is primarily in Turkish with no coherent connection to the program\'s fintech or enterprise software focus. There is no technology product to accelerate, no meaningful YK collaboration angle, and the European challenges they face (distributor relationships for industrial equipment in France) are entirely outside the scope of this program.',
+  },
+  {
+    company: 'Packpeer', sector: 'Enterprise Software / AI Sourcing', color: '#2d3748', status: 'review', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'AI-powered sourcing agent for packaging procurement, automating supplier discovery, quote comparison, and order management for brands and manufacturers.',
+    comment: 'Interesting AI procurement play but narrow sector fit. Packpeer targets packaging procurement specifically - a niche vertical within supply chain automation. The AI sourcing agent model (automating supplier discovery, quote comparison, sample coordination) addresses real friction in packaging sourcing. Revenue reported at $25-50K MRR. However, the packaging procurement focus creates a thin collaboration pathway for YK, whose SME and corporate clients span all industries. The DACH market has strong demand for supply chain efficiency tools, but Packpeer would need to demonstrate a broader horizontal application or a credible fintech integration angle (embedded trade finance, invoice factoring on packaging orders) to justify inclusion. Currently assessed as out of scope for this cohort.',
   },
 ];
 
@@ -2145,6 +2153,70 @@ function switchView(id) {
 // INIT
 // ============================================================
 
+// ============================================================
+// AIRTABLE LIVE SYNC
+// ============================================================
+const AIRTABLE_PAT = 'patWFPWBYzNhJwZm0.871fe91f484b544d43160170dec23b181cb1c97dd2ed76585f1ae15361bd8a2e';
+const AIRTABLE_BASE = 'appLY4d1qYmYgd1lh';
+const AIRTABLE_TABLE = 'tbl4E1lgZJA51jMgg';
+const AIRTABLE_VIEW = 'viwab04l0P5MHlFjN';
+
+const AIRTABLE_STATUS_MAP = {
+  'Shortlisted': 'shortlist',
+  'To be interviewed': 'shortlist',
+  'To be rejected': 'rejected',
+  'Review later': 'review',
+};
+
+async function syncFromAirtable() {
+  try {
+    const records = [];
+    let offset = null;
+    do {
+      const params = new URLSearchParams({ view: AIRTABLE_VIEW });
+      if (offset) params.set('offset', offset);
+      const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?${params}`, {
+        headers: { Authorization: `Bearer ${AIRTABLE_PAT}` }
+      });
+      if (!res.ok) throw new Error('Airtable fetch failed: ' + res.status);
+      const data = await res.json();
+      records.push(...data.records);
+      offset = data.offset || null;
+    } while (offset);
+
+    let updated = 0;
+    records.forEach(record => {
+      const fields = record.fields || {};
+      const name = fields['Name'] || fields['Company Name'] || fields['Startup Name'] || '';
+      const airtableStatus = fields['Status'] || '';
+      const mapped = AIRTABLE_STATUS_MAP[airtableStatus];
+      if (!name) return;
+      const app = APPLICATIONS.find(a => {
+        const an = a.company.toLowerCase();
+        const rn = name.toLowerCase();
+        return an === rn || rn.includes(an) || an.includes(rn);
+      });
+      if (app && mapped && app.status !== mapped) {
+        app.status = mapped;
+        updated++;
+      }
+    });
+
+    if (updated > 0) {
+      renderOverview();
+      renderApplications();
+    }
+
+    const el = document.getElementById('airtable-sync-time');
+    if (el) {
+      const now = new Date();
+      el.textContent = 'Synced ' + now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    }
+  } catch (err) {
+    console.warn('Airtable sync error:', err.message);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const today = new Date();
   document.getElementById('today-badge').textContent = today.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
@@ -2157,6 +2229,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderEcosystem();
   updateAsanaButton();
   if (gcalClientId) updateGcalButton(false); // show as configured but not yet authed
+
+  // Sync from Airtable on load, then every 5 minutes
+  syncFromAirtable();
+  setInterval(syncFromAirtable, 5 * 60 * 1000);
 });
 </script>
 </body>
