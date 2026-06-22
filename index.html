@@ -649,12 +649,33 @@
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
         <div class="view-toggle">
           <button class="toggle-btn active" id="toggle-cards" onclick="setAppView('cards')">🃏 Cards</button>
+          <button class="toggle-btn" id="toggle-table" onclick="setAppView('table')">📋 Airtable</button>
         </div>
+        <a class="open-airtable-btn" href="https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/viwab04l0P5MHlFjN?blocks=hide" target="_blank">
+          Open in Airtable ↗
+        </a>
       </div>
 
       <div id="app-cards-view">
         <div class="app-filter-row" id="app-filter-row"></div>
         <div class="app-cards-grid" id="app-cards-grid"></div>
+      </div>
+
+      <div id="app-table-view" style="display:none">
+        <div class="airtable-frame-wrap" id="airtable-wrap">
+          <iframe
+            id="airtable-iframe"
+            src="https://airtable.com/embed/viwab04l0P5MHlFjN?backgroundColor=white&viewControls=on"
+            onload="handleIframeLoad()"
+            onerror="handleIframeError()">
+          </iframe>
+          <div class="airtable-fallback" id="airtable-fallback">
+            <div style="font-size:48px">📋</div>
+            <p style="font-size:15px;font-weight:600;color:var(--text)">Open directly in Airtable</p>
+            <p>Airtable may require sign-in to view embedded.</p>
+            <a class="open-airtable-btn" href="https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/viwab04l0P5MHlFjN?blocks=hide" target="_blank" style="margin-top:8px">Open in Airtable ↗</a>
+          </div>
+        </div>
       </div>
     </div>
 
