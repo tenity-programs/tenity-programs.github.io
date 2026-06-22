@@ -1775,8 +1775,8 @@ function renderOverview() {
   document.getElementById('stat-app-count').textContent = APPLICATIONS.length;
   document.getElementById('stat-app-sub').textContent = suggested + ' suggested · ' + shortlisted + ' shortlisted';
   document.getElementById('banner-app-count').textContent = APPLICATIONS.length;
-  const today = new Date(); const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  document.getElementById('banner-app-date').textContent = 'As of ' + months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
+  const bannerMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('banner-app-date').textContent = 'As of ' + bannerMonths[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
 
   document.getElementById('milestones-list').innerHTML = MILESTONES.map(m => {
     const cls = m.status === 'done' ? 'ms-done' : 'ms-upcoming';
