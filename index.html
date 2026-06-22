@@ -631,8 +631,8 @@
       <div class="apps-banner">
         <div class="apps-stat blue">
           <div class="label">Total Applications</div>
-          <div class="value">15</div>
-          <div class="sub">As of June 10, 2026</div>
+          <div class="value" id="banner-app-count">-</div>
+          <div class="sub" id="banner-app-date">-</div>
         </div>
         <div class="apps-stat yellow">
           <div class="label">Days Remaining</div>
@@ -1774,6 +1774,9 @@ function renderOverview() {
   const shortlisted = APPLICATIONS.filter(a => a.status === 'shortlist' || a.status === 'finalist').length;
   document.getElementById('stat-app-count').textContent = APPLICATIONS.length;
   document.getElementById('stat-app-sub').textContent = suggested + ' suggested · ' + shortlisted + ' shortlisted';
+  document.getElementById('banner-app-count').textContent = APPLICATIONS.length;
+  const today = new Date(); const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('banner-app-date').textContent = 'As of ' + months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
 
   document.getElementById('milestones-list').innerHTML = MILESTONES.map(m => {
     const cls = m.status === 'done' ? 'ms-done' : 'ms-upcoming';
