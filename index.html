@@ -470,6 +470,49 @@
     .two-col { grid-template-columns: 1fr; }
     .apps-banner { grid-template-columns: 1fr 1fr; }
   }
+
+  /* MENTOR MATCHING */
+  .mentor-section-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .mentor-section-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+  .mentor-roster { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 36px; }
+  .mentor-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; transition: box-shadow .15s; }
+  .mentor-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+  .mentor-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .mentor-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent2); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; flex-shrink: 0; }
+  .mentor-name { font-size: 13px; font-weight: 700; line-height: 1.2; }
+  .mentor-title { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .mentor-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+  .mentor-tag { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: #ebf4ff; color: #2b6cb0; }
+  .mentor-tag.tag-dach { background: #ebf8ff; color: #2c5282; }
+  .mentor-tag.tag-fintech { background: #fef3c7; color: #92400e; }
+  .mentor-tag.tag-gtm { background: #f0fff4; color: #22543d; }
+  .mentor-tag.tag-hr { background: #faf5ff; color: #553c9a; }
+  .mentor-tag.tag-ai { background: #e6fffa; color: #234e52; }
+  .mentor-tag.tag-esg { background: #f0fff4; color: #276749; }
+  .mentor-tag.tag-bd { background: #fff5f5; color: #9b2c2c; }
+  .mentor-tag.tag-saas { background: #eff6ff; color: #1e40af; }
+  .mentor-card-li { font-size: 11px; color: var(--blue); text-decoration: none; }
+  .mentor-card-li:hover { text-decoration: underline; }
+
+  .match-grid { display: flex; flex-direction: column; gap: 20px; }
+  .match-startup-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .match-startup-header { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+  .match-startup-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .match-startup-name { font-size: 14px; font-weight: 700; }
+  .match-startup-sector { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .match-rows { display: flex; flex-direction: column; }
+  .match-row { display: grid; grid-template-columns: 200px 1fr 160px 120px; gap: 14px; align-items: center; padding: 13px 20px; border-bottom: 1px solid var(--border); }
+  .match-row:last-child { border-bottom: none; }
+  .match-row-mentor { font-size: 13px; font-weight: 600; }
+  .match-row-co { font-size: 11px; color: var(--muted); }
+  .match-row-angle { font-size: 12px; color: var(--text); line-height: 1.4; }
+  .match-row-priority { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 10px; width: fit-content; }
+  .priority-high { background: #fed7d7; color: #9b2c2c; }
+  .priority-med { background: #fefcbf; color: #744210; }
+  .match-status-btn { font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; background: var(--bg); color: var(--muted); transition: all .15s; white-space: nowrap; }
+  .match-status-btn.scheduled { background: #ebf4ff; color: #2b6cb0; border-color: #bee3f8; }
+  .match-status-btn.done { background: #f0fff4; color: #276749; border-color: #c6f6d5; }
 </style>
 </head>
 <body>
@@ -564,6 +607,9 @@
     </a>
     <a class="nav-item" data-view="ecosystem" onclick="switchView('ecosystem'); return false;" href="#">
       <span class="icon">🌍</span> Ecosystem
+    </a>
+    <a class="nav-item" data-view="mentors" onclick="switchView('mentors'); return false;" href="#">
+      <span class="icon">🤝</span> Mentor Matching
     </a>
   </nav>
   <div class="sidebar-footer">Tenity | Making Innovation Work</div>
@@ -760,6 +806,17 @@
       <input class="search-bar" type="text" id="eco-search" placeholder="Search Munich/DACH ecosystem..." oninput="renderEcosystem()">
       <div class="filter-row" id="eco-filters"></div>
       <div class="eco-grid" id="eco-grid"></div>
+    </div>
+
+    <!-- MENTOR MATCHING -->
+    <div class="view" id="view-mentors">
+      <div class="mentor-section-title">Mentor Roster</div>
+      <div class="mentor-section-sub">13 mentors across DACH, Turkey, and UK — matched by sector expertise, market knowledge, and network fit.</div>
+      <div class="mentor-roster" id="mentor-roster"></div>
+
+      <div class="mentor-section-title">Startup — Mentor Match Matrix</div>
+      <div class="mentor-section-sub">Top mentor recommendations for each shortlisted startup. Click status to update session progress.</div>
+      <div class="match-grid" id="match-grid"></div>
     </div>
 
   </div>
@@ -1112,6 +1169,71 @@ const APPLICATIONS = [
     company: 'Packpeer', sector: 'Enterprise Software / AI Sourcing', color: '#2d3748', status: 'review', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
     oneliner: 'AI-powered sourcing agent for packaging procurement, automating supplier discovery, quote comparison, and order management for brands and manufacturers.',
     comment: 'Interesting AI procurement play but narrow sector fit. Packpeer targets packaging procurement specifically - a niche vertical within supply chain automation. The AI sourcing agent model (automating supplier discovery, quote comparison, sample coordination) addresses real friction in packaging sourcing. Revenue reported at $25-50K MRR. However, the packaging procurement focus creates a thin collaboration pathway for YK, whose SME and corporate clients span all industries. The DACH market has strong demand for supply chain efficiency tools, but Packpeer would need to demonstrate a broader horizontal application or a credible fintech integration angle (embedded trade finance, invoice factoring on packaging orders) to justify inclusion. Currently assessed as out of scope for this cohort.',
+  },
+  {
+    company: 'Comply2Reg', sector: 'RegTech / AI Compliance', color: '#2c5282', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'AI agents for regulatory monitoring, AML workflow automation and audit-ready compliance documentation for financial institutions. India-based, zero customers.',
+    comment: 'Not a fit. Comply2Reg addresses a genuine problem in financial compliance but is India-incorporated with no Turkish connection, no paying customers, and no product traction. The team is based in Bengaluru and the company has raised zero funding. A zero-customer RegTech from India with no EU regulatory experience is not ready for a corporate market-access program in DACH. The pitch is entirely conceptual. Better served by Indian fintech accelerators or programs designed for early-stage AI compliance startups.',
+  },
+  {
+    company: 'Ossify Health', sector: 'HealthTech / AI Clinical Decision Support', color: '#276749', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'AI-powered bone health reporting system synthesising clinical history, imaging and genetics for orthopedic surgeons. Finnish-incorporated, MVP stage.',
+    comment: 'Genuinely innovative HealthTech but wrong program entirely. Ossify Health builds multimodal AI diagnostics for orthopedic surgeons - a real clinical gap with meaningful technology. Finnish-incorporated with a medtech background. However, orthopedic clinical decision support has no meaningful connection to YK\'s banking business or the fintech/enterprise software focus of FRWRD. The DACH challenges they face (CE marking, clinical validation, hospital procurement cycles) are entirely outside the scope of a bank-backed accelerator. Better served by European healthtech accelerators such as Digital Health Hub Germany or EIT Health.',
+  },
+  {
+    company: 'Qybit Labs', sector: 'Industrial IoT / Manufacturing AI', color: '#744210', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'Edge intelligence platform for manufacturing floors using OPC-UA/Modbus to deliver real-time machine telemetry analytics. TÜBİTAK pre-seed, pre-revenue.',
+    comment: 'Deep-tech manufacturing IoT - wrong program. Qybit builds a low-latency edge architecture for production floor intelligence, a technically sound approach to Industrial AI. TÜBİTAK 1812 funding and Istanbul-based team. However, industrial manufacturing intelligence has no relevant connection to YK\'s banking business. The DACH challenges (German OEM partnerships, industrial integration certifications, hardware scale-up) are not addressable by a bank-backed market access program. The suggested YK collaboration (equipment financing) is too thin to anchor a program relationship. Better served by deep-tech programs like TUM Venture Labs, DFKI, or TRUMPF industrial accelerators.',
+  },
+  {
+    company: 'Trendbox', sector: 'FMCG Market Intelligence / RetailTech', color: '#e53e3e', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'AI market intelligence platform combining retail data, competitor signals and customer analytics for FMCG brands. Clients: Pernod Ricard, Philip Morris, Red Bull, Coca-Cola.',
+    comment: 'Strong product but wrong program. Trendbox has genuine commercial traction - Pernod Ricard, Philip Morris, Red Bull, Efes, Coca-Cola as paying clients - and credible investors in BlueHub (Anadolu Group) and Finberg (Fiba Holding). But FMCG market intelligence analytics serves brand managers at consumer goods companies, not banks. The YK collaboration angle (retail banking data insights) requires significant product-to-use-case bridging that cannot happen in a 6-month program. DACH entry in FMCG requires distributor relationships, trade event presence, and category-specific sales cycles, not banking ecosystem access. Better served by FMCG-focused innovation programs or RetailTech accelerators.',
+  },
+  {
+    company: 'Uptechlabs', sector: 'AI Data Platform / Enterprise Analytics', color: '#b7791f', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'AI-powered platform serving 30+ enterprise clients including HSBC, Is Bankasi, Allianz, Mercedes-Benz and Sabanci Holding. Sabanci ARF-backed.',
+    comment: 'Strong client roster but unclear product scope. Uptechlabs has worked with 30+ enterprise clients spanning banking (HSBC, Is Bankasi), insurance (Allianz), automotive (Mercedes-Benz), retail (Carrefoursa) and agriculture, suggesting a horizontal AI data platform. Sabanci ARF backing is a positive signal. However the product description is unclear and the extremely diverse client base makes it hard to identify a sharp use case for YK or a targeted DACH entry wedge. Without clarity on the core product, a collaboration path is hard to construct. Could be reconsidered with more product detail - recommend requesting a product demo before finalising.',
+  },
+  {
+    company: 'WUUB', sector: 'Consumer Hardware / Workspace Products', color: '#4a5568', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'Ergonomic workspace hardware product sold D2C and through Trendyol. 102 units sold in first month. Seeking corporate brand co-labelling deals in DACH.',
+    comment: 'Consumer physical product - completely outside program scope. WUUB sells ergonomic workspace hardware through Trendyol and direct sales events. 102 units in the first month shows some early demand. However, a Turkish consumer hardware brand with no technology platform, no fintech angle, and a strategy built around co-labelling with major brands is not appropriate for a bank-backed tech accelerator. The YK collaboration angle is non-existent. Their DACH goal (getting physical product in front of European audiences at Bits & Pretzels) is not what this program is designed to deliver.',
+  },
+  {
+    company: 'Monq', sector: 'Negotiation AI / B2B SaaS', color: '#1a1a2e', status: 'new', date: 'Jun 2026', verdict: 'SUGGESTED',
+    oneliner: 'AI-powered negotiation intelligence platform for enterprise procurement and Mittelstand companies. Investors: Sequoia, Octopus Ventures, Lakestar Halo, Outward VC (lead). 10+ paying enterprise clients.',
+    comment: 'Exceptional investor profile and clear DACH thesis. Monq has secured backing from Outward VC, Cornerstone VC, Portfolio Ventures, Sequoia, Octopus Ventures, Endurance Ventures, and Lakestar Halo - a remarkable investor lineup for this stage. 10+ paying enterprise clients including PVH, BAT, Opsan. The DACH Mittelstand focus is well-reasoned: Germany has thousands of mid-market industrial companies running complex procurement cycles with limited dedicated negotiation tooling. YK collaboration pathway: Monq could be offered as a value-added tool to YK\'s corporate banking clients in procurement-heavy industries, and YK\'s corporate network provides warm introduction channels into Turkish and European enterprise buyers. The goal to exit the program at $5M ARR line of sight is ambitious but credible given the investor base. One of the most commercially mature new applications in this batch.',
+  },
+  {
+    company: 'SupraOS', sector: 'Revenue Recovery AI / Enterprise SaaS', color: '#2d3748', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'Autonomous AI recovery agents that map revenue systems (CRM, contracts, finance) and execute approved actions to recover at-risk renewals and expansions. 4 paying enterprise pilots.',
+    comment: 'Interesting revenue operations AI but weak YK fit. SupraOS builds autonomous agents that connect CRM, contracts, finance and customer data to identify and recover at-risk revenue. 4 paying enterprise pilot customers in fintech/payments, B2B SaaS, healthcare and travel SaaS with 117 pilot users. The product is genuinely novel in the revenue operations space. However, the use case is primarily for B2B SaaS and subscription businesses managing renewals - a profile that does not strongly map onto YK\'s core banking operations or corporate client base. The DACH entry path (qualified corporate meetings, one design partner conversation) is achievable but the collaboration story for YK is thin. Could be reconsidered if they sharpen the financial services use case.',
+  },
+  {
+    company: 'Corpowid AI', sector: 'Digital Accessibility / AI Compliance', color: '#6b46c1', status: 'new', date: 'Jun 2026', verdict: 'SUGGESTED',
+    oneliner: '360 degree AI digital accessibility and compliance solution. 250+ corporate clients including Zurich Insurance, Garanti BBVA, Halk Bank, Is Bankasi, Togg, Vodafone, Turkcell. EU and US incorporated.',
+    comment: 'Highly validated and immediately relevant to the EU regulatory moment. Corpowid makes any digital property (websites, apps, documents, media) accessible and compliant with disability standards - no redesign or developer effort required. 250+ corporate clients including Zurich Insurance, TSKB, Garanti BBVA, Halk Bank, SBM, Colendi, Is Bankasi, Togg, Vodafone, Turkcell - exceptional traction with regulated enterprises. The European Accessibility Act (EAA) deadline creates powerful pull demand across DACH: every public-facing digital product must comply or face penalties. Specific YK use case: bringing all YK digital properties (Yapi Kredi Mobil, web banking, documents) into EAA compliance at scale. EU relocation already underway. Turkish-US incorporation provides structural readiness. One of the strongest new applications in terms of traction and regulatory timing.',
+  },
+  {
+    company: 'PayderPay', sector: 'Mobile Payments / Consumer Fintech', color: '#e53e3e', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'B2C mobile payment app in closed beta. Not yet legally incorporated (operating as sole proprietor). Pre-revenue, pre-launch.',
+    comment: 'Far too early-stage. PayderPay is a B2C mobile payments application still in closed beta with a small test group, operating as a sole proprietor rather than a registered legal entity. The company plans to complete incorporation during 2026 and launch publicly in 2-3 months. With no legal entity, no revenue, no customers, and no technical differentiation articulated beyond "mobile payments," this is not ready for a corporate market-access accelerator. The B2C payments space in Europe is already crowded with Revolut, Monzo, N26, and Wise. Better served by returning after incorporation, initial user traction, and a defined product differentiation.',
+  },
+  {
+    company: 'Vaulty', sector: 'Luxury Asset Tokenization / Blockchain', color: '#4a5568', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'Mobile fractional investment platform for tokenized luxury physical assets (watches, handbags, art) via smart contracts. Pre-revenue, MVP development phase.',
+    comment: 'Pre-revenue blockchain product with a thin regulatory path. Vaulty enables fractional ownership of luxury physical assets via tokenization - a real market opportunity in the alternative assets space. However, the product is still in MVP development, pre-revenue, with no paying users. The smart contract tokenization model for luxury goods raises complex custody, insurance, authentication, and EU financial regulation questions that a 6-month accelerator cannot resolve. The YK collaboration angle (sandbox for tokenization experiments) requires significant internal YK regulatory clearance that is unlikely within this program timeline. Better served by fintech regulatory sandboxes or blockchain-specific accelerators after product and legal framework are established.',
+  },
+  {
+    company: 'Forsico', sector: 'AI Project Management / Enterprise SaaS', color: '#2b6cb0', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'AI-powered Project OS with 20 enterprise clients and 200 active users. Targets DACH for first international expansion. Turkey-based.',
+    comment: 'Decent early traction but undifferentiated in a crowded market. Forsico builds an AI-powered project management platform (AI Project OS) with 20 B2B enterprise clients and 200 active users - meaningful early validation. The DACH target is logical. However, the enterprise project management space is exceptionally crowded (Asana, Monday.com, Linear, Notion, Jira, ClickUp) and Forsico\'s differentiation is not clearly articulated. The YK collaboration angle (internal operational project management) is generic and does not constitute a real partnership or commercial validation. Without a sharper wedge or differentiated capability (e.g., construction, banking-specific workflows, compliance-linked project tracking), this is unlikely to stand out in DACH. Better served by a later cohort once international customer evidence is established.',
+  },
+  {
+    company: 'Stock Tuner', sector: 'Industrial B2B Marketplace / Circular Economy', color: '#718096', status: 'new', date: 'Jun 2026', verdict: 'NOT SUGGESTED',
+    oneliner: 'B2B circular marketplace connecting sellers of unused industrial stock with buyers seeking alternative parts. 10 sellers, EUR 500K listed inventory. Turkey-incorporated.',
+    comment: 'Wrong program. Stock Tuner addresses a real inefficiency in industrial supply chains by creating a marketplace for unused stock and surplus industrial parts. 10 seller-side companies with EUR 500K in listed inventory is early traction. However, industrial B2B marketplaces for surplus inventory have no meaningful connection to YK\'s banking business or the fintech/enterprise software focus of FRWRD. The DACH challenges (buyer trust in cross-border industrial parts, logistics, quality certification for used components) are not addressable by a bank-backed accelerator. The YK collaboration angle (SME/corporate customers) is too abstract to anchor a relationship. Better served by industrial supply chain programs or European circular economy accelerators.',
   },
 ];
 
