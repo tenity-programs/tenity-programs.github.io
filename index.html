@@ -1398,75 +1398,61 @@ const PROGRAM_WEEKS = [
     ]
   },
   {
-    id: 'onboarding', label: 'Onboarding', range: 'Jul 27-31', startDate: '2026-07-27',
+    id: 'prep', label: 'Pre-Program Prep', range: 'Late Jul', startDate: '2026-07-24',
     events: [
-      { date: '2026-07-27', time: '10:00-11:30', title: 'Startup Onboarding Calls', desc: 'Welcome call, program overview, Notion access, Airtable setup', type: 'session' },
-      { date: '2026-07-28', time: '10:00-12:00', title: 'Onboarding Calls cont.', desc: 'Remaining startups onboarded, platform walkthrough', type: 'session' },
-      { date: '2026-07-29', time: '14:00-15:00', title: 'YK Intro Briefing', desc: 'Startup intros shared with Merve and Zeynep', type: 'session' },
+      { date: '2026-07-24', time: 'Online · 60 min', title: 'P2 - Welcome Call (Full Cohort)', desc: 'Introductory group call: meet the team, program overview, expectations, Q&A. First chance for startups to meet each other. Led by Eda / Elif / YK Team. Output: cohort relationship established, expectations aligned.', type: 'kickoff' },
+      { date: '2026-07-31', time: 'Async', title: 'P1 - Onboarding Brief Sent', desc: 'Share onboarding pack: program agenda, session dates, expectations, Tenity perks, Airtable access, communication channels. Output: onboarding brief delivered to all selected startups.', type: 'session' },
     ]
   },
   {
-    id: 'w1', label: 'Week 1 - Kickoff and Deep Dives', range: 'Aug 3-7', startDate: '2026-08-03',
+    id: 'w1', label: 'Week 1 - Kick-off & Deep Dives', range: 'Jul 27-31', startDate: '2026-07-27',
     events: [
-      { date: '2026-08-05', time: '13:00-15:00', title: 'Program Kickoff', desc: 'Formal opening, overview, introductions, KPI alignment with YK team', type: 'kickoff' },
-      { date: '2026-08-05', time: '15:00-18:00', title: 'Deep Dives: Batch 1', desc: '1:1 sessions, DACH landscape, ICP mapping, B&P goals (Startups 1-3)', type: 'deepdive' },
-      { date: '2026-08-06', time: '10:00-17:00', title: 'Deep Dives: Batch 2', desc: 'Individual sessions, priority targets, investor landscape (Startups 4-6)', type: 'deepdive' },
-      { date: '2026-08-07', time: '10:00-14:00', title: 'Deep Dives: Batch 3', desc: 'Final 1:1 sessions, output: value prop + priority targets + B&P KPIs (Startup 7)', type: 'deepdive' },
+      { date: '2026-07-27', time: 'Online · 45 min each', title: 'Deep Dives - Startups 1, 2, 3', desc: 'Individual 1:1 per startup. Cover: current positioning, DACH ambition, product-market fit hypothesis, target ICP, investor landscape, key blockers. Set B&P KPIs. Led by Eda Taskin. Output: startup profile card + B&P KPIs doc.', type: 'deepdive' },
+      { date: '2026-07-28', time: 'Online · 45 min each', title: 'Deep Dives - Startups 4, 5, 6', desc: 'Individual 1:1 per startup. Cover: current positioning, DACH ambition, product-market fit hypothesis, target ICP, investor landscape, key blockers. Set B&P KPIs. Led by Eda Taskin. Output: startup profile card + B&P KPIs doc.', type: 'deepdive' },
+      { date: '2026-07-29', time: 'Online · 45 min each', title: 'Deep Dives - Startups 7, 8', desc: 'Individual 1:1 per startup. Cover: current positioning, DACH ambition, product-market fit hypothesis, target ICP, investor landscape, key blockers. Set B&P KPIs. Led by Eda Taskin. Output: startup profile card + B&P KPIs doc.', type: 'deepdive' },
+      { date: '2026-07-30', time: 'Group Session', title: 'MC1 - DACH / European Market Landscape & Competitive Positioning', desc: 'DACH ecosystem map, regulatory landscape (BaFin, GDPR/DSGVO, EU AI Act), entity formation options (GmbH vs UG), regional differences (Munich vs Berlin vs Frankfurt), cultural nuances for business. Output: clear DACH value proposition.', type: 'masterclass' },
+      { date: '2026-07-30', time: 'Group Session', title: 'MC2 - Target ICP & Partner Mapping', desc: 'Enterprise sales in DACH: discovery frameworks, decision-maker mapping, German procurement timelines, partnership vs direct sales, pricing localisation. Real case studies. Output: defined priority targets (investors / corporates / ecosystem).', type: 'masterclass' },
+      { date: '2026-07-31', time: 'Group Session · Dimitri', title: 'MC3 - Investor Landscape Overview (DACH-focused)', desc: 'Overview of DACH VC landscape, fund profiles, investment thesis and stage focus, warm intro pathways. Led by Dimitri. Output: B&P success KPIs.', type: 'masterclass' },
+      { date: '2026-07-31', time: 'Group Session', title: 'MC4 - Regulatory & Compliance Red Flags', desc: 'Key regulatory red flags for startups entering DACH: financial licensing, data privacy (DSGVO), sector-specific compliance. Practical guidance on what to prepare before B&P.', type: 'masterclass' },
     ]
   },
   {
-    id: 'w2', label: 'Week 2 - Action Planning', range: 'Aug 10-14', startDate: '2026-08-10',
+    id: 'w2', label: 'Week 2 - Masterclass Series', range: 'Aug 3-7', startDate: '2026-08-03',
     events: [
-      { date: '2026-08-10', time: '10:00-12:00', title: 'Go-to-Market Roadmaps', desc: 'Sales strategy, KPI tracking setup per startup', type: 'session' },
-      { date: '2026-08-11', time: '10:00-12:00', title: 'Investor Outreach Strategy', desc: 'Pipeline building, outreach templates, target: min 7 VC intros per startup', type: 'session' },
-      { date: '2026-08-12', time: '14:00-16:00', title: 'Corporate Outreach Planning', desc: 'DACH corporate targets, intro scripts, target: min 8 partner intros per startup', type: 'session' },
-      { date: '2026-08-13', time: '10:00-12:00', title: '7-Week Outreach Calendar', desc: 'Build pipeline list and weekly cadence for each startup', type: 'session' },
+      { date: '2026-08-03', time: 'Online · 90 min', title: 'MC5 - Targeted Outreach & Action Planning (Sales)', desc: 'DACH Go-To-Market Roadmap, Sales & Meeting Strategy, KPI Tracking Framework. Corporate & partner outreach: min 8 intros per startup, structuring partnership conversations, pre-meeting qualification, follow-up sequencing. Output: prepare outreach pipeline.', type: 'masterclass' },
+      { date: '2026-08-04', time: 'Online · 90 min · Alper Yurder', title: 'MC6 - Targeted Outreach & Action Planning (Investors)', desc: 'Investor outreach strategy: min 7 VC introductions per startup, high-conversion email formats, LinkedIn strategy for investors. Led by Alper Yurder. Output: structured 7-week outreach calendar.', type: 'masterclass' },
+      { date: '2026-08-05', time: 'Online · 60 min · Eda/Alper', title: 'Action Planning Sessions - Startups 1 & 2', desc: 'Review deep dive outputs; build 7-week outreach calendar; confirm top 15 VC targets + top 15 corporate targets; review LinkedIn/Apollo setup; assign weekly KPIs. Output: 7-week outreach calendar + contact list (15 VCs + 15 corporates).', type: 'session' },
+      { date: '2026-08-06', time: 'Online · 60 min · Eda/Alper', title: 'Action Planning Sessions - Startups 3, 4 & 5', desc: 'B&P maximisation: scheduling strategy, AI-powered outreach setup (LinkedIn/Apollo), conversation openers, follow-up frameworks, founder dinner etiquette. Output: 7-week outreach calendar + contact list.', type: 'session' },
+      { date: '2026-08-07', time: 'Online · 60 min · Eda/Alper', title: 'Action Planning Sessions - Startups 6, 7 & 8', desc: 'B&P maximisation: scheduling strategy, AI-powered outreach setup (LinkedIn/Apollo), conversation openers, follow-up frameworks, founder dinner etiquette. Output: 7-week outreach calendar + contact list.', type: 'session' },
     ]
   },
   {
-    id: 'w3', label: 'Week 3 - Masterclass 1', range: 'Aug 17-21', startDate: '2026-08-17',
+    id: 'w3', label: 'Week 3 - Masterclass Series', range: 'Aug 17-19', startDate: '2026-08-17',
     events: [
-      { date: '2026-08-19', time: '10:00-13:00', title: 'MC1: DACH Market Entry', desc: 'Company setup and tax, entity formation, hiring and team structure, business etiquette', type: 'masterclass' },
-      { date: '2026-08-19', time: '14:00-15:30', title: 'MC1 Office Hours', desc: '1:1 follow-up per startup on DACH entry questions', type: 'masterclass' },
+      { date: '2026-08-17', time: 'Online · 90 min · Paolo', title: 'MC7 - Pitching & Fundraising Mastery', desc: 'DACH VC expectations & evaluation criteria, pitch deck localisation for DACH investors, handling difficult investor questions, term sheet basics, fundraising strategy (DACH vs global comparison). Led by Paolo. Output: investor-ready pitch + pitch feedback notes per startup.', type: 'masterclass' },
+      { date: '2026-08-19', time: 'Online · 90 min', title: 'MC8 - Hiring, Incorporation & Tax', desc: 'DACH entity formation (GmbH vs UG), tax structure & incentives, UK hiring landscape, legal readiness for fundraising, compensation benchmarks, early team structure planning, DACH business culture & negotiation nuances. Output: UK/DACH operational readiness checklist + hiring & expansion roadmap.', type: 'masterclass' },
     ]
   },
   {
-    id: 'w4', label: 'Week 4 - Masterclass 2', range: 'Aug 24-28', startDate: '2026-08-24',
+    id: 'w46', label: 'Weeks 4-6 - Outreach & B&P Matching', range: 'Aug 20 - Sep 2', startDate: '2026-08-20',
     events: [
-      { date: '2026-08-26', time: '10:00-13:00', title: 'MC2: Go-to-Market and Sales', desc: 'DACH customer acquisition, pricing for European markets, sales funnel and CRM, local partnership models', type: 'masterclass' },
-      { date: '2026-08-26', time: '14:00-15:30', title: 'Outreach Progress Review', desc: 'Mid-point check on VC and corporate pipeline status per startup', type: 'session' },
-      { date: '2026-08-27', time: '10:00-12:00', title: 'Stakeholder Mapping', desc: 'Finalize B&P target list, pre-schedule meeting slots in app', type: 'session' },
+      { date: '2026-08-20', time: 'Online · 45 min', title: 'Outreach Pipeline Review (Group)', desc: 'Mid-sprint check: who has replied, which targets are warm, which need new angles. Group session to share best-performing messages. Output: updated pipeline; revised messaging for cold targets.', type: 'session' },
+      { date: '2026-09-01', time: 'Online · 90 min', title: 'B&P App Scraping & AI Matching (Workshop)', desc: 'B&P mobile app goes live. Scrape attendee list together. Use AI to identify top 40 relevant contacts per startup. Assign outreach priorities for the final sprint. Output: top 40 B&P contact list per startup; automated outreach queued.', type: 'prep' },
+      { date: '2026-09-02', time: 'Online · 20 min each', title: '1:1 Pipeline Reviews (All Startups)', desc: 'Individual check-in per startup: review reply rates, warm contacts, objection handling. Adjust targeting if needed. 20 min per startup. Output: revised outreach plan per startup.', type: 'session' },
     ]
   },
   {
-    id: 'w5', label: 'Week 5 - Masterclass 3', range: 'Aug 31 - Sep 4', startDate: '2026-08-31',
+    id: 'w7', label: 'Week 7 - Pre-Departure & Final Prep', range: 'Sep 14-17', startDate: '2026-09-14',
     events: [
-      { date: '2026-09-02', time: '10:00-13:00', title: 'MC3: Pitching and Fundraising', desc: 'Investor-ready pitch structure, Series A readiness for DACH VCs, fundraising narrative for European context', type: 'masterclass' },
-      { date: '2026-09-02', time: '14:00-17:00', title: 'Mock Investor Panels', desc: 'Practice pitches in front of panel, feedback and iteration round', type: 'masterclass' },
-      { date: '2026-09-03', time: '10:00-12:00', title: 'Pitch Refinement', desc: 'Incorporate feedback, finalize pitch decks for B&P', type: 'prep' },
-    ]
-  },
-  {
-    id: 'w6', label: 'Week 6 - Masterclass 4', range: 'Sep 7-11', startDate: '2026-09-07',
-    events: [
-      { date: '2026-09-09', time: '10:00-13:00', title: 'MC4: B&P Event Maximization', desc: 'How to work B&P efficiently, meeting protocol, follow-up best practices, AI matching walkthrough', type: 'masterclass' },
-      { date: '2026-09-10', time: '10:00-12:00', title: 'B&P App Matching', desc: 'Analyse attendee list, AI matching to startup targets', type: 'prep' },
-      { date: '2026-09-11', time: '14:00-16:00', title: 'Pre-schedule B&P Meetings', desc: 'Confirm meeting slots in B&P app for investors and corporates', type: 'prep' },
-    ]
-  },
-  {
-    id: 'w7', label: 'Week 7 - Final Prep', range: 'Sep 14-18', startDate: '2026-09-14',
-    events: [
-      { date: '2026-09-16', time: '10:00-12:00', title: 'B&P Preparation Session', desc: 'Final run-through, logistics briefing, on-site schedule review', type: 'prep' },
-      { date: '2026-09-17', time: '14:00-15:00', title: 'YK Munich Briefing', desc: 'Sync with Merve and Zeynep on Munich agenda and dinner', type: 'session' },
-      { date: '2026-09-18', time: 'All day', title: 'Travel to Munich', desc: 'Founders + Eda + YK team travel day', type: 'event' },
+      { date: '2026-09-14', time: 'Online · 60 min', title: 'Meeting Pre-Scheduling Finalisation (Group)', desc: 'Coordinate with B&P matchmakers. Review confirmed meeting list per startup. Fill gaps with last-minute outreach. Every startup needs minimum 5 confirmed meetings before travel. Output: confirmed meeting list per startup (min 5 meetings each).', type: 'prep' },
+      { date: '2026-09-17', time: 'Online · 45 min', title: 'B&P Logistics Briefing', desc: 'Travel, accommodation, event registration, startup booth/badge logistics, schedule overview, emergency contacts, Munich tips. What to bring, what to expect each day. Output: Munich logistics pack sent to all founders.', type: 'prep' },
     ]
   },
   {
     id: 'bp', label: 'Bits and Pretzels Munich', range: 'Sep 28-30', startDate: '2026-09-28',
     events: [
       { date: '2026-09-28', time: 'All day', title: 'B&P Day 1', desc: 'Conference opens, startup meetings, networking, Tenity ecosystem evening event', type: 'event' },
-      { date: '2026-09-29', time: 'All day', title: "B&P Day 2 + Founder Dinner", desc: "Full conference day, evening: Founder Dinner hosted by Yapi Kredi Germany", type: 'event' },
+      { date: '2026-09-29', time: 'All day', title: 'B&P Day 2 + Founder Dinner', desc: 'Full conference day, evening: Founder Dinner hosted by Yapi Kredi Germany', type: 'event' },
       { date: '2026-09-30', time: 'All day', title: 'B&P Day 3 + Wrap-up', desc: 'Final meetings, meeting notes compiled, debrief', type: 'event' },
     ]
   },
@@ -1486,7 +1472,7 @@ const PROGRAM_WEEKS = [
   },
 ];
 
-let activeWeekId = 'w1';
+let activeWeekId = 'selection';
 
 function renderProgramSchedule() {
   const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
