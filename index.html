@@ -2315,6 +2315,13 @@ async function syncFromAirtable() {
       renderApplications();
     }
 
+    // Always update count to live Airtable total
+    const total = records.length;
+    const countEl = document.getElementById('stat-app-count');
+    const bannerEl = document.getElementById('banner-app-count');
+    if (countEl) countEl.textContent = total;
+    if (bannerEl) bannerEl.textContent = total;
+
     const el = document.getElementById('airtable-sync-time');
     if (el) {
       const now = new Date();
