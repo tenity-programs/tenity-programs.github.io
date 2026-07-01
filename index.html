@@ -2600,7 +2600,7 @@ async function syncFromAirtable() {
     const records = [];
     let offset = null;
     do {
-      const params = new URLSearchParams({ view: AIRTABLE_VIEW });
+      const params = new URLSearchParams({ view: AIRTABLE_VIEW, pageSize: '100' });
       if (offset) params.set('offset', offset);
       const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?${params}`, {
         headers: { Authorization: `Bearer ${AIRTABLE_PAT}` }
