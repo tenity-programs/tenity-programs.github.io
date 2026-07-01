@@ -1360,7 +1360,7 @@ const ECOSYSTEM = [
 // ============================================================
 
 function getFinalists() {
-  return APPLICATIONS.filter(a => a.status === 'finalist');
+  return APPLICATIONS.filter(a => a.status === 'shortlist' || a.status === 'finalist');
 }
 
 const DD_STATUS_COLORS = {
@@ -1386,7 +1386,7 @@ function renderDeepDives() {
       </div>
       <div class="dd-status-dot" style="background:${statusColor}" title="${saved.status || 'Not Started'}"></div>
     </div>`;
-  }).join('') || `<div style="padding:16px;font-size:12px;color:var(--muted);text-align:center">No finalists yet.<br>Mark startups as Finalist<br>in Applications.</div>`;
+  }).join('') || `<div style="padding:16px;font-size:12px;color:var(--muted);text-align:center">No shortlisted startups yet.<br>Shortlist startups in Applications.</div>`;
   if (activeDDIdx !== null && finalists[activeDDIdx]) openDD(activeDDIdx);
 }
 
@@ -2634,12 +2634,27 @@ async function syncFromAirtable() {
       renderApplications();
     }
 
-    // Always update count to live Airtable total
-    const total = records.length;
-    const countEl = document.getElementById('stat-app-count');
-    const bannerEl = document.getElementById('banner-app-count');
-    if (countEl) countEl.textContent = total;
-    if (bannerEl) bannerEl.textContent = total;
+    // Fetch total count from full table (no view filter) for accurate total
+    const countRes = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?fields[]=Name`, {
+      headers: { Authorization: `Bearer ${AIRTABLE_PAT}` }
+    });
+    if (countRes.ok) {
+      const countData = await countRes.json();
+      let total = countData.records.length;
+      let countOffset = countData.offset || null;
+      while (countOffset) {
+        const nextRes = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?fields[]=Name&offset=${countOffset}`, {
+          headers: { Authorization: `Bearer ${AIRTABLE_PAT}` }
+        });
+        const nextData = await nextRes.json();
+        total += nextData.records.length;
+        countOffset = nextData.offset || null;
+      }
+      const countEl = document.getElementById('stat-app-count');
+      const bannerEl = document.getElementById('banner-app-count');
+      if (countEl) countEl.textContent = total;
+      if (bannerEl) bannerEl.textContent = total;
+    }
 
     const el = document.getElementById('airtable-sync-time');
     if (el) {
