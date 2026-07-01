@@ -637,7 +637,7 @@
       <div class="stats-grid">
         <div class="stat-card blue">
           <div class="stat-label">Applications</div>
-          <div class="stat-value" id="stat-app-count">14</div>
+          <div class="stat-value" id="stat-app-count">-</div>
           <div class="stat-sub" id="stat-app-sub">8 suggested · 1 shortlisted</div>
         </div>
         <div class="stat-card green">
@@ -2634,6 +2634,25 @@ async function syncFromAirtable() {
       renderApplications();
     }
 
+    // Fetch total count from full table (no view filter)
+    let total = 0, totalOffset = null;
+    do {
+      const p = new URLSearchParams({ 'fields[]': 'Name', pageSize: '100' });
+      if (totalOffset) p.set('offset', totalOffset);
+      const tr = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?${p}`, {
+        headers: { Authorization: `Bearer ${AIRTABLE_PAT}` }
+      });
+      if (!tr.ok) break;
+      const td = await tr.json();
+      total += td.records.length;
+      totalOffset = td.offset || null;
+    } while (totalOffset);
+    if (total > 0) {
+      const countEl = document.getElementById('stat-app-count');
+      const bannerEl = document.getElementById('banner-app-count');
+      if (countEl) countEl.textContent = total;
+      if (bannerEl) bannerEl.textContent = total;
+    }
 
     const el = document.getElementById('airtable-sync-time');
     if (el) {
