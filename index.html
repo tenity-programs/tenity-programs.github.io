@@ -2634,27 +2634,6 @@ async function syncFromAirtable() {
       renderApplications();
     }
 
-    // Fetch total count from full table (no view filter) for accurate total
-    const countRes = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?fields[]=Name`, {
-      headers: { Authorization: `Bearer ${AIRTABLE_PAT}` }
-    });
-    if (countRes.ok) {
-      const countData = await countRes.json();
-      let total = countData.records.length;
-      let countOffset = countData.offset || null;
-      while (countOffset) {
-        const nextRes = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?fields[]=Name&offset=${countOffset}`, {
-          headers: { Authorization: `Bearer ${AIRTABLE_PAT}` }
-        });
-        const nextData = await nextRes.json();
-        total += nextData.records.length;
-        countOffset = nextData.offset || null;
-      }
-      const countEl = document.getElementById('stat-app-count');
-      const bannerEl = document.getElementById('banner-app-count');
-      if (countEl) countEl.textContent = total;
-      if (bannerEl) bannerEl.textContent = total;
-    }
 
     const el = document.getElementById('airtable-sync-time');
     if (el) {
