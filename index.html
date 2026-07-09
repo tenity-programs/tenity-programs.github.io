@@ -2109,7 +2109,8 @@ function renderApplicationCards() {
   // Count per status
   const counts = {};
   APPLICATIONS.forEach(a => { counts[a.status] = (counts[a.status] || 0) + 1; });
-  const total = APPLICATIONS.length;
+  // RULE: always show the total unfiltered application count from Airtable
+  const total = (typeof airtableTotalCount === 'number') ? airtableTotalCount : APPLICATIONS.length;
 
   // Build filter row — only show tabs that have entries, plus All
   const activeStatuses = ['all', ...Object.keys(STATUS_META).filter(k => k !== 'all' && counts[k])];
@@ -2639,6 +2640,7 @@ async function syncFromAirtable() {
     // Update global total and re-render overview with live count
     airtableTotalCount = allRecords.length;
     renderOverview();
+    renderApplicationCards();
 
     // Update statuses in local APPLICATIONS array from the view
     let updated = 0;
