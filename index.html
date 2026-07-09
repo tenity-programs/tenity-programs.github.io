@@ -251,6 +251,7 @@
   .status-review { background: #fef3c7; color: #92400e; }
   .status-shortlist { background: #d1fae5; color: #065f46; }
   .status-rejected { background: #fee2e2; color: #991b1b; }
+  .status-waitlist { background: #ede9fe; color: #5b21b6; }
   .app-date { font-size: 11px; color: var(--muted); }
   .app-comment { background: #f7f8fc; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; position: relative; }
   .app-comment:hover { border-color: #a0aec0; }
@@ -1995,7 +1996,9 @@ function renderOverview() {
 
   // Application stats — use live Airtable total if available
   const suggested = APPLICATIONS.filter(a => a.verdict === 'SUGGESTED').length;
-  const shortlisted = APPLICATIONS.filter(a => a.status === 'shortlist' || a.status === 'finalist').length;
+  const shortlisted = airtableStatusCounts
+    ? (airtableStatusCounts.shortlist || 0) + (airtableStatusCounts.finalist || 0)
+    : APPLICATIONS.filter(a => a.status === 'shortlist' || a.status === 'finalist').length;
   const displayTotal = (typeof airtableTotalCount === 'number') ? airtableTotalCount : APPLICATIONS.length;
   document.getElementById('stat-app-count').textContent = displayTotal;
   document.getElementById('stat-app-sub').textContent = suggested + ' suggested · ' + shortlisted + ' shortlisted';
@@ -2064,7 +2067,8 @@ const STATUS_META = {
   review:    { label: 'In Review',  cls: 'status-review',   order: 2 },
   shortlist: { label: 'Shortlisted',cls: 'status-shortlist',order: 3 },
   finalist:  { label: 'Finalist',   cls: 'status-finalist', order: 4 },
-  rejected:  { label: 'Rejected',   cls: 'status-rejected', order: 5 },
+  waitlist:  { label: 'Waitlist',   cls: 'status-waitlist', order: 5 },
+  rejected:  { label: 'Rejected',   cls: 'status-rejected', order: 6 },
 };
 
 let appStatusFilter = 'all';
@@ -2106,9 +2110,13 @@ function setAppFilter(f) {
 function renderApplicationCards() {
   const initials = name => name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 
-  // Count per status
+  // Count per status — use live Airtable counts when available
   const counts = {};
-  APPLICATIONS.forEach(a => { counts[a.status] = (counts[a.status] || 0) + 1; });
+  if (airtableStatusCounts) {
+    Object.assign(counts, airtableStatusCounts);
+  } else {
+    APPLICATIONS.forEach(a => { counts[a.status] = (counts[a.status] || 0) + 1; });
+  }
   // RULE: always show the total unfiltered application count from Airtable
   const total = (typeof airtableTotalCount === 'number') ? airtableTotalCount : APPLICATIONS.length;
 
@@ -2129,7 +2137,7 @@ function renderApplicationCards() {
   const statusOptions = Object.entries(STATUS_META)
     .filter(([k]) => k !== 'all')
     .map(([k, v]) => `<div class="status-option" onclick="changeAppStatus(__IDX__, '${k}', event)"><div class="dot" style="background:${
-      {new:'#3182ce',review:'#d69e2e',shortlist:'#38a169',finalist:'#78350f',rejected:'#c53030'}[k]
+      {new:'#3182ce',review:'#d69e2e',shortlist:'#38a169',finalist:'#78350f',waitlist:'#805ad5',rejected:'#c53030'}[k]
     }"></div>${v.label}</div>`).join('');
 
   document.getElementById('app-cards-grid').innerHTML = visible.length
@@ -2609,6 +2617,7 @@ function switchView(id) {
 // ============================================================
 const AIRTABLE_PAT = 'patWFPWBYzNhJwZm0.871fe91f484b544d43160170dec23b181cb1c97dd2ed76585f1ae15361bd8a2e';
 let airtableTotalCount = null; // set by syncFromAirtable, used by renderOverview
+let airtableStatusCounts = null; // live per-status counts from Airtable, used by renderApplicationCards
 const AIRTABLE_BASE = 'appLY4d1qYmYgd1lh';
 const AIRTABLE_TABLE = 'tbl4E1lgZJA51jMgg';
 const AIRTABLE_VIEW = 'viwab04l0P5MHlFjN';
@@ -2617,7 +2626,11 @@ const AIRTABLE_STATUS_MAP = {
   'Shortlisted': 'shortlist',
   'To be interviewed': 'shortlist',
   'To be rejected': 'rejected',
+  'To be Rejected': 'rejected',
   'Review later': 'review',
+  'Waitlist': 'waitlist',
+  'Waiting List': 'waitlist',
+  'Finalist': 'finalist',
 };
 
 async function syncFromAirtable() {
@@ -2639,6 +2652,16 @@ async function syncFromAirtable() {
 
     // Update global total and re-render overview with live count
     airtableTotalCount = allRecords.length;
+
+    // Live per-status counts from Airtable ("Status after 1st Call" overrides "Status")
+    airtableStatusCounts = {};
+    allRecords.forEach(record => {
+      const fields = record.fields || {};
+      const raw = fields['Status after 1st Call'] || fields['Status'] || '';
+      const mapped = AIRTABLE_STATUS_MAP[raw] || 'new';
+      airtableStatusCounts[mapped] = (airtableStatusCounts[mapped] || 0) + 1;
+    });
+
     renderOverview();
     renderApplicationCards();
 
@@ -2647,7 +2670,7 @@ async function syncFromAirtable() {
     allRecords.forEach(record => {
       const fields = record.fields || {};
       const name = fields['Name'] || fields['Company Name'] || fields['Startup Name'] || '';
-      const airtableStatus = fields['Status'] || '';
+      const airtableStatus = fields['Status after 1st Call'] || fields['Status'] || '';
       const mapped = AIRTABLE_STATUS_MAP[airtableStatus];
       if (!name) return;
       const app = APPLICATIONS.find(a => {
