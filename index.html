@@ -578,7 +578,7 @@
   <div class="sidebar-phase-indicator">
     <div class="label">Current Phase</div>
     <div class="phase">Applications Open</div>
-    <div class="date">Closes July 5, 2026</div>
+    <div class="date">Closes July 12, 2026</div>
   </div>
   <nav>
     <a class="nav-item active" data-view="overview" onclick="switchView('overview'); return false;" href="#">
@@ -649,7 +649,7 @@
         <div class="stat-card yellow">
           <div class="stat-label">Days to Close</div>
           <div class="stat-value" id="days-to-close">-</div>
-          <div class="stat-sub">July 5 deadline</div>
+          <div class="stat-sub">July 12 deadline</div>
         </div>
         <div class="stat-card red">
           <div class="stat-label">Days to B&P</div>
@@ -686,7 +686,7 @@
         <div class="apps-stat yellow">
           <div class="label">Days Remaining</div>
           <div class="value" id="apps-days-left">-</div>
-          <div class="sub">Closes July 5, 2026</div>
+          <div class="sub">Closes July 12, 2026</div>
         </div>
         <div class="apps-stat green">
           <div class="label">Target Selection</div>
@@ -853,16 +853,24 @@ const YK_MEETINGS_SYNCED = [
   {
     title: 'Yapı Kredi FRWRD <> Tenity Bi-Weekly',
     start: new Date('2026-06-30T12:00:00.000Z'),
-    mins: 30,
+    mins: 41,
     who: ['Zeynep', 'Merve', 'Neslisah'],
-    link: 'https://teams.microsoft.com/meet/381615945893333'
+    link: 'https://teams.microsoft.com/meet/381615945893333',
+    summary: 'Discussed the Forward Global Market Access Program - facilitating entry into European and industrial sectors. Focus on automotive and industrial segments, building enterprise connections. smartIQ smart mesh integration covered. Turkey incorporation steps and interview scheduling confirmed.',
+    actionItems: [
+      'Merve - Finalize interview scheduling and incorporation details for Turkey setup',
+      'Eda - Verify participant roles and titles for documentation and interview references',
+      'Neslisah - Compile company pipeline data with market and patent assets',
+      'Elif - Circulate application platform awareness and last date reminders',
+    ],
+    keywords: ['Global Market Access', 'Turkey Incorporation', 'Forward Program', 'Pipeline Data', 'European Market', 'Industrial Presentation'],
   },
   {
     title: 'YK FRWRD <> Sophi',
     start: new Date('2026-06-30T13:00:00.000Z'),
-    mins: 15,
+    mins: 20,
     who: ['Merve', 'Zeynep', 'Neslisah'],
-    link: 'https://teams.microsoft.com/meet/354730170429143'
+    link: 'https://teams.microsoft.com/meet/354730170429143',
   },
   {
     title: 'Yapı Kredi FRWRD <> Tenity Bi-Weekly',
@@ -911,7 +919,7 @@ const YK_MEETINGS_SYNCED = [
 const MILESTONES = [
   { date: '2026-05-05', name: 'Program Kick-off Meeting', status: 'done' },
   { date: '2026-06-01', name: 'Applications Open', status: 'done' },
-  { date: '2026-07-05', name: 'Applications Close', status: 'upcoming' },
+  { date: '2026-07-12', name: 'Applications Close', status: 'upcoming' },
   { date: '2026-07-06', name: 'Initial Screening Begins', status: 'upcoming' },
   { date: '2026-07-08', name: 'Selection Day', status: 'upcoming' },
   { date: '2026-07-14', name: 'Internal YK Sign-off Deadline', status: 'upcoming' },
@@ -923,7 +931,7 @@ const MILESTONES = [
 
 const NEXT_ACTIONS = [
   { urgency: 'high', text: 'Re-publish social media announcements (paused due to sensitive period) - align timing with Yapi Kredi', owner: 'Elif / Eda', due: 'ASAP' },
-  { urgency: 'high', text: 'Decide whether to extend application deadline beyond July 5 (currently 15 apps)', owner: 'Eda + Merve/Zeynep', due: 'This week' },
+  { urgency: 'high', text: 'Application deadline extended to July 12 — continue outreach and monitor incoming applications', owner: 'Eda + Merve/Zeynep', due: 'July 12' },
   { urgency: 'med', text: 'Share Yakup Bey quote with Elif for the Tenity article (English version approved by YK PR team)', owner: 'Merve', due: 'This week' },
   { urgency: 'med', text: 'Send bi-weekly application update to YK team', owner: 'Eda', due: 'Ongoing' },
   { urgency: 'med', text: 'Confirm Founder\'s Dinner logistics (hosted by Yapı Kredi Germany)', owner: 'Eda + Zeynep', due: 'July' },
@@ -972,13 +980,13 @@ const PHASES = [
     ]
   },
   {
-    id: 'applications', name: 'Applications', dates: 'June 1 - July 5, 2026', status: 'in-progress', color: '#d69e2e',
+    id: 'applications', name: 'Applications', dates: 'June 1 - July 12, 2026', status: 'in-progress', color: '#d69e2e',
     tasks: [
       { name: 'Applications Launch (June 1)', owner: 'Eda + Elif', status: 'done', date: 'June 1', asanaDate: null },
       { name: 'Social Media Announcement (re-publish after pause)', owner: 'Elif', status: 'in-progress', date: 'ASAP', asanaDate: '2026-06-12' },
       { name: 'Weekly Application Review via Airtable', owner: 'Eda + Merve', status: 'in-progress', date: 'Ongoing', asanaDate: null },
       { name: 'Share weekly application count with YK team', owner: 'Eda', status: 'in-progress', date: 'Ongoing', asanaDate: null },
-      { name: 'Applications Close (July 5)', owner: 'All', status: 'pending', date: 'July 5', asanaDate: '2026-07-05' },
+      { name: 'Applications Close (July 12)', owner: 'All', status: 'pending', date: 'July 12', asanaDate: '2026-07-12' },
     ]
   },
   {
@@ -1055,8 +1063,8 @@ const COMMS = [
   { month: 'June 2026', date: 'Jun 25', title: '"Going to Munich is one thing. Arriving prepared is another." — Benefits Post', channels: ['li','ig'], status: 'upcoming' },
   { month: 'June 2026', date: 'Jun 25', title: 'Benefits-focused email to network', channels: ['em'], status: 'upcoming' },
   { month: 'June 2026', date: 'Jun 30', title: '"Final week to apply ⏳" — Last Call Posts', channels: ['li','ig'], status: 'upcoming' },
-  { month: 'June 2026', date: 'Jun 30', title: 'Final Call Email — Applications close July 5', channels: ['em'], status: 'upcoming' },
-  { month: 'July 2026', date: 'Jul 5', title: 'Application Period Extended — Announcement', channels: ['li','ig'], status: 'upcoming', notes: 'Extension posts if deadline is extended beyond Jul 5' },
+  { month: 'June 2026', date: 'Jun 30', title: 'Final Call Email — Applications close July 12', channels: ['em'], status: 'upcoming' },
+  { month: 'July 2026', date: 'Jul 7', title: '"Last days to apply" — Final reminder post', channels: ['li','ig'], status: 'upcoming', notes: 'Final push before July 12 deadline' },
   { month: 'July 2026', date: 'Jul 11', title: 'Applications Closed', channels: ['li','ig'], status: 'upcoming' },
   { month: 'July 2026', date: 'Jul 20', title: 'Selected Startups Announcement + Founder Highlights', channels: ['li','ig','web'], status: 'upcoming' },
   { month: 'August 2026', date: 'Aug 25', title: 'Program Has Officially Started — Kickoff Post', channels: ['li','ig'], status: 'upcoming', notes: 'Photos from kickoff + deep dive sessions' },
@@ -1764,17 +1772,31 @@ function renderYKMeetings(meetings) {
   document.getElementById('stat-zeynep').textContent = zeynepCount;
 
   // List
-  document.getElementById('gcal-list-box').innerHTML = meetings.map(m => {
+  document.getElementById('gcal-list-box').innerHTML = meetings.map((m, i) => {
     const dateStr = m.start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     const timeStr = m.start.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
     const durStr  = m.mins >= 60 ? `${Math.floor(m.mins/60)}h ${m.mins%60>0?m.mins%60+'m':''}` : `${m.mins}m`;
-    return `<div class="past-meeting-row">
-      <div class="pm-dot"></div>
-      <div style="flex:1">
-        <div class="pm-title">${m.title}</div>
-        <div class="pm-meta">👤 ${m.who.join(', ')} &nbsp;·&nbsp; ${dateStr} ${timeStr}</div>
+    const hasNotes = m.summary || (m.actionItems && m.actionItems.length);
+    const notesHtml = hasNotes ? `
+      <div id="ff-notes-${i}" style="display:none;margin-top:10px;padding:10px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);font-size:12px;line-height:1.6">
+        ${m.summary ? `<div style="margin-bottom:8px;color:var(--text)">${m.summary}</div>` : ''}
+        ${m.actionItems && m.actionItems.length ? `
+          <div style="font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Action Items</div>
+          <ul style="margin:0;padding-left:16px;color:var(--text)">${m.actionItems.map(a => `<li>${a}</li>`).join('')}</ul>
+        ` : ''}
+        ${m.keywords && m.keywords.length ? `<div style="margin-top:8px">${m.keywords.map(k => `<span style="display:inline-block;margin:2px 3px 0 0;padding:2px 7px;background:var(--accent-soft,#e8f4fd);color:var(--accent,#2b6cb0);border-radius:10px;font-size:10px">${k}</span>`).join('')}</div>` : ''}
+      </div>` : '';
+    return `<div class="past-meeting-row" style="flex-direction:column;align-items:stretch">
+      <div style="display:flex;align-items:center">
+        <div class="pm-dot"></div>
+        <div style="flex:1">
+          <div class="pm-title">${m.title}</div>
+          <div class="pm-meta">👤 ${m.who.join(', ')} &nbsp;·&nbsp; ${dateStr} ${timeStr}</div>
+        </div>
+        <div class="pm-dur">${durStr}</div>
+        ${hasNotes ? `<button onclick="(function(el){el.style.display=el.style.display==='none'?'block':'none'})(document.getElementById('ff-notes-${i}'))" style="margin-left:8px;padding:3px 8px;border:1px solid var(--border);border-radius:6px;background:none;cursor:pointer;font-size:11px;color:var(--muted)">Notes</button>` : ''}
       </div>
-      <div class="pm-dur">${durStr}</div>
+      ${notesHtml}
     </div>`;
   }).join('');
 
@@ -1958,7 +1980,7 @@ function daysBetween(d1, d2) { return Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24
 
 function renderOverview() {
   const today = new Date();
-  const appClose = new Date('2026-07-05');
+  const appClose = new Date('2026-07-12');
   const bpDate = new Date('2026-09-28');
   document.getElementById('days-to-close').textContent = Math.max(0, daysBetween(today, appClose));
   document.getElementById('days-to-bp').textContent = Math.max(0, daysBetween(today, bpDate));
@@ -1971,12 +1993,13 @@ function renderOverview() {
   document.getElementById('stat-tasks-sub').textContent = doneTasks + ' of ' + allTasks.length + ' tasks complete';
   document.getElementById('progress-bar').style.width = pct + '%';
 
-  // Application stats
+  // Application stats — use live Airtable total if available
   const suggested = APPLICATIONS.filter(a => a.verdict === 'SUGGESTED').length;
   const shortlisted = APPLICATIONS.filter(a => a.status === 'shortlist' || a.status === 'finalist').length;
-  document.getElementById('stat-app-count').textContent = APPLICATIONS.length;
+  const displayTotal = (typeof airtableTotalCount === 'number') ? airtableTotalCount : APPLICATIONS.length;
+  document.getElementById('stat-app-count').textContent = displayTotal;
   document.getElementById('stat-app-sub').textContent = suggested + ' suggested · ' + shortlisted + ' shortlisted';
-  document.getElementById('banner-app-count').textContent = APPLICATIONS.length;
+  document.getElementById('banner-app-count').textContent = displayTotal;
   const bannerMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   document.getElementById('banner-app-date').textContent = 'As of ' + bannerMonths[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
 
@@ -2018,7 +2041,7 @@ function renderOverview() {
 
 function renderApplications() {
   const today = new Date();
-  const appClose = new Date('2026-07-05');
+  const appClose = new Date('2026-07-12');
   const daysLeft = Math.max(0, daysBetween(today, appClose));
   const el = document.getElementById('apps-days-left');
   if (el) el.textContent = daysLeft;
@@ -2584,6 +2607,7 @@ function switchView(id) {
 // AIRTABLE LIVE SYNC
 // ============================================================
 const AIRTABLE_PAT = 'patWFPWBYzNhJwZm0.871fe91f484b544d43160170dec23b181cb1c97dd2ed76585f1ae15361bd8a2e';
+let airtableTotalCount = null; // set by syncFromAirtable, used by renderOverview
 const AIRTABLE_BASE = 'appLY4d1qYmYgd1lh';
 const AIRTABLE_TABLE = 'tbl4E1lgZJA51jMgg';
 const AIRTABLE_VIEW = 'viwab04l0P5MHlFjN';
@@ -2597,22 +2621,28 @@ const AIRTABLE_STATUS_MAP = {
 
 async function syncFromAirtable() {
   try {
-    const records = [];
+    // Fetch ALL records (no view filter) for accurate total count
+    const allRecords = [];
     let offset = null;
     do {
-      const params = new URLSearchParams({ view: AIRTABLE_VIEW, pageSize: '100' });
+      const params = new URLSearchParams({ pageSize: '100' });
       if (offset) params.set('offset', offset);
       const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?${params}`, {
         headers: { Authorization: `Bearer ${AIRTABLE_PAT}` }
       });
       if (!res.ok) throw new Error('Airtable fetch failed: ' + res.status);
       const data = await res.json();
-      records.push(...data.records);
+      allRecords.push(...data.records);
       offset = data.offset || null;
     } while (offset);
 
+    // Update global total and re-render overview with live count
+    airtableTotalCount = allRecords.length;
+    renderOverview();
+
+    // Update statuses in local APPLICATIONS array from the view
     let updated = 0;
-    records.forEach(record => {
+    allRecords.forEach(record => {
       const fields = record.fields || {};
       const name = fields['Name'] || fields['Company Name'] || fields['Startup Name'] || '';
       const airtableStatus = fields['Status'] || '';
@@ -2629,15 +2659,7 @@ async function syncFromAirtable() {
       }
     });
 
-    const countEl = document.getElementById('stat-app-count');
-    const bannerEl = document.getElementById('banner-app-count');
-    if (countEl) countEl.textContent = records.length;
-    if (bannerEl) bannerEl.textContent = records.length;
-
-    if (updated > 0) {
-      renderOverview();
-      renderApplications();
-    }
+    if (updated > 0) renderApplications();
 
     const el = document.getElementById('airtable-sync-time');
     if (el) {
