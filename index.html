@@ -1999,7 +1999,7 @@ function renderOverview() {
   const shortlisted = airtableStatusCounts
     ? (airtableStatusCounts.shortlist || 0) + (airtableStatusCounts.finalist || 0)
     : APPLICATIONS.filter(a => a.status === 'shortlist' || a.status === 'finalist').length;
-  const displayTotal = (typeof airtableTotalCount === 'number') ? airtableTotalCount : APPLICATIONS.length;
+  const displayTotal = (typeof airtableTotalCount === 'number') ? airtableTotalCount : '…';
   document.getElementById('stat-app-count').textContent = displayTotal;
   document.getElementById('stat-app-sub').textContent = suggested + ' suggested · ' + shortlisted + ' shortlisted';
   document.getElementById('banner-app-count').textContent = displayTotal;
@@ -2118,7 +2118,7 @@ function renderApplicationCards() {
     APPLICATIONS.forEach(a => { counts[a.status] = (counts[a.status] || 0) + 1; });
   }
   // RULE: always show the total unfiltered application count from Airtable
-  const total = (typeof airtableTotalCount === 'number') ? airtableTotalCount : APPLICATIONS.length;
+  const total = (typeof airtableTotalCount === 'number') ? airtableTotalCount : '…';
 
   // Build filter row — only show tabs that have entries, plus All
   const activeStatuses = ['all', ...Object.keys(STATUS_META).filter(k => k !== 'all' && counts[k])];
@@ -2616,8 +2616,10 @@ function switchView(id) {
 // AIRTABLE LIVE SYNC
 // ============================================================
 const AIRTABLE_PAT = 'patWFPWBYzNhJwZm0.871fe91f484b544d43160170dec23b181cb1c97dd2ed76585f1ae15361bd8a2e';
-let airtableTotalCount = null; // set by syncFromAirtable, used by renderOverview
-let airtableStatusCounts = null; // live per-status counts from Airtable, used by renderApplicationCards
+// RULE: always show the TOTAL application count from Airtable, never the local sample or a filtered count.
+// Last-known values are cached so the true total shows even before/without a successful fetch.
+let airtableTotalCount = parseInt(localStorage.getItem('yk_airtable_total'), 10) || null;
+let airtableStatusCounts = JSON.parse(localStorage.getItem('yk_airtable_status_counts') || 'null');
 const AIRTABLE_BASE = 'appLY4d1qYmYgd1lh';
 const AIRTABLE_TABLE = 'tbl4E1lgZJA51jMgg';
 const AIRTABLE_VIEW = 'viwab04l0P5MHlFjN';
@@ -2652,6 +2654,7 @@ async function syncFromAirtable() {
 
     // Update global total and re-render overview with live count
     airtableTotalCount = allRecords.length;
+    localStorage.setItem('yk_airtable_total', String(airtableTotalCount));
 
     // Live per-status counts from Airtable ("Status after 1st Call" overrides "Status")
     airtableStatusCounts = {};
@@ -2661,6 +2664,7 @@ async function syncFromAirtable() {
       const mapped = AIRTABLE_STATUS_MAP[raw] || 'new';
       airtableStatusCounts[mapped] = (airtableStatusCounts[mapped] || 0) + 1;
     });
+    localStorage.setItem('yk_airtable_status_counts', JSON.stringify(airtableStatusCounts));
 
     renderOverview();
     renderApplicationCards();
