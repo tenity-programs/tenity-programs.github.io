@@ -3185,6 +3185,19 @@ function switchView(id) {
 // ============================================================
 // AIRTABLE LIVE SYNC
 // ============================================================
+const BUILD_ID = '2026-07-10-1';
+// Self-update: if the server has a newer build than this cached copy, reload once.
+fetch(window.location.pathname + '?nocache=' + Date.now(), { cache: 'no-store' })
+  .then(r => r.text())
+  .then(t => {
+    const m = t.match(/const BUILD_ID = '([^']+)'/);
+    if (m && m[1] !== BUILD_ID && !sessionStorage.getItem('yk_reloaded_' + m[1])) {
+      sessionStorage.setItem('yk_reloaded_' + m[1], '1');
+      window.location.reload();
+    }
+  })
+  .catch(() => {});
+
 const AIRTABLE_PAT = 'patWFPWBYzNhJwZm0.871fe91f484b544d43160170dec23b181cb1c97dd2ed76585f1ae15361bd8a2e';
 // RULE: always show the TOTAL application count from Airtable, never the local sample or a filtered count.
 // Last-known values are cached so the true total shows even before/without a successful fetch.
