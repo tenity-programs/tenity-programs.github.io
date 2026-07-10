@@ -249,9 +249,9 @@
   .app-status { font-size: 10px; padding: 3px 9px; border-radius: 10px; font-weight: 700; }
   .status-new { background: #dbeafe; color: #1d4ed8; }
   .status-review { background: #fef3c7; color: #92400e; }
-  .status-shortlist { background: #d1fae5; color: #065f46; }
+  .status-shortlist { background: #fed7aa; color: #9a3412; }
   .status-rejected { background: #fee2e2; color: #991b1b; }
-  .status-waitlist { background: #ede9fe; color: #5b21b6; }
+  .status-waitlist { background: #fef3c7; color: #92400e; }
   .app-date { font-size: 11px; color: var(--muted); }
   .app-comment { background: #f7f8fc; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; position: relative; }
   .app-comment:hover { border-color: #a0aec0; }
@@ -270,7 +270,7 @@
   /* OVERVIEW PROGRESS BAR */
   .progress-bar-wrap { background: var(--border); border-radius: 10px; height: 8px; overflow: hidden; margin-top: 8px; }
   .progress-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent), #f06a35); transition: width .4s ease; }
-  .status-finalist { background: #fde68a; color: #78350f; }
+  .status-finalist { background: #dbeafe; color: #1e40af; }
 
   .app-filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
   .app-filter-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border); font-size: 12px; font-weight: 600; cursor: pointer; background: var(--card); color: var(--muted); transition: all .15s; }
@@ -2633,12 +2633,12 @@ function setAppView(v) {
 
 const STATUS_META = {
   all:       { label: 'All',        cls: '',                order: 0 },
-  new:       { label: 'New',        cls: 'status-new',      order: 1 },
-  review:    { label: 'In Review',  cls: 'status-review',   order: 2 },
-  shortlist: { label: 'Shortlisted',cls: 'status-shortlist',order: 3 },
-  finalist:  { label: 'Finalist',   cls: 'status-finalist', order: 4 },
-  waitlist:  { label: 'Waitlist',   cls: 'status-waitlist', order: 5 },
-  rejected:  { label: 'Rejected',   cls: 'status-rejected', order: 6 },
+  new:       { label: 'New',               cls: 'status-new',      order: 1 },
+  review:    { label: 'Review later',      cls: 'status-review',   order: 2 },
+  shortlist: { label: 'To be interviewed', cls: 'status-shortlist',order: 3 },
+  finalist:  { label: 'Finalist',          cls: 'status-finalist', order: 4 },
+  waitlist:  { label: 'Waitlist',          cls: 'status-waitlist', order: 5 },
+  rejected:  { label: 'To be rejected',    cls: 'status-rejected', order: 6 },
 };
 
 let appStatusFilter = 'all';
@@ -3185,7 +3185,7 @@ function switchView(id) {
 // ============================================================
 // AIRTABLE LIVE SYNC
 // ============================================================
-const BUILD_ID = '2026-07-10-1';
+const BUILD_ID = '2026-07-10-2';
 // Self-update: if the server has a newer build than this cached copy, reload once.
 fetch(window.location.pathname + '?nocache=' + Date.now(), { cache: 'no-store' })
   .then(r => r.text())
