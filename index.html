@@ -252,6 +252,33 @@
   .status-shortlist { background: #fed7aa; color: #9a3412; }
   .status-rejected { background: #fee2e2; color: #991b1b; }
   .status-waitlist { background: #fef3c7; color: #92400e; }
+
+  /* ONE PAGERS */
+  .op-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 22px; }
+  .op-head { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; }
+  .op-logo { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 800; color: #fff; flex-shrink: 0; overflow: hidden; }
+  .op-logo img { width: 100%; height: 100%; object-fit: contain; background: #fff; }
+  .op-title { flex: 1; min-width: 220px; }
+  .op-title h3 { font-size: 19px; font-weight: 700; margin-bottom: 2px; }
+  .op-title .op-vertical { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .op-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .op-links a { font-size: 11.5px; font-weight: 600; color: var(--accent2); background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; text-decoration: none; }
+  .op-links a:hover { border-color: var(--accent2); }
+  .op-pitch { font-size: 13px; line-height: 1.65; color: var(--text); margin-bottom: 14px; }
+  .op-founder { display: flex; gap: 10px; align-items: center; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; }
+  .op-founder .op-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent2); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .op-founder .op-fname { font-size: 13px; font-weight: 700; }
+  .op-founder .op-fbio { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+  .op-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 14px; }
+  .op-fact { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
+  .op-fact .k { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 2px; }
+  .op-fact .v { font-size: 12.5px; font-weight: 600; line-height: 1.35; }
+  .op-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .op-block { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .op-block .k { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--accent); margin-bottom: 5px; }
+  .op-block p { font-size: 12px; line-height: 1.6; color: var(--text); }
+  .op-block.full { grid-column: 1 / -1; }
+  @media (max-width: 900px) { .op-blocks { grid-template-columns: 1fr; } }
   .app-date { font-size: 11px; color: var(--muted); }
   .app-comment { background: #f7f8fc; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; position: relative; }
   .app-comment:hover { border-color: #a0aec0; }
@@ -578,8 +605,8 @@
   </div>
   <div class="sidebar-phase-indicator">
     <div class="label">Current Phase</div>
-    <div class="phase">Applications Open</div>
-    <div class="date">Closes July 12, 2026</div>
+    <div class="phase">Selection &amp; Interviews</div>
+    <div class="date">Applications closed July 12</div>
   </div>
   <nav>
     <a class="nav-item active" data-view="overview" onclick="switchView('overview'); return false;" href="#">
@@ -611,6 +638,9 @@
     </a>
     <a class="nav-item" data-view="mentors" onclick="switchView('mentors'); return false;" href="#">
       <span class="icon">🤝</span> Mentor Matching
+    </a>
+    <a class="nav-item" data-view="onepagers" onclick="switchView('onepagers'); return false;" href="#">
+      <span class="icon">📄</span> One Pagers
     </a>
   </nav>
   <div class="sidebar-footer">Tenity | Making Innovation Work</div>
@@ -648,9 +678,9 @@
           <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
         </div>
         <div class="stat-card yellow">
-          <div class="stat-label">Days to Close</div>
-          <div class="stat-value" id="days-to-close">-</div>
-          <div class="stat-sub">July 12 deadline</div>
+          <div class="stat-label">Applications</div>
+          <div class="stat-value" id="days-to-close">Closed</div>
+          <div class="stat-sub">Deadline July 12 ✓ completed</div>
         </div>
         <div class="stat-card red">
           <div class="stat-label">Days to B&P</div>
@@ -685,9 +715,9 @@
           <div class="sub" id="banner-app-date">-</div>
         </div>
         <div class="apps-stat yellow">
-          <div class="label">Days Remaining</div>
-          <div class="value" id="apps-days-left">-</div>
-          <div class="sub">Closes July 12, 2026</div>
+          <div class="label">Applications</div>
+          <div class="value" id="apps-days-left">Closed</div>
+          <div class="sub">Closed July 12, 2026 ✓</div>
         </div>
         <div class="apps-stat green">
           <div class="label">Target Selection</div>
@@ -820,6 +850,13 @@
       <div class="match-grid" id="match-grid"></div>
     </div>
 
+    <!-- ONE PAGERS -->
+    <div class="view" id="view-onepagers">
+      <div class="mentor-section-title">Finalist One Pagers</div>
+      <div class="mentor-section-sub" id="onepager-sub">Program finalists at a glance - founder, business, traction, and DACH objectives on one card each.</div>
+      <div id="onepager-list"></div>
+    </div>
+
   </div>
 </main>
 
@@ -920,8 +957,8 @@ const YK_MEETINGS_SYNCED = [
 const MILESTONES = [
   { date: '2026-05-05', name: 'Program Kick-off Meeting', status: 'done' },
   { date: '2026-06-01', name: 'Applications Open', status: 'done' },
-  { date: '2026-07-12', name: 'Applications Close', status: 'upcoming' },
-  { date: '2026-07-06', name: 'Initial Screening Begins', status: 'upcoming' },
+  { date: '2026-07-12', name: 'Applications Close', status: 'done' },
+  { date: '2026-07-06', name: 'Initial Screening Begins', status: 'done' },
   { date: '2026-07-08', name: 'Selection Day', status: 'upcoming' },
   { date: '2026-07-14', name: 'Internal YK Sign-off Deadline', status: 'upcoming' },
   { date: '2026-07-31', name: 'Startup Onboarding Complete', status: 'upcoming' },
@@ -932,7 +969,7 @@ const MILESTONES = [
 
 const NEXT_ACTIONS = [
   { urgency: 'high', text: 'Re-publish social media announcements (paused due to sensitive period) - align timing with Yapi Kredi', owner: 'Elif / Eda', due: 'ASAP' },
-  { urgency: 'high', text: 'Application deadline extended to July 12 — continue outreach and monitor incoming applications', owner: 'Eda + Merve/Zeynep', due: 'July 12' },
+  { urgency: 'high', text: 'Applications closed (July 12) — complete interviews with the 14 shortlisted startups and finalize selection', owner: 'Eda + YK Team', due: 'July 14' },
   { urgency: 'med', text: 'Share Yakup Bey quote with Elif for the Tenity article (English version approved by YK PR team)', owner: 'Merve', due: 'This week' },
   { urgency: 'med', text: 'Send bi-weekly application update to YK team', owner: 'Eda', due: 'Ongoing' },
   { urgency: 'med', text: 'Confirm Founder\'s Dinner logistics (hosted by Yapı Kredi Germany)', owner: 'Eda + Zeynep', due: 'July' },
@@ -1148,6 +1185,16 @@ const APPLICATIONS = [
     "comment": "Enterprise Software / Operasyonel Zeka Platformu\nSUGGESTED\nFlow Master, kurumların operasyonlarının neden belirli sonuçlar ürettiğini anlamasını sağlayan, senaryo simülasyonu ve iş akışı otomasyonunu birleştiren bir platform. 9 aktif müşterisi (4'ü kurumsal: Innova, Finanstech, Tekimaş) ve yaklaşık 100 aktif kullanıcısı var; müşteri elde tutma oranları %100. Finans sektöründeki bir müşterilerinde POS onboarding, temsilci onboarding'i (düzenleyici gereksinimlerle) ve yönetici panelleri için kullanılıyor — bu doğrudan bankacılık operasyonlarına benzer bir referans. ISO 27001 ve 27701 sertifikaları var; Portekiz'de Unicorn Factory Lisboa'ya seçilmişler, Dubai'de iş geliştirme ortaklığı kurmuşlar. Gelir ölçeği henüz mütevazı ama finans sektöründeki somut referans ve kurumsal güvenlik sertifikasyonları bir banka pilotu için makul bir başlangıç noktası sunuyor. Mülakata alalım."
   },
   {
+    "company": "otomate.app",
+    "sector": "Enterprise Software",
+    "color": "#d69e2e",
+    "status": "new",
+    "date": "Jul 2026",
+    "verdict": "",
+    "oneliner": "superapp for car owners. maintanance insurance parking etc all in one platform",
+    "comment": ""
+  },
+  {
     "company": "Forg3t Protocol",
     "sector": "Cybersecurity",
     "color": "#1a1a2e",
@@ -1208,6 +1255,16 @@ const APPLICATIONS = [
     "comment": "ClimateTech / Çevresel Piyasalar İçin Ticaret Terminali\nSUGGESTED\nErguvan'ın ECM Terminal'i karbon giderme, gönüllü karbon, yenilenebilir enerji sertifikaları ve yapılandırılmış yeşil finansmanın tek bir platformda fiyatlandığı bir \"çevresel piyasalar Bloomberg Terminali\". MRR $25-50K bandında, İş Bankası, QNB, Denizbank, Halkbank gibi Türk bankaları dahil 100'den fazla müşterisi var ve Emirates NBD yatırımcıları arasında. Türkiye'nin kendi ETS'ine ve CBAM'a yaklaşırken, Türk bankalarının karbon piyasalarına giriş yapması kaçınılmaz — Erguvan bu geçişte hazır bir altyapı sunuyor. Yapı Kredi için üç somut senaryo var: kurumsal müşterileri karbon kredisi/REC tedarikine yönlendirmek, yeşil proje finansmanı akışı yaratmak ve bankanın kendi karbon işlem masasını kurmak. 15'ten fazla ülkede kullanıcıları var (Almanya, Hollanda, İngiltere dahil). Mülakata alalım."
   },
   {
+    "company": "HELIOS",
+    "sector": "ClimateTech",
+    "color": "#38a169",
+    "status": "new",
+    "date": "Jul 2026",
+    "verdict": "",
+    "oneliner": "Helios is a climate-tech startup developing advanced Metal-Organic Framework (MOF) materials for industrial gas capture, separation, and storage. Our lead application is energy-efficient carbon capture, helping emission-intensive industries such as cement a...",
+    "comment": ""
+  },
+  {
     "company": "Rootzo Foods & Kaptan’ın Ceviz Çiftliği",
     "sector": "RetailTech",
     "color": "#38a169",
@@ -1246,6 +1303,16 @@ const APPLICATIONS = [
     "verdict": "SUGGESTED",
     "oneliner": "Propars is an AI-powered cross-border commerce platform that enables brands to start selling and manage their operations across European and global marketplaces from a single platform.  We manage marketplace onboarding, product listing, content, integration...",
     "comment": "Enterprise Software / Sınır Ötesi E-Ticaret Pazaryeri Etkinleştirme\nSUGGESTED\nPropars markaların OTTO, Zalando, ABOUT YOU ve Amazon Europe gibi Avrupa pazaryerlerinde satışa başlamasını uçtan uca yöneten bir platform — pazaryeri onboarding'i, içerik/çeviri, ERP entegrasyonu, stok/fiyat senkronizasyonu, lojistik ve reklam operasyonlarını tek noktadan yürütüyor. 130'dan fazla ödeme yapan marka müşterisi (DESA, LTB Jeans, Colin's, Armine), MRR $25-50K bandında ve Akbank ile çalışma geçmişleri var. Yapı Kredi için değer önerisi net: ihracat odaklı KOBİ ve marka müşterilerine somut bir Avrupa pazar erişimi çözümü sunmak, bankanın \"market access\" pozisyonunu güçlendirmek. Almanya ve ABD'de zaten aktif ticari faaliyetleri var. Ticari olgunluk ve mevcut Avrupa pazaryeri ortaklıkları bu adayı güçlü kılıyor. Mülakata alalım."
+  },
+  {
+    "company": "Trusapien",
+    "sector": "Enterprise Software",
+    "color": "#065f46",
+    "status": "new",
+    "date": "Jul 2026",
+    "verdict": "",
+    "oneliner": "Trusapien is the agentic commerce layer for hospitality and retail. It carries a hotel or brand's live inventory, pricing, and guest profile into ChatGPT, Gemini, and voice assistants and closes the booking or order on agent-safe payment rails — modeled on...",
+    "comment": ""
   },
   {
     "company": "KasaKlick",
@@ -1296,6 +1363,16 @@ const APPLICATIONS = [
     "verdict": "SUGGESTED",
     "oneliner": "Singularity is an AI-native cybersecurity company building an autopilot for cybersecurity and an AI hacker for mission-critical organizations, including banks, defense, sovereign cloud, critical infrastructure, and regulated enterprises.",
     "comment": "Cybersecurity / Yapay Zeka Destekli Otonom Güvenlik Operasyonları\nNOT SUGGESTED\nSingularity, SOC ekipleri için otonom bir \"güvenlik otopiloti\" (AutoSecOps) ve sürekli sızma testi yapan bir \"yapay zeka hacker\" (BreachOps) geliştiriyor. Kurucunun AWS, Visa ve Mastercard geçmişi ve 1 milyardan fazla kişiyi etkileyen kritik güvenlik açıklarını keşfetmiş olması ciddi bir kurucu-pazar uyumu sinyali. Plug and Play, LVLUP Labs gibi yatırımcılardan $3,2M'lik taahhüt toplamışlar ($4M hedefleniyor). Ama şirket sıfır gelir üretiyor, hiçbir ödeme yapan müşterisi yok — savunma ve egemen bulut oyuncularıyla erken PoC görüşmeleri var ama bunlar henüz gelire dönüşmemiş. DORA/NIS2 teması bankalar için gelecekte kritik olacak ama bu aşamada, daha önce benzer gerekçeyle reddedilen Forg3t Protocol gibi, en az bir ödeme yapan kurumsal referans olmadan değerlendirmek zor. Bir yıl içinde tekrar değerlendirilebilir.\n\nRound icin konusalim -"
+  },
+  {
+    "company": "ErikLabs",
+    "sector": "Enterprise Software",
+    "color": "#e94560",
+    "status": "new",
+    "date": "Jul 2026",
+    "verdict": "",
+    "oneliner": "ErikLabs is an AI-driven quality engineering technology company that helps software teams generate, execute, and maintain end-to-end tests across web, mobile, and API applications. Through our Smart product suite, we reduce manual QA effort by up to 80% and...",
+    "comment": ""
   },
   {
     "company": "Afrimart.",
@@ -1388,6 +1465,16 @@ const APPLICATIONS = [
     "comment": "Interesting AI procurement play but narrow sector fit. Packpeer targets packaging procurement specifically - a niche vertical within supply chain automation. The AI sourcing agent model (automating supplier discovery, quote comparison, sample coordination) addresses real friction in packaging sourcing. Revenue reported at $25-50K MRR. However, the packaging procurement focus creates a thin collaboration pathway for YK, whose SME and corporate clients span all industries. The DACH market has strong demand for supply chain efficiency tools, but Packpeer would need to demonstrate a broader horizontal application or a credible fintech integration angle (embedded trade finance, invoice factoring on packaging orders) to justify inclusion. Currently assessed as out of scope for this cohort."
   },
   {
+    "company": "innclude",
+    "sector": "Fintech",
+    "color": "#065f46",
+    "status": "new",
+    "date": "Jul 2026",
+    "verdict": "",
+    "oneliner": "Before going out, everyone asks the same question: 'who else is going?' innclude answers it. Discover events, see who's in, plan with your contacts, and get tickets, all in one app.",
+    "comment": ""
+  },
+  {
     "company": "tarla.io",
     "sector": "ClimateTech",
     "color": "#2b6cb0",
@@ -1416,6 +1503,16 @@ const APPLICATIONS = [
     "verdict": "NOT SUGGESTED",
     "oneliner": "We have developed a innovation-based card payment system where card holders make payments in a standard way after one payment period, pay less interest even in case of delay after one period compared to the current system and POS merchants pay significantly...",
     "comment": "fintech / Kart Ödeme Altyapısı\nNOT SUGGESTED\nBaşvuru, mevcut Dört Taraflı Model'e alternatif olarak patenti beklemede olan yeni bir kart ödeme sistemi öneriyor: kullanıcılar bir ödeme döneminden sonra standart ödeme yapıyor, gecikme durumunda daha az faiz ödüyor, üye işyerleri daha düşük komisyon veriyor. Fikir kağıt üzerinde ilginç ama üç kişilik ekip, sıfır gelir, sıfır kurumsal deneyim ve sistemin çalışması için \"en az bir bankanın önce sisteme dahil olması\" gerekiyor — yani bir müşteri tabanı olmadan var olamıyor. Patent süreci devam ediyor ama teknik ve düzenleyici fizibilite henüz kanıtlanmamış. Bu, kart ağı ekonomisini yeniden icat etmeye çalışan, mucit aşamasında bir başvuru. Çok erken."
+  },
+  {
+    "company": "BackupSwarm",
+    "sector": "Cybersecurity",
+    "color": "#d69e2e",
+    "status": "rejected",
+    "date": "Jul 2026",
+    "verdict": "NOT SUGGESTED",
+    "oneliner": "For enterprise IT departments and MSPs struggling with tool sprawl, BackupSwarm is the command center for multi-vendor backup operations.  Instead of jumping between disconnected dashboards for AWS, Veeam, Commvault, Dell, Veritas NetBackup, Cohesity, Backu...",
+    "comment": "Strong candidate. Multi-vendor backup orchestration (Veeam, Commvault, Veritas, Dell, AWS, Azure) in a single pane of glass. Revenue-generating with 2 active enterprise customers. Production-ready multi-tenant architecture. Timing is excellent: DORA forces European financial institutions to prove data resilience visibility - direct regulatory pull in DACH. YK itself is a natural customer (complex hybrid backup estate; ransomware recovery visibility, automated compliance reporting). Target markets (DE/CH/AT/NL) match program geography exactly. Watch points: no activity outside Turkey yet, bootstrapped, customer references unverifiable. Recommend interview."
   },
   {
     "company": "Uptechlabs",
@@ -1581,7 +1678,7 @@ const APPLICATIONS = [
     "company": "smartIQ",
     "sector": "Fintech",
     "color": "#e53e3e",
-    "status": "shortlist",
+    "status": "finalist",
     "date": "Jun 2026",
     "verdict": "SUGGESTED",
     "oneliner": "smartIQ is a deep learning automotive intelligence and transaction infrastructure that connects the automotive, finance and insurance ecosystems through one data-driven operating layer.  Today, we work with 14 automotive brands and nearly 1,000 business par...",
@@ -1591,11 +1688,11 @@ const APPLICATIONS = [
     "company": "CyberWeave AI",
     "sector": "Cybersecurity",
     "color": "#065f46",
-    "status": "new",
+    "status": "rejected",
     "date": "Jul 2026",
-    "verdict": "",
+    "verdict": "NOT SUGGESTED",
     "oneliner": "CyberWeave AI is an AI-powered cyber resilience platform that helps organizations measure the effectiveness of their security investments, validate their defenses through realistic attack simulations, and strengthen their incident response readiness.",
-    "comment": ""
+    "comment": "Borderline - worth an interview. AI-powered cyber resilience platform: continuous security control validation, MITRE ATT&CK attack simulations, SOC readiness measurement. Already EU-incorporated (Finland) - structural head start for DACH. Revenue-generating, 3 customers (Prosight, GTI Teknoloji, Connected Ops). Exploring PoC with Kuveyt Turk - Turkish banking familiarity. Concrete YK use case: SOC readiness, control validation, regulatory compliance. Watch points: very young (Dec 2025), no FI experience yet, crowded BAS market (Picus is the Turkish-origin global leader). Probe Kuveyt Turk PoC status and Picus differentiation in interview."
   },
   {
     "company": "Nakdin Yapay Zeka Destekli Finansal Teknolojiler A.Ş.",
@@ -1626,6 +1723,16 @@ const APPLICATIONS = [
     "verdict": "SUGGESTED",
     "oneliner": "Chexta is the operating system for hotels. We replace multiple disconnected software products with one cloud platform that manages reservations, front office, restaurant operations, channel distribution and reporting in real time. Hotels save money, elimina...",
     "comment": "- quick call"
+  },
+  {
+    "company": "ARDIC TEKNOLOJİ AŞ",
+    "sector": "Enterprise Software",
+    "color": "#0f3460",
+    "status": "new",
+    "date": "Jul 2026",
+    "verdict": "",
+    "oneliner": "ARDICTECH builds Conversational Manufacturing: CWF (\"Chat With Factory\") lets anyone ask a factory a question in plain language and get an answer grounded in live production data — the LLM reasons over governed MES and IoT data, never invents numbers. Four...",
+    "comment": ""
   },
   {
     "company": "Layerscate",
@@ -1666,6 +1773,16 @@ const APPLICATIONS = [
     "verdict": "NOT SUGGESTED",
     "oneliner": "Qybit Machinery is an industrial Deep-Tech startup that delivers smart, autonomous digital transformation solutions and AI-driven predictive systems to optimize manufacturing lines, reduce operational downtime, and drive resource efficiency for enterprise f...",
     "comment": "Deep-tech manufacturing IoT - wrong program. Qybit builds a low-latency edge architecture for production floor intelligence, a technically sound approach to Industrial AI. TÜBİTAK 1812 funding and Istanbul-based team. However, industrial manufacturing intelligence has no relevant connection to YK's banking business. The DACH challenges (German OEM partnerships, industrial integration certifications, hardware scale-up) are not addressable by a bank-backed market access program. The suggested YK collaboration (equipment financing) is too thin to anchor a program relationship. Better served by deep-tech programs like TUM Venture Labs, DFKI, or TRUMPF industrial accelerators."
+  },
+  {
+    "company": "LYCEA",
+    "sector": "Enterprise Software",
+    "color": "#718096",
+    "status": "new",
+    "date": "Jul 2026",
+    "verdict": "",
+    "oneliner": "Lycea turns fragmented technical documents and expert know-how into traceable, source-backed, human-approved decisions — built for industries where a wrong answer is expensive. Starting with chemicals and advanced materials, it supports technical sales, sou...",
+    "comment": ""
   },
   {
     "company": "WUUB",
@@ -1778,10 +1895,20 @@ const APPLICATIONS = [
     "comment": "Decent early traction but undifferentiated in a crowded market. Forsico builds an AI-powered project management platform (AI Project OS) with 20 B2B enterprise clients and 200 active users - meaningful early validation. The DACH target is logical. However, the enterprise project management space is exceptionally crowded (Asana, Monday.com, Linear, Notion, Jira, ClickUp) and Forsico's differentiation is not clearly articulated. The YK collaboration angle (internal operational project management) is generic and does not constitute a real partnership or commercial validation. Without a sharper wedge or differentiated capability (e.g., construction, banking-specific workflows, compliance-linked project tracking), this is unlikely to stand out in DACH. Better served by a later cohort once international customer evidence is established."
   },
   {
+    "company": "Nomins",
+    "sector": "RetailTech",
+    "color": "#38a169",
+    "status": "rejected",
+    "date": "Jul 2026",
+    "verdict": "NOT SUGGESTED",
+    "oneliner": "Nomins is an AI-powered trademark intelligence and brand protection platform that helps companies make faster and safer branding decisions.  Before launching a new brand name, product name, logo, or campaign, companies often need to understand whether there...",
+    "comment": "Too early for this cohort. AI trademark intelligence / brand protection platform (LegalTech). Has revenue (<$10K MRR) and one client (Tritech Patent); international scope built into the product. However: single reference customer, no corporate/FI experience, no funding, and structurally a sub-product of Gemforce Teknoloji rather than a standalone company. YK value proposition (monitoring misuse of YK trademarks) is real but narrow - not a core banking need. Consider waitlist at most."
+  },
+  {
     "company": "Nextrain",
     "sector": "HR Tech",
     "color": "#2c5282",
-    "status": "shortlist",
+    "status": "finalist",
     "date": "Jun 2026",
     "verdict": "SUGGESTED",
     "oneliner": "\"Nextrain is the AI operating system that runs enterprise learning.\"",
@@ -2553,7 +2680,7 @@ function renderOverview() {
   const today = new Date();
   const appClose = new Date('2026-07-12');
   const bpDate = new Date('2026-09-28');
-  document.getElementById('days-to-close').textContent = Math.max(0, daysBetween(today, appClose));
+  // Applications closed July 12, 2026 - stat card shows static "Closed"
   document.getElementById('days-to-bp').textContent = Math.max(0, daysBetween(today, bpDate));
 
   // % completion from PHASES
@@ -2614,10 +2741,7 @@ function renderOverview() {
 
 function renderApplications() {
   const today = new Date();
-  const appClose = new Date('2026-07-12');
-  const daysLeft = Math.max(0, daysBetween(today, appClose));
-  const el = document.getElementById('apps-days-left');
-  if (el) el.textContent = daysLeft;
+  // Applications closed July 12, 2026 - banner shows static "Closed"
   renderApplicationCards();
   setTimeout(initCommentTextareas, 0);
 }
@@ -3155,6 +3279,258 @@ function renderMentorMatching() {
 // NAV
 // ============================================================
 
+// ============================================================
+// ONE PAGERS (finalists) - data injected by sync/one-pager build
+// ============================================================
+const ONE_PAGERS = [
+  {
+    "company": "portuma",
+    "color": "#3182ce",
+    "domain": "portuma.com",
+    "vertical": "Fintech / AdTech, MarTech, Loyalty Platform, Gamification",
+    "pitch": "Portuma is an innovative in-game advertising network and ecosystem that seamlessly integrates real-time, non-intrusive dynamic ads into mobile, PC, and console games. By combining AdTech with Web3 and its loyalty platform, Portuma Connect, Portuma creates a complete ecosystem that benefits developers, brands, and players alike. Portuma Connect is the platform’s engagement and rewards hub, enabling players to earn...",
+    "website": "https://portuma.com/",
+    "deck": "https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/rec3iCtm3aRLnmmdm",
+    "linkedin": "https://www.linkedin.com/company/portuma/",
+    "founder": "emrah ünal",
+    "founderBio": "Kurucu ve yönetim ekibimiz; AdTech, oyun teknolojileri, yazılım geliştirme, dijital pazarlama, iş geliştirme ve ürün yönetimi alanlarında deneyimli profesyonellerden oluşmaktadır. Ekip, ölçeklenebi...",
+    "incorporation": "turkey",
+    "founded": "2021",
+    "employees": "12",
+    "fundraising": "0",
+    "mrr": "$50k - $100k",
+    "useCase": "Portuma Connect enables brands to reach millions of gamers through native, reward-driven experiences instead of traditional advertising. Yapı Kredi could leverage the platform to promote banking products, loyalty campaigns, credit cards, digital wallets, and financial education initiatives through interactive in-game missions and rewards. This approach increases engagement, improves customer acquisition, strengthens loyalty, and provides measu...",
+    "traction": "MRR: $50k - $100k · Portuma has established relationships with international game publishers and serves campaigns that reach global gaming audiences. Our platform supports advertisers targeting users across multiple regions, and we conti...",
+    "customers": "Portuma has worked with 100+ brands and continues to expand its customer portfolio. Our key clients include Garanti BBVA, Akbank, Vodafone, Türk Telekom, Turkcell, Burger King, Popeyes, Subway, CarrefourSA, Hepsiburada, A101, English Home, Kiğılı, Atasun Optik, Levi's, Milka, Anadolu Sigorta, Saat&Saat, Hopi, and Tıkla Gelsin. Through our publis...",
+    "dach": "Target markets: Germany, France, United Kingdom, Other. Our primary objectives are to: Establish strategic partnerships with European brands and gaming companies. Launch pilot campaigns in key European markets. Expand our publisher and advertiser network. Validate product-market fit for Portuma Connect internationally. Connect with investors and ecosystem partners to support long-term growth.",
+    "assessment": "Oyun İçi Reklam ve Gamifiye Sadakat Platformu SUGGESTED Portuma, mobil/PC/konsol oyunlarına reklam entegre eden ve Portuma Connect adlı gamifiye sadakat katmanıyla oyuncuları marka kampanyalarıyla eşleştiren bir platform. Bu kohortun en yüksek gelirli adaylarından biri: MRR $50-100K bandında ve Garanti BBVA, Akbank, Vodafone, Turkcell, Burger King, CarrefourSA gibi 100'den fazla marka ile çalışmışlar. Akbank ve Ga..."
+  },
+  {
+    "company": "Rooca Inc.",
+    "color": "#0f3460",
+    "domain": "rooca.io",
+    "vertical": "Enterprise Software / AIOPS, MLOPS",
+    "pitch": "Rooca builds the Tribunal Dialectic Engine, an autonomous root cause analysis platform for regulated enterprises. Dozens of AI agents in a Prosecutor, Defender, and Judge architecture debate why an incident actually happened, and deterministic confidence scoring produces an audit-defensible, reproducible verdict. As the only platform that reasons across the full stack, from transaction to transceiver, we cut MTTR...",
+    "website": "https://www.rooca.io/",
+    "deck": "https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/rec5tqlBQa1tLvLr0",
+    "linkedin": "https://www.linkedin.com/company/112693083/",
+    "founder": "",
+    "founderBio": "Founders Rooca is built by two cofounders whose combined careers map directly onto the problem the product solves: building defensible, AI-driven incident intelligence for regulated critical-infras...",
+    "incorporation": "Canada",
+    "founded": "2026",
+    "employees": "5",
+    "fundraising": "0",
+    "mrr": "$10-25k",
+    "useCase": "Yes, and the fit is direct. Yapı Kredi is exactly the kind of organization Rooca is built for: a large, regulated financial institution running mission-critical, hybrid infrastructure where downtime carries both regulatory and customer-trust consequences. The most immediate collaboration is the bank as a design partner or customer for the Tribunal Dialectic Engine. Banking infrastructure spans both the application and hardware layers, and our...",
+    "traction": "MRR: $10-25k · Germany, Canada. One customer live in Germany. 200K USD Revenue",
+    "customers": "We currently have one paying customer: a European critical-infrastructure energy operator engaged as a design partner. The nine-month engagement generates six-figure EUR annual recurring revenue and is on a defined path to conversion into an annual platform contract. During that deployment we reduced mean time to resolution from 4.2 hours to 11...",
+    "dach": "Target markets: Germany, United Kingdom, Netherlands, France, Austria, Switzerland. Our objectives from FRWRD Global are concrete and tied to a DACH market entry already on our roadmap. First, to convert the program's DACH market access into qualified enterprise pipeline. We want to leave the program with active conversations, and ideally a first design partner or proof of concept, among regulated financial services, energy, and telecom operators in the...",
+    "assessment": "Rooca teknik bir aday. Onlarca yapay zeka ajanı savcı, savunma ve hakim mimarisiyle bir araya gelip prodüksiyondaki sistem arızalarının gerçek nedenini tespit ediyor ve denetçinin imzalayabileceği kanıt kaydı üretiyor. Almanya'daki kritik enerji altyapı operatörünün MTTR'sini 4,2 saatten 11 dakikaya indirmişler ve o dokuz aylık pilot altı haneli EUR ARR'ye dönüşmüş. YK için kullanım alanı: DORA ve NIS2 kapsamında..."
+  },
+  {
+    "company": "ThinkSuit",
+    "color": "#38a169",
+    "domain": "thinkcut.com",
+    "vertical": "HR Tech",
+    "pitch": "ThinkSuite is a cloud-based SaaS platform that unifies workforce management, employee experience, and HR processes within a single ecosystem. From performance management and employee engagement to task tracking and internal communication, ThinkSuite enables organizations to manage critical business processes through one integrated platform, reducing operational complexity while improving productivity and employee...",
+    "website": "https://www.thinkcut.com",
+    "deck": "https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/rec7ssYBzRkmAPFts",
+    "linkedin": "https://www.linkedin.com/company/thinksuiteapp/",
+    "founder": "Gulsah",
+    "founderBio": "Gülşah Çakır: +22 yıllık satıs, ürünleşme, fiyatlama, girişim mentorluğu ve yatırım ekosistemi tecrübesi : Turgay Budakoglu: +25 Yıl Satış, Pazarlama Deneyimi : Ece Uslu: https: +4 Yıl Proje Yöneti...",
+    "incorporation": "Turkey, Estonia",
+    "founded": "2024",
+    "employees": "12",
+    "fundraising": "0",
+    "mrr": "$100k+",
+    "useCase": "ThinkSuite can create value for Yapı Kredi and its corporate customers by helping organizations digitize workforce management, employee experience, and HR processes through a single integrated platform. Our solution improves operational efficiency, employee engagement, and productivity through AI-powered automation, performance management, internal communication, and workforce management tools. ThinkSuite can be offered as a value-added digita...",
+    "traction": "MRR: $100k+",
+    "customers": "ThinkSuite currently serves 29 active paying corporate customers. Our customers include leading organizations such as Turkcell, as well as companies operating in manufacturing, retail, technology, logistics, and service sectors. We continue to expand our presence in the workforce management and employee experience market.",
+    "dach": "Target markets: Other, Austria, Germany. Our primary expectation from the program is to accelerate our international growth through access to the right network, market insights, and strategic guidance. We aim to connect with potential customers, partners, and investors in Germany and Austria, gain a better understanding of local market dynamics, and receive support in building a scalable go-to-market strategy for Europe.",
+    "assessment": "Strong candidate. Clear product-market fit in Turkey with 29 active corporate customers and $220K+ ARR. AI-powered workforce platform addresses a universal enterprise pain point directly relevant to YK's large corporate customer base. DACH focus (Germany & Austria) is well-justified. Primary risk is crowded market — competing with SAP SuccessFactors and Workday. Commercially validated and structurally ready for Eu..."
+  },
+  {
+    "company": "Monq",
+    "color": "#d69e2e",
+    "domain": "monq.io",
+    "vertical": "Enterprise Software / B2B Enterprise SaaS",
+    "pitch": "Monq is an AI-native negotiation intelligence platform that helps enterprise procurement and sourcing teams win better deals — faster. We sit inside the negotiation workflow, analysing supplier behaviour in real time, recommending next moves, and capturing institutional knowledge that disappears when people leave. For large organisations running hundreds of sourcing events a year, Monq turns negotiation from an ar...",
+    "website": "https://www.monq.io",
+    "deck": "https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/recBErdhY7MPxlQge",
+    "linkedin": "https://www.linkedin.com/company/monqai/",
+    "founder": "Yasin Bostanci - Duygu Gozeler Porchet",
+    "founderBio": "Founder - yasin@monq.io",
+    "incorporation": "United Kingdom",
+    "founded": "2025",
+    "employees": "5",
+    "fundraising": "$2m+",
+    "mrr": "Pre-revenue",
+    "useCase": "The value creation opportunity with Yapı Kredi operates on multiple distinct and complementary levels. Yapı Kredi as a direct user. A financial institution of Yapı Kredi's scale runs substantial procurement operations — vendor contracts, technology sourcing, facilities, professional services. These are high-value, high-frequency negotiations where marginal improvements in outcomes compound significantly at scale. Monq's negotiation intelligenc...",
+    "traction": "Yes. Monq operates across three geographies with established legal entities in each. United Kingdom is our headquarters and primary market. We are incorporated in England and Wales, closed our pre-seed round through o...",
+    "customers": ">10 paying enterprises; some of our customers would include PVH, BAT, Opsan, etc.",
+    "dach": "Target markets: Germany, Switzerland, Austria. We have three clear objectives from the FRWRD programme. First, enterprise network access in Turkey and beyond. Procurement intelligence is a trust-sale — it sits at the heart of how organisations manage supplier relationships and commercial risk. The FRWRD network gives us direct access to C-suite and procurement leadership at large Turkish and international enterprises, compressing a sales cycle that woul...",
+    "assessment": "Monq'u görünce \"bu şirketi ciddiye almak gerekiyor\" diyorsunuz. Outward VC liderliğinde Sequoia, Octopus Ventures ve Cornerstone VC'nin katıldığı bir yatırım turu almışlar; PVH, British American Tobacco, Opsan gibi isimlerle 10'u aşkın ödeme yapan kurumsal müşterileri var. Temel ürün şu: satın alma ve tedarik ekiplerinin müzakere sürecine oturan, tedarikçi davranışlarını gerçek zamanlı analiz eden, bir sonraki ham..."
+  },
+  {
+    "company": "Singularity",
+    "color": "#805ad5",
+    "domain": "singularityrd.com",
+    "vertical": "Cybersecurity / AI-native Cybersecurity Platform; AutoSecOps for Autonomo...",
+    "pitch": "Singularity is an AI-native cybersecurity company building an autopilot for cybersecurity and an AI hacker for mission-critical organizations, including banks, defense, sovereign cloud, critical infrastructure, and regulated enterprises.",
+    "website": "https://singularityrd.com",
+    "deck": "https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/recBiyL3Om7lAi1Uw",
+    "linkedin": "https://www.linkedin.com/company/singularityrd/",
+    "founder": "Muhammet Anıl Yağız",
+    "founderBio": "Muhammet Anıl Yağız Founder & CEO. Technical founder with experience across AWS, Visa, and Mastercard. Discovered critical vulnerabilities affecting 1B+ people. Recent graduate who chose to build S...",
+    "incorporation": "Türkiye and United States",
+    "founded": "2025",
+    "employees": "4",
+    "fundraising": "$2m+",
+    "mrr": "Pre-revenue",
+    "useCase": "Singularity could create value for Yapı Kredi by helping the bank move toward AI-native cyber resilience while keeping sensitive security operations under enterprise control. AutoSecOps could act as an AI security operator for Yapı Kredi’s SOC and security teams. It can help triage alerts, investigate incidents, identify real threats, prioritize remediation, and reduce manual workload across complex banking infrastructure. This could improve o...",
+    "traction": "Yes. We are currently active outside Türkiye through early PoC / pilot and government-level conversations. These include sovereign and regulated cloud players in Europe, Ukraine defense-related stakeholders, and minis...",
+    "customers": "We currently have 0 paying production customers. However, we are in active PoC / pilot and customer discovery conversations with multiple enterprise, defense, sovereign cloud, and government stakeholders. Our pipeline includes leading defense companies in Türkiye, sovereign and regulated cloud players in Europe, Ukraine defense-related stakehold...",
+    "dach": "Target markets: Germany, Austria, France, Switzerland, United Kingdom, Netherlands. Our main objectives are to validate our European go-to-market strategy, meet potential banking and regulated enterprise customers, understand procurement and compliance expectations in DACH and Continental Europe, build relationships with strategic partners, and convert our early international pipeline into paid pilots and enterprise deployments. We would also value intr...",
+    "assessment": "Cybersecurity / Yapay Zeka Destekli Otonom Güvenlik Operasyonları NOT SUGGESTED Singularity, SOC ekipleri için otonom bir \"güvenlik otopiloti\" (AutoSecOps) ve sürekli sızma testi yapan bir \"yapay zeka hacker\" (BreachOps) geliştiriyor. Kurucunun AWS, Visa ve Mastercard geçmişi ve 1 milyardan fazla kişiyi etkileyen kritik güvenlik açıklarını keşfetmiş olması ciddi bir kurucu-pazar uyumu sinyali. Plug and Play, LVLUP..."
+  },
+  {
+    "company": "Mistikist",
+    "color": "#e94560",
+    "domain": "mistikist.com",
+    "vertical": "HealthTech / AI-powered wellbeing platform / Digital health / Corporat...",
+    "pitch": "Mistikist is an AI-assisted brainwave regulation platform that helps individuals and teams reduce stress, improve focus, sleep better, and prevent burnout in minutes through personalized sound and light frequency sessions. With 90,000+ users across 150+ countries, 26 languages, B2B customers and clinical validation, Mistikist is now scaling into corporate wellbeing, insurance, healthcare-adjacent and automotive us...",
+    "website": "https://mistikist.com",
+    "deck": "https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/recE10bJRH7ZA8nZj",
+    "linkedin": "linkedin.com/company/mistikist/",
+    "founder": "Bugra",
+    "founderBio": "Buğra Karahan, Founder & CEO: Founder of Mistikist and Shellix Smart Solutions, with 10+ years of IT management experience and a background in computer technologies, digital products, entrepreneurs...",
+    "incorporation": "Türkiye",
+    "founded": "2019",
+    "employees": "6",
+    "fundraising": "$100k - 500k",
+    "mrr": "Less than $10k",
+    "useCase": "Mistikist can create value for Yapı Kredi across employee wellbeing, customer experience and digital banking engagement. For employees, Mistikist can support stress reduction, burnout prevention, focus and recovery through short micro-reset sessions integrated into workplace routines. For customers, Yapı Kredi could offer Mistikist as a premium wellbeing benefit through Yapı Kredi Mobil, World, Blue Class, salary customers, SME packages or loy...",
+    "traction": "MRR: Less than $10k · Mistikist has users in 150+ countries and supports 26 languages. We also have a UK company, Mistikist LTD, and are establishing a new entity in Barcelona, Spain with the support of the ICEX / Invest in Spain program....",
+    "customers": "Mistikist has 90,000+ users globally, 500+ paying users and several B2B customers/pilots. Business clients and partners include Rixos, The LifeCo, Eric Labs, DenizBank employee benefit placement, and ongoing enterprise/strategic partnership discussions with organizations in corporate wellbeing, automotive, aviation and health innovation.",
+    "dach": "Target markets: United Kingdom, Germany, Netherlands, France, Switzerland, Austria. Our main objectives are to refine our DACH market entry strategy, meet corporate wellbeing, insurance, healthcare-adjacent and automotive partners, secure investor introductions for our seed round, and build a strong meeting pipeline before and during Bits & Pretzels. We also want support on positioning, outreach, fundraising readiness and post-event follow-up so that th...",
+    "assessment": "Mature and internationally proven product. 90,000+ users across 150+ countries, 26 languages, clinical validation in peer-reviewed journals. B2B clients: Sabanci ARF, Akbank, DenizBank, Allianz, Turk Telekom, Rixos. Available on Microsoft Teams, Android TV, XR — genuine enterprise readiness. DACH case is well-constructed: corporate wellbeing and burnout prevention are high-priority in Germany and Austria. YK colla..."
+  },
+  {
+    "company": "FileOrbis A.S",
+    "color": "#065f46",
+    "domain": "fileorbis.com",
+    "vertical": "Enterprise Software / Document Management",
+    "pitch": "ighly regulated and security-focused enterprises are drowning in fragmented data across scattered on-premises and cloud repositories. FileOrbis solves this by creating a single point of view and control over all file infrastructures. We don't just offer traditional Document Management Capabilities; we consolidate all critical enterprise needs into a single platform. FileOrbis delivers secure Content-Aware File Sha...",
+    "website": "https://www.fileorbis.com/",
+    "deck": "https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/recQRVS3utiN8xNnX",
+    "linkedin": "https://www.linkedin.com/company/fileorbis",
+    "founder": "Emre Demiray",
+    "founderBio": "Emre Demiray is the Vice President of Technology at FileOrbis, a company specializing in secure file sharing and enterprise content governance. With over 15 years of industry experience, he has led...",
+    "incorporation": "Izmir",
+    "founded": "2019",
+    "employees": "32",
+    "fundraising": "$500k - $2m",
+    "mrr": "$100k+",
+    "useCase": "Yes. Yapı Kredi is already one of our valued customers, and we see significant potential to further expand our collaboration. Through the FRWRD Global Program, we would like to explore new use cases, develop Proof of Concept (PoC) projects, and identify additional opportunities where FileOrbis can create value across different business units. Beyond the existing relationship, we also see the program as an opportunity to build a long-term strat...",
+    "traction": "MRR: $100k+ · FileOrbis currently operates in more than 25 countries. Our primary international markets include the United States, the United Kingdom, Azerbaijan, Jordan, and Kosovo, along with customers and partners across Europe,...",
+    "customers": "450+ Enterprice Customer. SOme of them:Albaraka, Bmc, Defacto, Eureko Sigorta, Etstur, Ing, Hdi, Migros, Tskb, Pluxee, Türk Nippon Sigorta, Vakıf Katılım, Modon, University Of Petra, Care Medical, Ministry Of Health",
+    "dach": "Target markets: France, United Kingdom, Netherlands, Germany, Austria, Switzerland. Our primary objective is to generate new international business opportunities by acquiring new enterprise customers, establishing strategic partnerships, and expanding our global partner ecosystem. We also aim to initiate commercial collaborations and Proof of Concept (PoC) projects with Yapı Kredi business units, connect with international investors and venture capital...",
+    "assessment": "Enterprise Software / Kurumsal İçerik Yönetişimi SUGGESTED FileOrbis zaten Yapı Kredi'nin mevcut bir müşterisi — bu tek başına bu listede nadir bir konum. 2019'dan beri faaliyette, 450'den fazla kurumsal müşterisi arasında Albaraka, BMC, Defacto, ING, HDI, Migros, TSKB, Vakıf Katılım var; MRR $100K'nın üzerinde. 25'ten fazla ülkede faaliyet gösteriyor, ABD, Birleşik Krallık ve BAE'de ofisleri var, 2025'te Gartner..."
+  },
+  {
+    "company": "smartIQ",
+    "color": "#9a3412",
+    "domain": "smartiq.io",
+    "vertical": "Fintech / AI-powered Automotive Intelligence, Mobility FinTech and...",
+    "pitch": "smartIQ is a deep learning automotive intelligence and transaction infrastructure that connects the automotive, finance and insurance ecosystems through one data-driven operating layer. Today, we work with 14 automotive brands and nearly 1,000 business partners, tracking approximately 9 billion dollars in annual vehicle transaction volume. Through our analytics solutions, our partners reduce average vehicle sales...",
+    "website": "https://www.smartiq.io/",
+    "deck": "https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/recZuzwxeZJl0DLfh",
+    "linkedin": "https://tr.linkedin.com/company/smartiq-otomotiv",
+    "founder": "Goktug",
+    "founderBio": "smartIQ’s key management team combines senior expertise across consulting, enterprise software, automotive, banking, insurance, data analytics and scalable technology architecture. Ali Kavak – CEO...",
+    "incorporation": "Turkiye",
+    "founded": "2020",
+    "employees": "32",
+    "fundraising": "0",
+    "mrr": "$100k+",
+    "useCase": "smartIQ can create value for Yapı Kredi by helping the bank become part of the vehicle ownership journey much earlier, not only at the point of loan application. As Yapı Kredi’s solution partner in Türkiye, smartIQ supports an end-to-end ecosystem that connects vehicle owners with vehicle buying, selling, credit and insurance journeys. This creates a strong opportunity to increase automotive loan and insurance penetration, improve customer tim...",
+    "traction": "MRR: $100k+ · Yes, we have started our international expansion through a recently signed agreement with Ford Trucks covering operations over 40 countries. The rollout will begin with six priority markets. Türkiye remains our main c...",
+    "customers": "smartIQ currently works with nearly 1,000 business partners across the automotive, banking, insurance, leasing, fleet and mobility ecosystems. Our customer and partner base includes 14 automotive brands, major dealer groups, fleet and rental companies, financial institutions, insurers and marketplace players. Key examples include Yapı Kredi, Tür...",
+    "dach": "Target markets: Germany, Netherlands, United Kingdom. Our main objective is to turn smartIQ’s proven Türkiye model, including our solution partnership with Yapı Kredi, into a clear and executable international expansion roadmap. Through the program, we aim to validate our European go-to-market strategy, prioritize the right markets, and identify potential partners across banking, insurance, automotive, fleet, dealer group and mobility ecosystems. We als...",
+    "assessment": "Yapı Kredi'nin Türkiye'deki aktif iş ortakları; 14 otomotiv markası ve yaklaşık 1.000 iş ortağıyla çalışıyorlar, yıllık 9 milyar dolarlık araç işlem hacmini izliyorlar. Bu sadece bir veri analitik firması değil: araç alım-satımını, finansmanı ve sigortayı tek bir ekosisteme bağlayan altyapı katmanı. Yapı Kredi için ne anlama geldiği benim anladigim: araç kredisi ve sigorta satışlarında dönüşüm anına çok daha erken... | Post-call: SmartIQ da bağımızın olduğu bir girişim program sonunda keyifli bir hikaye yazabiliriz, buna da finalist diyebiliriz"
+  },
+  {
+    "company": "Nextrain",
+    "color": "#1e40af",
+    "domain": "nextrain.ai",
+    "vertical": "HR Tech / ai-native LMS",
+    "pitch": "\"Nextrain is the AI operating system that runs enterprise learning.\"",
+    "website": "https://www.nextrain.ai/en",
+    "deck": "https://airtable.com/appLY4d1qYmYgd1lh/tbl4E1lgZJA51jMgg/recpcujffC4NBLlO0",
+    "linkedin": "https://www.linkedin.com/company/nextrainlms/",
+    "founder": "Kalde Ernart",
+    "founderBio": "Founder - Gökçen Karan",
+    "incorporation": "USA",
+    "founded": "2026",
+    "employees": "2",
+    "fundraising": "0",
+    "mrr": "$10-25k",
+    "useCase": "There are two sides to this for us. Nextrain can create value inside Yapı Kredi as an enterprise itself, and it can become something Yapı Kredi offers to its own customers. Inside the bank, this is almost a perfect fit. A bank like Yapı Kredi has tens of thousands of employees and one of the heaviest training and compliance loads of any industry. Regulatory training, anti money laundering, ethics, KVKK and GDPR, product certifications, branch...",
+    "traction": "MRR: $10-25k · First, market access. We want warm introductions to enterprise buyers in DACH, the large organizations whose European and global headquarters sit in that region. Getting in front of the right decision makers is the ha...",
+    "customers": "Our previous platform's enterprise customers are now migrating onto Nextrain, including Migros, Tavuk Dünyası, Terra Pizza, Denizbank, Enerjisa, Anagold, Metro Grossmarket, Garenta, Mavi USA, Mavi, Şişecam and Maxion Wheels. We are also winning new business: although we were founded only just over a month ago, we have already signed N11 as a cus...",
+    "dach": "Target markets: Germany, Switzerland. What are your main objectives from this program? Our main objective is to use this program as our entry point into the DACH region, starting with Germany and Switzerland. Concretely, we are looking for three things. First, market access. We want warm introductions to enterprise buyers in DACH, the large organizations whose European and global headquarters sit in that region. Getting in front of the right decision...",
+    "assessment": "SUGGESTED Nextrain'i özel kılan şey, Yapı Kredi ile zaten organik bir geçmişi olması: ortakları Arma Eğitim, bankanın şube satış eğitimini önceki platformları GMPLY üzerinde kurmuş ve bu çalışma YK'ya birkaç Brandon Hall ödülü kazandırmış. Ekip sekiz yıldır kurumsal seviyede çalışıyor, önceki platformda 52 kurumsal müşteriye ulaşmış; şimdi Migros, Denizbank, Enerjisa, Şişecam, Anagold, Mavi gibi büyük müşterilerin..."
+  }
+];
+
+function renderOnePagers() {
+  const el = document.getElementById('onepager-list');
+  if (!el) return;
+  const sub = document.getElementById('onepager-sub');
+  if (sub) sub.textContent = ONE_PAGERS.length + ' finalists - founder, business, traction, and DACH objectives on one card each.';
+  const initials = n => n.split(' ').filter(Boolean).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  el.innerHTML = ONE_PAGERS.map(o => `
+    <div class="op-card">
+      <div class="op-head">
+        <div class="op-logo" style="background:${o.color}">
+          ${o.domain ? `<img src="https://www.google.com/s2/favicons?domain=${o.domain}&sz=128" alt="" onerror="this.remove()">` : initials(o.company)}
+        </div>
+        <div class="op-title">
+          <h3>${escapeHtml(o.company)}</h3>
+          <div class="op-vertical">${escapeHtml(o.vertical)}</div>
+        </div>
+        <div class="op-links">
+          ${o.website ? `<a href="${o.website}" target="_blank">🌐 Website</a>` : ''}
+          ${o.deck ? `<a href="${o.deck}" target="_blank">📑 Deck</a>` : ''}
+          ${o.linkedin ? `<a href="${o.linkedin}" target="_blank">in LinkedIn</a>` : ''}
+        </div>
+      </div>
+      <div class="op-pitch">${escapeHtml(o.pitch)}</div>
+      <div class="op-founder">
+        <div class="op-avatar">${initials(o.founder || '?')}</div>
+        <div>
+          <div class="op-fname">${escapeHtml(o.founder || 'Founder TBC')}</div>
+          <div class="op-fbio">${escapeHtml(o.founderBio || '')}</div>
+        </div>
+      </div>
+      <div class="op-facts">
+        <div class="op-fact"><div class="k">Incorporation</div><div class="v">${escapeHtml(o.incorporation)}</div></div>
+        <div class="op-fact"><div class="k">Founded</div><div class="v">${escapeHtml(o.founded)}</div></div>
+        <div class="op-fact"><div class="k">Employees</div><div class="v">${escapeHtml(o.employees)}</div></div>
+        <div class="op-fact"><div class="k">Fundraising</div><div class="v">${escapeHtml(o.fundraising)}</div></div>
+        <div class="op-fact"><div class="k">Revenue / MRR</div><div class="v">${escapeHtml(o.mrr)}</div></div>
+      </div>
+      <div class="op-blocks">
+        <div class="op-block"><div class="k">Use Case - Yapı Kredi & Customers</div><p>${escapeHtml(o.useCase)}</p></div>
+        <div class="op-block"><div class="k">Traction</div><p>${escapeHtml(o.traction)}</p></div>
+        <div class="op-block"><div class="k">Current Customers</div><p>${escapeHtml(o.customers)}</p></div>
+        <div class="op-block"><div class="k">DACH Objectives</div><p>${escapeHtml(o.dach)}</p></div>
+        <div class="op-block full"><div class="k">Assessment Notes</div><p>${escapeHtml(o.assessment)}</p></div>
+      </div>
+    </div>
+  `).join('');
+}
+
 const VIEW_TITLES = {
   overview: 'Program Overview',
   applications: 'Applications',
@@ -3166,6 +3542,7 @@ const VIEW_TITLES = {
   contacts: 'Mentors & Partners',
   ecosystem: 'Munich / DACH Ecosystem',
   mentors: 'Mentor Matching',
+  onepagers: 'Finalist One Pagers',
 };
 
 function switchView(id) {
@@ -3185,7 +3562,7 @@ function switchView(id) {
 // ============================================================
 // AIRTABLE LIVE SYNC
 // ============================================================
-const BUILD_ID = '2026-07-10-2';
+const BUILD_ID = '2026-07-17-101207';
 // Self-update: if the server has a newer build than this cached copy, reload once.
 fetch(window.location.pathname + '?nocache=' + Date.now(), { cache: 'no-store' })
   .then(r => r.text())
@@ -3198,14 +3575,16 @@ fetch(window.location.pathname + '?nocache=' + Date.now(), { cache: 'no-store' }
   })
   .catch(() => {});
 
-const AIRTABLE_PAT = 'patWFPWBYzNhJwZm0.871fe91f484b544d43160170dec23b181cb1c97dd2ed76585f1ae15361bd8a2e';
+// Airtable access goes through a serverless proxy - the PAT lives in a Vercel
+// env var (AIRTABLE_PAT), never in this page. The proxy returns only Name +
+// status fields, so applicant PII stays private.
+const AIRTABLE_PROXY = 'https://yk-frwrd-deploy.vercel.app/api/airtable';
 // RULE: always show the TOTAL application count from Airtable, never the local sample or a filtered count.
 // Last-known values are cached so the true total shows even before/without a successful fetch.
 let airtableTotalCount = parseInt(localStorage.getItem('yk_airtable_total'), 10) || null;
 let airtableStatusCounts = JSON.parse(localStorage.getItem('yk_airtable_status_counts') || 'null');
 const AIRTABLE_BASE = 'appLY4d1qYmYgd1lh';
 const AIRTABLE_TABLE = 'tbl4E1lgZJA51jMgg';
-const AIRTABLE_VIEW = 'viwab04l0P5MHlFjN';
 
 const AIRTABLE_STATUS_MAP = {
   'Shortlisted': 'shortlist',
@@ -3224,11 +3603,9 @@ async function syncFromAirtable() {
     const allRecords = [];
     let offset = null;
     do {
-      const params = new URLSearchParams({ pageSize: '100' });
+      const params = new URLSearchParams();
       if (offset) params.set('offset', offset);
-      const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?${params}`, {
-        headers: { Authorization: `Bearer ${AIRTABLE_PAT}` }
-      });
+      const res = await fetch(`${AIRTABLE_PROXY}?${params}`);
       if (!res.ok) throw new Error('Airtable fetch failed: ' + res.status);
       const data = await res.json();
       allRecords.push(...data.records);
@@ -3294,6 +3671,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderContacts();
   renderEcosystem();
   renderMentorMatching();
+  renderOnePagers();
   updateAsanaButton();
   if (gcalClientId) updateGcalButton(false); // show as configured but not yet authed
 
