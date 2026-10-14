@@ -628,8 +628,8 @@
   </div>
   <div class="sidebar-phase-indicator">
     <div class="label">Current Phase</div>
-    <div class="phase">Program Execution</div>
-    <div class="date">Cohort of 7 - masterclasses underway</div>
+    <div class="phase">Local Follow-up & Closing</div>
+    <div class="date">B&P Munich done - Demo Day Istanbul 15 Dec</div>
   </div>
   <nav>
     <a class="nav-item active" data-view="overview" onclick="switchView('overview'); return false;" href="#">
@@ -708,20 +708,26 @@
           <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
         </div>
         <div class="stat-card yellow">
-          <div class="stat-label">Applications</div>
-          <div class="stat-value" id="days-to-close">Closed</div>
-          <div class="stat-sub">Deadline July 12 ✓ completed</div>
+          <div class="stat-label">B&P Munich Contacts</div>
+          <div class="stat-value" id="bp-contacts">128</div>
+          <div class="stat-sub">7 startups · 60 investors · 28-30 Sep ✓</div>
         </div>
         <div class="stat-card red">
-          <div class="stat-label">Days to B&P</div>
+          <div class="stat-label">Days to Demo Day</div>
           <div class="stat-value" id="days-to-bp">-</div>
-          <div class="stat-sub">Sept 28, Munich</div>
+          <div class="stat-sub">Tue 15 Dec, Arter Istanbul</div>
         </div>
       </div>
 
       <div class="card milestones">
         <div class="card-title">Key Milestones</div>
         <div id="milestones-list"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-title">Bits & Pretzels 2026 - Outcomes per Startup</div>
+        <div style="font-size:12px;color:var(--muted);margin:-4px 0 12px">Qualified contacts logged in Munich, 28-30 Sep 2026, as in the B&P 2026 Report shared with Yapi Kredi on 14 Oct (dated 15 Oct). Per-startup meeting schedules are in the Meeting Cadence view (from the B&P Meeting Tracker sheet). Pre-event Tenity matchmaking: ~100 intros across the cohort.</div>
+        <div id="bp-outcomes"></div>
       </div>
 
       <div class="two-col">
@@ -829,7 +835,7 @@
       <div class="gcal-header">
         <h3>📅 Past Meetings with YK Team</h3>
         <div style="display:flex;align-items:center;gap:8px">
-          <span id="gcal-sync-badge" style="font-size:11px;color:var(--green);background:#f0fff4;border:1px solid #c6f6d5;border-radius:6px;padding:4px 10px;font-weight:600">✓ Synced via Outlook · 15 Jun 2026</span>
+          <span id="gcal-sync-badge" style="font-size:11px;color:var(--green);background:#f0fff4;border:1px solid #c6f6d5;border-radius:6px;padding:4px 10px;font-weight:600">✓ Synced via Outlook and Fireflies · 14 Oct 2026</span>
           <button class="gcal-connect-btn connected" id="gcal-main-btn" onclick="handleGcalConnect()">
             <svg width="14" height="14" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></svg>
             <span id="gcal-main-label">Refresh</span>
@@ -848,6 +854,12 @@
       <hr class="section-divider">
       <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px">Meeting Schedule</div>
       <div class="meetings-grid" id="meetings-list"></div>
+      <hr class="section-divider">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+        <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Bits & Pretzels Meeting Log - 28-30 Sep, Munich</div>
+        <a class="open-airtable-btn" href="https://docs.google.com/spreadsheets/d/1N3CO64M4HqfQS2v1lMwdXw4uDK0F7h3c/edit" target="_blank" rel="noopener">Open the B&P Meeting Tracker ↗</a>
+      </div>
+      <div id="bp-meeting-log"></div>
     </div>
 
     <!-- COMMS PLAN -->
@@ -876,7 +888,7 @@
       <div class="mentor-roster" id="mentor-roster"></div>
 
       <div class="mentor-section-title">Startup - Mentor Match Matrix</div>
-      <div class="mentor-section-sub">Top mentor recommendations for each shortlisted startup. Click status to update session progress.</div>
+      <div class="mentor-section-sub">Top mentor recommendations for each of the 7 cohort startups, refreshed after Bits & Pretzels. Click status to update session progress.</div>
       <div class="match-grid" id="match-grid"></div>
     </div>
 
@@ -895,7 +907,7 @@
 // DATA
 // ============================================================
 
-// Real meeting data synced from Outlook and the note takers (last synced: 20 Aug 2026)
+// Real meeting data synced from Outlook and the note takers (last synced: 14 Oct 2026)
 const YK_MEETINGS_SYNCED = [
   {
     title: 'Yapı Kredi FRWRD & Tenity',
@@ -1071,31 +1083,169 @@ const YK_MEETINGS_SYNCED = [
     keywords: ['Masterclass 2', 'Legal', 'Compliance', 'DACH entry', 'Lexr'],
   },
   {
-    title: 'Tenity <> YK FRWRD',
+    title: 'Tenity <> YK FRWRD (B&P logistics)',
     start: new Date('2026-08-21T08:00:00.000Z'),
-    mins: 30,
+    mins: 37,
     who: ['Zeynep', 'Merve', 'Neslisah', 'Elif'],
+    summary: 'Airtable agreed as the tracking tool for startup progress with weekly reports. B&P tickets for the startups, accommodation budget of about EUR 1,000 per person in city-centre hotels, every startup to attend at least two side events, YK executives routed to panels. Portuma stand request approved with Emrah leading sponsorship.',
+    actionItems: [
+      'Eda - Share the deep dive results and program calendar, and set up intro and progress tracking in Airtable',
+      'Eda - Finalise B&P and Oktoberfest tickets and the participant list; collect stand and sponsor options',
+      'Zeynep - Track the minimum two side events per startup and run the hotel and flight budget approval',
+      'Merve - Support side event planning and the weekly progress reporting',
+    ],
+    keywords: ['Bits & Pretzels', 'Tickets', 'Airtable tracking', 'Oktoberfest', 'Sponsorship'],
+  },
+  {
+    title: 'Masterclass 2: DACH Market Landscape & Competitive Positioning (Sebnem Elif Kocaoglu Ulbrich)',
+    start: new Date('2026-08-26T11:00:00.000Z'),
+    mins: 87,
+    who: ['Merve', 'Zeynep', 'Neslisah'],
+    summary: 'Germany as a segmented federal market needing regional strategies; around 28 percent of residents are foreign-born, which shapes B2B and B2C expectations. Trust is built through localisation, certifications, local presence and GDPR-grade data security. Long-term commitment and a German-speaking sales or management presence are the recurring success factors.',
+    actionItems: [
+      'All founders - Write a clear German entry strategy: why enter, who the customer is, local team involvement, value proposition',
+      'All founders - Localise website, materials and messaging; research competitors and prepare for objections',
+      'Sebnem - Share her German market newsletter and offer market entry consultancy to the cohort',
+    ],
+    keywords: ['Masterclass 2', 'German market', 'Localisation', 'Trust', 'GDPR'],
+  },
+  {
+    title: 'Masterclass 3: DACH Investor Landscape & Fundraising Strategy (Dimitri Archatow)',
+    start: new Date('2026-08-31T07:00:00.000Z'),
+    mins: 92,
+    who: ['Merve', 'Zeynep', 'Neslisah'],
+    summary: 'Germany raised EUR 8.4bn of VC in 2025 across 2,000+ rounds; Austria concentrates in Vienna, Switzerland leads per capita in deep tech and life sciences. Target 15 to 20 well-matched investors, expect a 1 percent close rate, use warm intros and concise emails, respect formal DACH etiquette and follow up every 5 to 7 days with real progress.',
+    actionItems: [
+      'All founders - Build an A/B/C tiered investor list and tailor the deck per investor type, stage and sector',
+      'All founders - Track outreach in a CRM and prepare the data room (deck, plan, licences, governance, cap table)',
+      'All founders - Finalise who needs visas and tickets for Munich and tell Eda',
+      'Dimitri - Share the slides; book 1:1s with Dimitri and Alper',
+    ],
+    keywords: ['Masterclass 3', 'Investors', 'Fundraising', 'DACH', 'Pipeline'],
   },
   {
     title: 'Yapı Kredi FRWRD <> Tenity Bi-Weekly',
     start: new Date('2026-09-01T12:00:00.000Z'),
-    mins: 30,
+    mins: 32,
     who: ['Zeynep', 'Merve', 'Neslisah'],
-    link: 'https://teams.microsoft.com/meet/381615945893333'
+    link: 'https://teams.microsoft.com/meet/381615945893333',
+    summary: 'Investor and corporate matchmaking accelerated with sector-specific targeting tracked in Airtable: automotive for smartIQ, banks and insurers for FileOrbis; conversations opened with Porsche Ventures and Novartis. Visa and ticket process in the final stage (Emrah and Anil pending). KOSGEB-backed grants and loans webinar planned for 9 to 11 September. Emrah raising USD 8m. Some motivation and participation issues noted.',
+    actionItems: [
+      'Eda - Ask Alper for an update on who completed the form; organise Zeynep\'s ticket and app access',
+      'Eda - Coordinate the KOSGEB webinar slot and set up a call with Handan (TDK Ventures) on AI investments',
+      'Eda - Flag the startup count error in the newsletter to Elif',
+      'Merve - Propose webinar times for 9 to 11 September',
+      'Zeynep - Confirm the flight and hotel travel plan',
+    ],
+    keywords: ['Matchmaking', 'Visas', 'KOSGEB', 'Porsche Ventures', 'Novartis'],
+  },
+  {
+    title: 'Masterclass 4: Regulatory & Compliance Red Flags (Lexr - Leo Jedwab)',
+    start: new Date('2026-09-08T12:30:00.000Z'),
+    mins: 94,
+    who: ['Merve', 'Zeynep', 'Neslisah'],
+    summary: 'Entering Switzerland, Germany and Austria: Switzerland outside the EU with 26 cantons and separate permits, Germany and Austria under GDPR and the AI Act. Entry options from cross-border sales and employer-of-record to branch and subsidiary, each with VAT, payroll, tax and permanent establishment consequences. Checklist of localised contracts, security controls, IP assignments, data processing records, employment documents and due diligence materials.',
+    actionItems: [
+      'Eda - Share the recording with everyone and forward follow-up questions to the Lexr team',
+      'Leo - Share the slides and the booking link for 1:1 follow-up calls with the law experts',
+    ],
+    keywords: ['Masterclass 4', 'Legal', 'GDPR', 'AI Act', 'Entity setup', 'Lexr'],
   },
   {
     title: 'Yapı Kredi FRWRD <> Tenity Bi-Weekly',
     start: new Date('2026-09-08T12:00:00.000Z'),
-    mins: 30,
+    mins: 27,
     who: ['Zeynep', 'Merve', 'Neslisah'],
     link: 'https://teams.microsoft.com/meet/381615945893333'
   },
   {
+    title: 'Investor intros: smartIQ and Rooca with BlackFin, Rooca with PAWAO',
+    start: new Date('2026-09-10T09:00:00.000Z'),
+    mins: 92,
+    who: ['Eda'],
+    summary: 'Pre-B&P investor calls. smartIQ with Nathalie (BlackFin): European expansion via OEMs, dealers, insurers and banks; revenue plan to USD 15m by 2027; seeking USD 5 to 7.5m at about USD 55m valuation from strategic investors. Rooca with Maren Frey (PAWAO family office) and with BlackFin: USD 1.5 to 2m SAFE for 15 to 18 months of runway, 29 integrations toward 63, German renewable energy client live.',
+    actionItems: [
+      'Goktug - Send the smartIQ deck to Nathalie; Nathalie to connect smartIQ with the Affinity payments team',
+      'Mustafa - Send deck, blurb and the 32-question technical DD playbook to Maren and BlackFin',
+      'Maren - Present Rooca to the PAWAO investment committee',
+      'Eda - Organise a Rooca demo meetup during the Munich week',
+    ],
+    keywords: ['BlackFin', 'PAWAO', 'Investor intros', 'smartIQ', 'Rooca'],
+  },
+  {
+    title: 'YK FRWRD <> Tenity - Kamu Destekleri (KOSGEB) Oturumu',
+    start: new Date('2026-09-11T10:00:00.000Z'),
+    mins: 181,
+    who: ['Merve', 'Zeynep', 'Neslisah'],
+    summary: 'Public funding session for the cohort with KOSGEB and Unal Aslan: European Innovation Council programs with up to EUR 1m for third-party technology transfer, pilots and commercialisation; partial funding models with universities and startups; technology transfer support, readiness assessments and mentorship.',
+    keywords: ['KOSGEB', 'EIC', 'Grants', 'Technology transfer'],
+  },
+  {
+    title: 'Pre-B&P 1:1s with YK (FileOrbis, Rooca, smartIQ, Singularity, Portuma)',
+    start: new Date('2026-09-15T12:00:00.000Z'),
+    mins: 300,
+    who: ['Merve', 'Zeynep', 'Neslisah', 'Aydin'],
+    summary: 'Individual pre-departure briefings 15 to 18 September with the YK innovation team: meeting lists, logistics and opening lines for key Munich meetings. Portuma session ran three hours with Berk (Adnetify) and Aydin Cankat joining.',
+    keywords: ['Pre-event briefings', '1:1', 'Munich prep'],
+  },
+  {
+    title: 'YK FRWRD Ventures tanisma: Nextrain, ThinkSuite, Rooca',
+    start: new Date('2026-09-16T08:00:00.000Z'),
+    mins: 92,
+    who: ['Merve', 'Zeynep'],
+    summary: 'Introduction calls between three cohort startups and the Yapi Kredi FRWRD Ventures team (Sezgin Akyuz, Erim Fidan). Rooca covered regulatory traceability, audit trails, self-healing storage and the AI research partnerships (MaRS Discovery District); Merve flagged financial projections and due diligence readiness.',
+    actionItems: [
+      'Merve - Follow up on financial projections and due diligence for the startup evaluations',
+      'Mustafa (Rooca) - Share reliability engineering and AI research partnership documentation',
+    ],
+    keywords: ['YK Ventures', 'Investment', 'Due diligence'],
+  },
+  {
+    title: 'Bits & Pretzels Meeting Review (Forte Growth)',
+    start: new Date('2026-09-21T12:30:00.000Z'),
+    mins: 54,
+    who: ['Merve', 'Zeynep', 'Neslisah', 'Sabina', 'Elif'],
+    summary: 'Final group session before Munich with Alper and Fatih: curiosity-driven networking over self-promotion, partner-specific follow-ups, a one-page briefing per startup covering key contacts and partnership goals, and a first-timer networking plan. Merve confirmed meetings are recorded for accountability and knowledge sharing.',
+    actionItems: [
+      'All founders - Ask contacts for referrals, lead with questions, keep touch points focused',
+      'Emrah - Produce a one-page briefing document; Kalde - run the first-timer networking program',
+    ],
+    keywords: ['B&P prep', 'Networking', 'Forte Growth', 'Follow-up'],
+  },
+  {
     title: 'Yapı Kredi FRWRD <> Tenity Bi-Weekly',
     start: new Date('2026-09-22T12:00:00.000Z'),
-    mins: 30,
-    who: ['Zeynep', 'Merve', 'Neslisah'],
+    mins: 40,
+    who: ['Zeynep', 'Merve', 'Neslisah', 'Elif'],
     link: 'https://teams.microsoft.com/meet/381615945893333'
+  },
+  {
+    title: 'FRWRD Global "Road to DACH Region" Programi Sunum Etkinligi',
+    start: new Date('2026-09-23T08:00:00.000Z'),
+    mins: 83,
+    who: ['Merve', 'Zeynep', 'Neslisah', 'Aydin', 'Sabina', 'Elif'],
+    summary: 'Cohort presentation event to the wider Yapi Kredi audience including Artug Acarturk (Yapi Kredi Germany) and Itir Aydogan. All seven startups presented their DACH plans ahead of Munich.',
+    keywords: ['Cohort presentations', 'Yapi Kredi', 'YK Germany'],
+  },
+  {
+    title: 'Bits & Pretzels Munich (on-site, 7 startups + YK team)',
+    start: new Date('2026-09-28T07:00:00.000Z'),
+    mins: 1440,
+    who: ['Merve', 'Zeynep', 'Sabina'],
+    summary: 'Three days on site. 128 qualified contacts across the cohort: 60 investors and finance institutions, 32 customer, brand and corporate, 18 tech and GTM partners, 18 ecosystem. Two pre-event matchmaking intros converted to in-person meetings (Vienna Business Agency, MHS Ventures). Oktoberfest side event and founder evenings held.',
+    keywords: ['Bits & Pretzels', 'Munich', '128 contacts', 'Oktoberfest'],
+  },
+  {
+    title: 'Ask Me Anything with NVIDIA (Inception)',
+    start: new Date('2026-10-07T13:00:00.000Z'),
+    mins: 78,
+    who: ['Aydin', 'Merve', 'Zeynep', 'Neslisah'],
+    summary: 'Chris Brown (NVIDIA) on Inception resources, technical connections, media and enterprise intros. Portuma, Nextrain, FileOrbis, Singularity and smartIQ presented. NVIDIA pointed to NeMo Curator and Retriever, Morpheus, CUDA-X, cuOpt and Nemotron/NIMs for controlled deployment; data sovereignty, AI regulation and on-prem capacity were the recurring themes. FileOrbis is buying 16 more hardware units.',
+    actionItems: [
+      'All founders - Confirm Inception enrolment and email Chris Brown to accelerate review',
+      'FileOrbis and Nextrain - Evaluate the Nemotron platform',
+    ],
+    keywords: ['NVIDIA', 'Inception', 'Nemotron', 'Data sovereignty'],
   },
 ];
 
@@ -1110,26 +1260,787 @@ const MILESTONES = [
   { date: '2026-08-03', name: 'Congratulations Email to All Founders', status: 'done' },
   { date: '2026-08-05', name: 'Startup Onboarding Brief Sent', status: 'done' },
   { date: '2026-08-18', name: 'Program Kick-Off + Deep Dives (all 7 startups)', status: 'done' },
-  { date: '2026-08-20', name: 'Masterclass 1 - Target ICP & Partner Mapping (Alper Yurder)', status: 'done' },
-  { date: '2026-08-25', name: 'Masterclass 2 - DACH Market Landscape & Positioning (Elif Kocaoglu)', status: 'upcoming' },
-  { date: '2026-08-31', name: 'Masterclass 3 - Investor Landscape, DACH focused (Dimitri Archatow)', status: 'upcoming' },
-  { date: '2026-09-02', name: 'Masterclass 4 - Regulatory & Compliance Red Flags (LEXR) - date to confirm, Lexr agreed Sep 8', status: 'upcoming' },
-  { date: '2026-09-07', name: 'B&P App Scraping & AI Matching', status: 'upcoming' },
-  { date: '2026-09-28', name: 'Bits & Pretzels Munich (28-30 Sep)', status: 'upcoming' },
-  { date: '2026-10-31', name: 'Post-B&P Report & Exit Interviews', status: 'upcoming' },
-  { date: '2026-11-15', name: 'Istanbul Demo Day / Closing Event (Galataport)', status: 'upcoming' },
+  { date: '2026-08-20', name: 'Masterclass 1 - Target ICP & Partner Mapping (Alper Yurder, Forte Growth)', status: 'done' },
+  { date: '2026-08-26', name: 'Masterclass 2 - DACH Market Landscape & Positioning (Sebnem Elif Kocaoglu Ulbrich)', status: 'done' },
+  { date: '2026-08-31', name: 'Masterclass 3 - DACH Investor Landscape & Fundraising (Dimitri Archatow)', status: 'done' },
+  { date: '2026-09-08', name: 'Masterclass 4 - Regulatory & Compliance Red Flags (Lexr, Leo Jedwab)', status: 'done' },
+  { date: '2026-09-11', name: 'Kamu Destekleri (KOSGEB / EIC) session for the cohort', status: 'done' },
+  { date: '2026-09-16', name: 'Pre-B&P 1:1 briefings + YK FRWRD Ventures intros (15-18 Sep)', status: 'done' },
+  { date: '2026-09-23', name: 'Cohort presentation event to Yapi Kredi (incl. YK Germany)', status: 'done' },
+  { date: '2026-09-28', name: 'Bits & Pretzels Munich (28-30 Sep) - 128 qualified contacts', status: 'done' },
+  { date: '2026-10-07', name: 'NVIDIA Inception Ask Me Anything for the cohort', status: 'done' },
+  { date: '2026-10-14', name: 'B&P 2026 Report shared with Yapi Kredi (Turkish, 26 pages) - 128 qualified contacts', status: 'done' },
+  { date: '2026-10-30', name: 'Exit Interviews with all 7 startups', status: 'upcoming' },
+  { date: '2026-11-13', name: 'Post-Program Impact Report to YK', status: 'upcoming' },
+  { date: '2026-12-15', name: 'Istanbul Demo Day / Closing Event - Arter, Beyoglu (Tue 15 Dec)', status: 'upcoming' },
 ];
 
+// Bits & Pretzels 2026 outcomes - source: YK_FRWRD_BitsPretzels_2026_Report_Summary (report to YK on 15 Oct 2026)
+const BP_OUTCOMES = [
+  { startup: 'Singularity', funding: 'USD 4m pre-seed open (3.2m committed)', inv: 27, corp: 12, partner: 3, eco: 11, total: 53, note: 'Detailed list received via the tracker: +4 investors, 4 PoC candidates (BBVA, Inference.sh, SICK AG, Yorizon), +1 startup. Outcomes and next steps still to collect' },
+  { startup: 'Rooca', funding: 'USD 2m SAFE (12m pre / 14m post)', inv: 23, corp: 2, partner: '-', eco: '-', total: 25, note: 'Includes 5 non-B&P live pipeline investors (APY, 212, IBM Ventures, Heartfelt, Montauk); 18 done / 7 open as of 5 Oct. V2 deck with Senovo, Maan, Kibo; Nauta Capital (28 Sep) outcome to confirm' },
+  { startup: 'FileOrbis', funding: 'USD 3.5m open', inv: 6, corp: 3, partner: 5, eco: 5, total: 19, note: '5 partners on integration + joint GTM (Sign8, Cambrion, Zylon, Csquaregrc, Aiven); Future Fund of Oman talk ongoing; KPMG intros' },
+  { startup: 'ThinkSuite', funding: 'Not raising', inv: 3, corp: 7, partner: 5, eco: 2, total: 17, note: 'Pool: 269 prospects, 48 investors, 47 partners' },
+  { startup: 'Portuma', funding: 'Not raising (USD 8m closing)', inv: '-', corp: 6, partner: 4, eco: '-', total: 10, note: 'Clients and corporate partners only' },
+  { startup: 'smartIQ', funding: 'Not raising', inv: 1, corp: 2, partner: '-', eco: '-', total: 3, note: '6 planned meetings not held - moving online. New: Mercedes-Benz Mobility, TUV SUD, PwC Ventures. Pre-event: 10x Scale, Heartfelt, MHS, BlackFin' },
+  { startup: 'Nextrain', funding: 'Not raising - possible pivot', inv: '-', corp: '-', partner: 1, eco: '-', total: 1, note: 'Germany partner model (Grunder / Tom Heyer). Investor follow-ups paused pending pivot. Webrazzi Summit stage 21 Oct' },
+];
+
+// Bits & Pretzels meeting log - pulled from the YK FRWRD B&P Meeting Tracker (Google Sheet, one tab per startup), 14 Oct 2026.
+// Only rows the founders entered are listed; the fixed programme rows (side events, team gatherings) are excluded.
+const BP_TRACKER_URL = 'https://docs.google.com/spreadsheets/d/1N3CO64M4HqfQS2v1lMwdXw4uDK0F7h3c/edit';
+const BP_MEETING_LOG = {
+ "Singularity": [
+  {
+   "date": "28 Sep",
+   "time": "08:00",
+   "company": "\\>commit",
+   "contact": "Abel Samot, Founding Partner",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "09:30",
+   "company": "Alea Capital",
+   "contact": "Rui Escaleira, Founding Partner",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "10:00",
+   "company": "Allianz X",
+   "contact": "Nhi Huynh, Senior Manager Growth Equity",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "10:30",
+   "company": "ArtifiCraft",
+   "contact": "Ramona Al Dreihi, Founder & MD",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "11:00",
+   "company": "Balnord",
+   "contact": "Aleksander Dobrzyniecki, General Partner",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "11:30",
+   "company": "Basic Ventures",
+   "contact": "Franz Diekmann, Partner/MD",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "12:00",
+   "company": "Bonsai Partners",
+   "contact": "Cristina Maestre, Investment Manager",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "13:00",
+   "company": "Munich Business / Stadt München",
+   "contact": "Julia Christiansen, İnovasyon ekosistemi",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "13:30",
+   "company": "Macaristan Başkonsolosluğu",
+   "contact": "Istvan Karasz, Economic & Trade Counselor",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "14:00",
+   "company": "Creative Dock / nFrontier",
+   "contact": "Anastasia Kasatkina",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "14:30",
+   "company": "Daikin",
+   "contact": "Haruka Degawa, Avrupa CVC",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "15:00",
+   "company": "DB mindbox",
+   "contact": "Simon Höfer, Head of Startup Scouting",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "16:30",
+   "company": "DTIF",
+   "contact": "Bernhard Gold",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "17:30",
+   "company": "Earlybird",
+   "contact": "Paul-Christoph Altunay, Yatırım ekibi",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "18:00",
+   "company": "Expeditions",
+   "contact": "Dominik von Möller, Investment Manager",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "09:30",
+   "company": "FinanceWise",
+   "contact": "Christoph Berndt, Founder & GP",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "10:00",
+   "company": "Fortino Capital",
+   "contact": "Renaat Berckmoes, Managing Partner",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "10:30",
+   "company": "Founders Foundation",
+   "contact": "Celine Brilka, Ecosystem & Partnership Manager",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "11:00",
+   "company": "Ontario Hükümeti Münih",
+   "contact": "Petra Kovacova, Commercial Officer",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "11:30",
+   "company": "Hack-Nation",
+   "contact": "Kai Wiederhold, Founder & CEO",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "12:00",
+   "company": "HSBC Innovation Banking",
+   "contact": "Ken Nakagawa, Corporate Associate",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "13:00",
+   "company": "Invest in Madrid",
+   "contact": "Pedro Homedes",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "13:30",
+   "company": "Kibo Ventures",
+   "contact": "Sonia Fernandez, Partner",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "14:00",
+   "company": "Left Lane Capital",
+   "contact": "Louis Frach, Investor",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "14:30",
+   "company": "Macnica ATD Europe",
+   "contact": "Miki Nishihata, Innovation Sourcing",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "15:00",
+   "company": "MBG BW",
+   "contact": "Cornelius Baral, Investment Manager VC",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "15:30",
+   "company": "Melious AI",
+   "contact": "Sebastian Birster",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "16:30",
+   "company": "Mitsubishi Electric Europe",
+   "contact": "Tomohiro Iwaki",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "17:00",
+   "company": "Morgan Stanley",
+   "contact": "Manos Zampouridis",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "17:30",
+   "company": "Lahey Belediyesi",
+   "contact": "Marijn Fraanje",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "18:00",
+   "company": "NVIDIA",
+   "contact": "Naomi Betz, Regional Lead Startup Ecosystem DACH",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "18:30",
+   "company": "NRW.Venture",
+   "contact": "Maximilian Erb, Investment Director",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "08:00",
+   "company": "Plug and Play Japan",
+   "contact": "Kazutoshi Machida, Senior Associate",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "08:30",
+   "company": "Redstone",
+   "contact": "Richard Würl, Principal",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "09:00",
+   "company": "Siemens Energy Ventures",
+   "contact": "Silke Grimhardt, Lead Venture Client",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "09:30",
+   "company": "a16z Scout",
+   "contact": "Joël Hainzl",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "13:00",
+   "company": "CDTM / Stanford HAI",
+   "contact": "Fabian Hildesheim, a16z angel/scout",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "13:30",
+   "company": "Stripe",
+   "contact": "Miguel Barranco, Account Exec Funded Startups DACH",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "14:00",
+   "company": "SVG",
+   "contact": "Chris Bregazzi",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "14:30",
+   "company": "T.Capital",
+   "contact": "Sarah Röhm, Investor",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "15:00",
+   "company": "Wayra Germany",
+   "contact": "Chaileena da Silva",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "15:30",
+   "company": "TUM robotik inkübatör",
+   "contact": "Nicole Ebner",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "",
+   "company": "HSBC Deutschland",
+   "contact": "Anja Link, Head of Sustainable Finance & Transition",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "",
+   "company": "seed+speed Ventures",
+   "contact": "Nelly Karsch, Associate (yatırım)",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "",
+   "company": "Octopus Ventures",
+   "contact": "Stan Williams, Principal (yatırım)",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "",
+   "company": "Vanagon VC",
+   "contact": "Sandro Stark, General Partner (yatırım)",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "",
+   "company": "BBVA",
+   "contact": "J. Salgado (PoC)",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "",
+   "company": "Inference.sh",
+   "contact": "Ömer Karışman, Kurucu (PoC)",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "",
+   "company": "SICK AG",
+   "contact": "(PoC)",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "",
+   "company": "Yorizon",
+   "contact": "(PoC)",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "",
+   "company": "QED Investors",
+   "contact": "Yusuf Özdalga (Blackfin breakfast, yatırım)",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "30 Sep",
+   "time": "",
+   "company": "Tytan",
+   "contact": "Batuhan Yumurtacı, CEO (side event, intro yapacak)",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  }
+ ],
+ "Portuma": [
+  {
+   "date": "28 Sep",
+   "time": "12:00",
+   "company": "Prosus Ventures",
+   "contact": "Arun Bhahirathan",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "13:00",
+   "company": "Alstin Capital",
+   "contact": "Selin Daldal",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "15:00",
+   "company": "May Ventures",
+   "contact": "David Volkinshteyn",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "28 Sep",
+   "time": "18:00",
+   "company": "Redstone",
+   "contact": "Mikael Mylymaki",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "13:30",
+   "company": "Octopus Ventures",
+   "contact": "Stan Williams",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "14:30",
+   "company": "13books Capital",
+   "contact": "Nitya Gupta",
+   "type": "",
+   "loc": "",
+   "status": "",
+   "by": "",
+   "notes": ""
+  }
+ ],
+ "Rooca": [
+  {
+   "date": "28 Sep",
+   "time": "13:00",
+   "company": "Nauta Capital",
+   "contact": "Conor Scanlan, Partner",
+   "type": "Investor",
+   "loc": "Table 27",
+   "status": "Confirmed",
+   "by": "Founder",
+   "notes": "12:45–13:05 (Munich) · Investor meeting via Bits & Pretzels matchmaking · Table 27 · NOTE: overlaps YK FRWRD team gathering 12:30–12:50 by 5 min — founder leaves gathering at 12:40"
+  },
+  {
+   "date": "29 Sep",
+   "time": "11:30",
+   "company": "BAUHAUS Investments SA",
+   "contact": "Engjell Rrahimi, Investment Officer",
+   "type": "Investor",
+   "loc": "Table 26",
+   "status": "Confirmed",
+   "by": "Founder",
+   "notes": "11:30–11:50 (Munich) · Investor meeting via Bits & Pretzels matchmaking · Table 26"
+  },
+  {
+   "date": "29 Sep",
+   "time": "15:00",
+   "company": "BrightCap Ventures",
+   "contact": "Diana Stefanova, Managing Partner",
+   "type": "Investor",
+   "loc": "Table 22",
+   "status": "Confirmed",
+   "by": "Founder",
+   "notes": "15:15–15:35 (Munich) · Investor meeting via Bits & Pretzels matchmaking · Table 22"
+  },
+  {
+   "date": "29 Sep",
+   "time": "15:30",
+   "company": "Maan Advisory / Maan Capital",
+   "contact": "Thomas Koene, Managing Director",
+   "type": "Investor",
+   "loc": "Table TBC",
+   "status": "Confirmed",
+   "by": "Founder",
+   "notes": "16:05–16:25 (Munich) · Investor meeting via Bits & Pretzels matchmaking · table no. TBC · NOTE: overlaps YK FRWRD team gathering 16:00–16:20 — founder to skip/leave gathering"
+  },
+  {
+   "date": "29 Sep",
+   "time": "16:30",
+   "company": "Senovo Capital",
+   "contact": "Frederick Mallinckrodt, Founding Partner",
+   "type": "Investor",
+   "loc": "Table TBC",
+   "status": "Confirmed",
+   "by": "Founder",
+   "notes": "16:30–16:50 (Munich) · Investor meeting via Bits & Pretzels matchmaking · table no. TBC · back-to-back after Maan Advisory"
+  }
+ ],
+ "ThinkSuite": [
+  {
+   "date": "28 Sep",
+   "time": "10:30",
+   "company": "HUBSPOT",
+   "contact": "Daniela Zacharieva FOUNDING GTM",
+   "type": "Partner / Channel",
+   "loc": "Stage / Session",
+   "status": "Confirmed",
+   "by": "Founder",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "09:30",
+   "company": "Side event: ICM - Uluslararası Kongre Merkezi, Messe München Salı, 29 Eylül 09:30 - 11:30 GMT+2 Münih, Almanya https://luma.com/The-GTM-Garage-LIQID?tk=eD4fEZ",
+   "contact": "",
+   "type": "Ecosystem / Other",
+   "loc": "Stage / Session",
+   "status": "Confirmed",
+   "by": "Founder",
+   "notes": ""
+  },
+  {
+   "date": "29 Sep",
+   "time": "10:30",
+   "company": "Side event: Event",
+   "contact": "",
+   "type": "Ecosystem / Other",
+   "loc": "Partner booth",
+   "status": "Confirmed",
+   "by": "",
+   "notes": ""
+  }
+ ],
+ "FileOrbis": [],
+ "smartIQ": [],
+ "Nextrain": []
+};
+
 const NEXT_ACTIONS = [
-  { urgency: 'high', text: 'Confirm Bits & Pretzels registrations, travel and accommodation for the 7 founders plus YK team', owner: 'Eda', due: 'ASAP' },
-  { urgency: 'high', text: 'Send startup one pagers and profiles to Lexr and collect the cohort\'s legal questions before the 8 September masterclass', owner: 'Eda', due: 'By Sept 1' },
-  { urgency: 'high', text: 'Share the cohort list and one pagers with Heartfelt VC (Onur) and UnternehmerTUM (Maria) to start investor and ecosystem intros', owner: 'Eda', due: 'This week' },
-  { urgency: 'med', text: 'Set up the weekly one-hour outbound review sessions with Forte Growth following Masterclass 1', owner: 'Eda + Alper', due: 'Week of Aug 24' },
-  { urgency: 'med', text: 'Share the mentor and investor network, perks and golden rules with the cohort', owner: 'Sabina + Eda', due: 'This week' },
-  { urgency: 'med', text: 'Finalise the investor introduction process and the startup evaluation framework (market status, investment readiness)', owner: 'Eda + Sabina', due: 'End of August' },
-  { urgency: 'med', text: 'Update startup logos and cohort records in Airtable, and remove Monq / Mistikist from the finalist view', owner: 'Eda', due: 'This week' },
-  { urgency: 'low', text: 'Publish the kick-off and deep dive social posts using the kick-off photos and intro videos', owner: 'Elif', due: 'Aug 25' },
-  { urgency: 'low', text: 'Record and share every masterclass for founders who cannot attend live', owner: 'Eda', due: 'Ongoing' },
+  { urgency: 'high', text: 'Schedule and run the exit interviews with all 7 startups (B&P outcomes, DACH pipeline, investment leads, 90-day plan)', owner: 'Eda', due: 'By Oct 30' },
+  { urgency: 'high', text: 'Demo Day 15 Dec at Arter: agree the run of show with Merve (3-min pitches, matchmaking, reception), guest list of 60+ and invitation email', owner: 'Eda + Merve + Elif', due: 'Mid November' },
+  { urgency: 'high', text: 'Cohort-level follow-ups from Munich: Vienna Business Agency, Bayern KI-Agentur, Invest in Madrid, Kibo, Redstone, MHS, PAWAO, 10x Scale', owner: 'Eda', due: 'This week' },
+  { urgency: 'high', text: 'Singularity: collect outcomes and next steps for the 53 Munich contacts, starting with the 4 PoC candidates (BBVA, Inference.sh, SICK AG, Yorizon)', owner: 'Eda + Anil', due: 'This week' },
+  { urgency: 'med', text: 'smartIQ: move the 6 unheld Munich meetings online; progress Mercedes-Benz Mobility, TUV SUD and PwC Ventures; confirm Porsche AG status', owner: 'Eda + Goktug', due: 'Oct' },
+  { urgency: 'med', text: 'Rooca: chase Senovo, Maan (5 questions) and Kibo on the V2 deck; BDC Capital call 15 or 22 Oct; Flint Capital intro via Boardy', owner: 'Mustafa + Eda', due: 'Oct 22' },
+  { urgency: 'med', text: 'FileOrbis: support the 5 partner integrations (Sign8, Cambrion, Zylon, Csquaregrc, Aiven) and the KPMG tech peer intros; Qpay and Rosenberger needs sessions', owner: 'Gokhan + Eda', due: 'Oct' },
+  { urgency: 'med', text: 'Nextrain: pivot decision before restarting investor follow-ups; rebook Hilal Arslan; Webrazzi Summit stage 21 Oct', owner: 'Kalde + Eda', due: 'Oct 21' },
+  { urgency: 'med', text: 'Founders to confirm NVIDIA Inception enrolment and email Chris Brown; FileOrbis and Nextrain to evaluate Nemotron', owner: 'Founders', due: 'Oct' },
+  { urgency: 'low', text: 'Post-program impact report for YK: meetings, intros, investments progressed, partnerships, YK collaborations', owner: 'Eda', due: 'Mid November' },
+  { urgency: 'low', text: 'B&P recap carousel and Demo Day announcement on LinkedIn and Instagram', owner: 'Elif', due: 'October' },
 ];
 
 const TEAM = [
@@ -1165,11 +2076,11 @@ const PHASES = [
     ]
   },
   {
-    id: 'contracting', name: 'Contracting', dates: 'May 2026 - open', status: 'in-progress', color: '#3182ce',
+    id: 'contracting', name: 'Contracting', dates: 'May - October 2026', status: 'done', color: '#3182ce',
     tasks: [
-      { name: 'Contract & Legal Documents (via Tenity London)', owner: 'Zeynep / Kaan', status: 'in-progress', date: 'ASAP', asanaDate: null },
+      { name: 'Contract & Legal Documents (via Tenity London)', owner: 'Zeynep / Kaan', status: 'done', date: 'Oct 2026', asanaDate: null },
       { name: 'Mukimlik (Residency) Certificate', owner: 'Tenity', status: 'done', date: 'June 2026', asanaDate: '2026-06-30' },
-      { name: 'Payment Terms', owner: 'YK Finance / Tenity', status: 'in-progress', date: 'On signing', asanaDate: null },
+      { name: 'Payment Terms', owner: 'YK Finance / Tenity', status: 'done', date: 'On signing', asanaDate: null },
     ]
   },
   {
@@ -1194,65 +2105,72 @@ const PHASES = [
     ]
   },
   {
-    id: 'execution', name: 'Program Execution', dates: 'August - September 2026', status: 'in-progress', color: '#e94560',
+    id: 'execution', name: 'Program Execution', dates: 'August - September 2026', status: 'done', color: '#e94560',
     tasks: [
       { name: 'Onboarding Brief Sent to Selected Startups', owner: 'Eda', status: 'done', date: 'Aug 4', asanaDate: null },
-      { name: 'Kick-Off + Welcome Call (full cohort)', owner: 'Eda / Elif / YK Team', status: 'done', date: 'Aug 18', asanaDate: null },
+      { name: 'Kick-Off + Welcome Call (full cohort, YK Genel Mudurluk)', owner: 'Eda / Elif / YK Team', status: 'done', date: 'Aug 18', asanaDate: null },
       { name: 'Deep Dive Sessions (1:1 per startup, 45 min each)', owner: 'Sabina / Eda', status: 'done', date: 'Aug 18', asanaDate: null },
-      { name: 'Masterclass 1 - Target ICP & Partner Mapping', owner: 'Alper Yurder', status: 'done', date: 'Aug 20', asanaDate: null },
-      { name: 'Action Planning Sessions (1:1 per startup)', owner: 'Eda / Alper', status: 'in-progress', date: 'Aug 20 onwards', asanaDate: '2026-08-28' },
-      { name: 'Masterclass 2 - DACH Market Landscape & Positioning', owner: 'Elif Kocaoglu', status: 'pending', date: 'Aug 25', asanaDate: '2026-08-25' },
-      { name: 'Masterclass 3 - Investor Landscape (DACH focused)', owner: 'Dimitri Archatow', status: 'pending', date: 'Aug 31', asanaDate: '2026-08-31' },
-      { name: 'Masterclass 4 - Regulatory & Compliance Red Flags', owner: 'LEXR + Ahmet Kilicarslan', status: 'pending', date: 'Sep 2 (Lexr say Sep 8)', asanaDate: '2026-09-02' },
-      { name: 'Outreach Pipeline Review (group)', owner: 'Eda', status: 'pending', date: 'Sep 3', asanaDate: '2026-09-03' },
-      { name: 'Action Planning & Outreach Setup (min 7 VC + 8 corporate intros each)', owner: 'Tenity', status: 'in-progress', date: 'Mid Aug onwards', asanaDate: '2026-08-31' },
-      { name: 'B&P App Scraping & AI Matching', owner: 'Alper Yurder', status: 'pending', date: 'Sep 7', asanaDate: '2026-09-07' },
-      { name: 'Pipeline Reviews - all startups (1:1)', owner: 'Eda', status: 'pending', date: 'Sep 8', asanaDate: '2026-09-08' },
-      { name: 'Meeting Pre-Scheduling Finalisation (min 5 confirmed each)', owner: 'Eda', status: 'pending', date: 'Sep 14', asanaDate: '2026-09-14' },
-      { name: 'B&P Logistics Briefing', owner: 'Eda', status: 'pending', date: 'Sep 21', asanaDate: '2026-09-21' },
+      { name: 'Masterclass 1 - Target ICP & Partner Mapping', owner: 'Alper Yurder (Forte Growth)', status: 'done', date: 'Aug 20', asanaDate: null },
+      { name: 'Masterclass 2 - DACH Market Landscape & Positioning', owner: 'Sebnem Elif Kocaoglu Ulbrich', status: 'done', date: 'Aug 26', asanaDate: '2026-08-26' },
+      { name: 'Masterclass 3 - DACH Investor Landscape & Fundraising', owner: 'Dimitri Archatow', status: 'done', date: 'Aug 31', asanaDate: '2026-08-31' },
+      { name: 'Masterclass 4 - Regulatory & Compliance Red Flags', owner: 'Lexr (Leo Jedwab)', status: 'done', date: 'Sep 8', asanaDate: '2026-09-08' },
+      { name: 'Action Planning & Outreach Setup (per-startup target lists, ~40 each)', owner: 'Tenity', status: 'done', date: 'Aug - Sep', asanaDate: '2026-09-12' },
+      { name: 'Kamu Destekleri session (KOSGEB / EIC funding)', owner: 'YK + KOSGEB', status: 'done', date: 'Sep 11', asanaDate: '2026-09-11' },
+      { name: 'Pre-B&P investor intros (BlackFin, PAWAO, 10x Scale, Heartfelt, MHS)', owner: 'Eda', status: 'done', date: 'Sep 9-18', asanaDate: '2026-09-18' },
+      { name: 'Pre-B&P 1:1 briefings with YK team (all startups)', owner: 'Eda + YK', status: 'done', date: 'Sep 15-18', asanaDate: '2026-09-18' },
+      { name: 'YK FRWRD Ventures intro calls (Nextrain, ThinkSuite, Rooca)', owner: 'Merve / Zeynep', status: 'done', date: 'Sep 16', asanaDate: '2026-09-16' },
+      { name: 'B&P Meeting Review session (Forte Growth)', owner: 'Alper + Eda', status: 'done', date: 'Sep 21', asanaDate: '2026-09-21' },
+      { name: 'Cohort presentation event to Yapi Kredi (incl. YK Germany)', owner: 'YK + Tenity', status: 'done', date: 'Sep 23', asanaDate: '2026-09-23' },
+      { name: 'Pre-event matchmaking (~100 intros across the cohort)', owner: 'Tenity', status: 'done', date: 'Sep', asanaDate: '2026-09-25' },
     ]
   },
   {
-    id: 'bp', name: 'Bits & Pretzels Munich', dates: 'September 28-30, 2026', status: 'pending', color: '#0f3460',
+    id: 'bp', name: 'Bits & Pretzels Munich', dates: 'September 28-30, 2026', status: 'done', color: '#0f3460',
     tasks: [
-      { name: 'Travel & Accommodation (founders + 2 YK + Eda)', owner: 'Eda', status: 'in-progress', date: 'Sept 28', asanaDate: '2026-09-20' },
-      { name: 'Event Registrations via Deel partnership', owner: 'Eda', status: 'in-progress', date: 'Sept 28-29', asanaDate: '2026-09-20' },
-      { name: 'On-site Execution Support', owner: 'Eda', status: 'pending', date: 'Sept 28-30', asanaDate: '2026-09-28' },
-      { name: 'Founder\'s Dinner (hosted by YK Germany - TBD)', owner: 'Eda + Zeynep', status: 'pending', date: 'TBD', asanaDate: '2026-09-29' },
-      { name: 'Networking Event (60+ curated guests)', owner: 'Tenity', status: 'pending', date: 'Sept 28-30', asanaDate: '2026-09-28' },
-      { name: 'Side Event - Oktoberfest', owner: 'Tenity + YK', status: 'pending', date: 'During B&P', asanaDate: '2026-09-29' },
-      { name: 'Meeting Notes & Tracking Compilation', owner: 'Eda', status: 'pending', date: 'During event', asanaDate: '2026-09-30' },
+      { name: 'Travel & Accommodation (founders + YK team + Tenity)', owner: 'Eda + Zeynep', status: 'done', date: 'Sept 27', asanaDate: '2026-09-20' },
+      { name: 'Event Registrations and tickets', owner: 'Eda', status: 'done', date: 'Sept 28', asanaDate: '2026-09-20' },
+      { name: 'On-site Execution Support (3 days)', owner: 'Eda + Sabina', status: 'done', date: 'Sept 28-30', asanaDate: '2026-09-28' },
+      { name: 'Side Event - Oktoberfest (table captains)', owner: 'Tenity + YK', status: 'done', date: 'Sept 29', asanaDate: '2026-09-29' },
+      { name: 'Meeting tracking - 128 qualified contacts logged (startup lists + Google Sheet tracker)', owner: 'Eda + founders', status: 'done', date: 'Sept 28-30', asanaDate: '2026-09-30' },
+      { name: 'B&P 2026 Report to Yapi Kredi (Turkish, 26 pages)', owner: 'Eda', status: 'done', date: 'Oct 14', asanaDate: '2026-10-15' },
     ]
   },
   {
-    id: 'followup', name: 'Local Follow-up & Closing', dates: 'October - November 2026', status: 'pending', color: '#718096',
+    id: 'followup', name: 'Local Follow-up & Closing', dates: 'October - December 2026', status: 'in-progress', color: '#718096',
     tasks: [
-      { name: 'Exit Interviews with Startups', owner: 'Eda', status: 'pending', date: 'October', asanaDate: '2026-10-15' },
-      { name: 'Post-Program Report (meetings, POCs, investments)', owner: 'Eda', status: 'pending', date: 'October', asanaDate: '2026-10-31' },
-      { name: 'Istanbul Demo Day Invites (60+ guests)', owner: 'Eda + Elif', status: 'pending', date: 'October', asanaDate: '2026-10-20' },
-      { name: 'Istanbul Demo Day at Galataport', owner: 'Tenity + YK', status: 'pending', date: 'Oct/Nov', asanaDate: '2026-11-15' },
-      { name: 'Final Program Report to YK', owner: 'Eda', status: 'pending', date: 'November', asanaDate: '2026-11-30' },
+      { name: 'NVIDIA Inception Ask Me Anything for the cohort', owner: 'Eda', status: 'done', date: 'Oct 7', asanaDate: '2026-10-07' },
+      { name: 'Post-B&P follow-ups per startup (see Immediate Actions)', owner: 'Eda + founders', status: 'in-progress', date: 'October', asanaDate: '2026-10-24' },
+      { name: 'Cohort-level stakeholder follow-ups (Vienna Business Agency, Bayern KI-Agentur, Kibo, Redstone, MHS, PAWAO, 10x Scale)', owner: 'Eda', status: 'in-progress', date: 'October', asanaDate: '2026-10-17' },
+      { name: 'Exit Interviews with Startups (1:1, 45 min)', owner: 'Eda', status: 'pending', date: 'By Oct 30', asanaDate: '2026-10-30' },
+      { name: 'Post-Program Impact Report (meetings, POCs, investments, YK collaborations)', owner: 'Eda', status: 'pending', date: 'Mid November', asanaDate: '2026-11-13' },
+      { name: 'Demo Day run of show, guest list (60+) and invitations', owner: 'Eda + Merve + Elif', status: 'pending', date: 'November', asanaDate: '2026-11-20' },
+      { name: 'Demo Day pitch rehearsal (all startups, 3 min each)', owner: 'Eda', status: 'pending', date: 'Week of Dec 7', asanaDate: '2026-12-09' },
+      { name: 'Istanbul Demo Day at Arter, Beyoglu', owner: 'YK FRWRD + Tenity', status: 'pending', date: 'Tue Dec 15', asanaDate: '2026-12-15' },
+      { name: 'Final Program Report and 2027 recommendations to YK', owner: 'Eda + Sabina', status: 'pending', date: 'December', asanaDate: '2026-12-22' },
     ]
   }
 ];
 
 const MEETINGS = [
   { name: 'Program Kick-off', format: 'Online', cadence: 'Once', yk: 'Required', tenity: 'Eda, Sabina, Kaan, Elif', status: 'done', date: 'May 5, 2026' },
-  { name: 'Weekly KPI & Progress Tracking', format: 'Online', cadence: 'Bi-weekly', yk: 'Required', tenity: 'Eda', status: 'active', date: 'Next: Sept 1' },
+  { name: 'Weekly KPI & Progress Tracking', format: 'Online', cadence: 'Bi-weekly', yk: 'Required', tenity: 'Eda', status: 'active', date: 'Last: Sept 22 - resume for Demo Day prep' },
   { name: 'Comms & Marketing Alignment', format: 'Online', cadence: 'Once', yk: 'Required', tenity: 'Elif + Eda', status: 'done', date: 'Done' },
   { name: 'Application Review Sessions', format: 'Online', cadence: 'Bi-weekly', yk: 'Required', tenity: 'Eda', status: 'done', date: 'Closed July 12' },
   { name: 'Selection Alignment', format: 'Online', cadence: 'Milestone', yk: 'Required', tenity: 'Eda + Sabina', status: 'done', date: 'July 16, 2026' },
   { name: 'Startup Deep Dives', format: 'Online', cadence: 'Per startup', yk: 'Optional', tenity: 'Kaan / Eda', status: 'done', date: 'Aug 18, 2026' },
-  { name: 'Masterclass Sessions (x4)', format: 'Online', cadence: 'Milestone', yk: 'Optional', tenity: 'Tenity + Guest', status: 'active', date: 'MC1 done Aug 20 - MC2 Aug 25 - MC3 Aug 31 - MC4 Sep 2' },
-  { name: 'Weekly Outbound Review (Forte Growth)', format: 'Online', cadence: 'Weekly', yk: 'Optional', tenity: 'Eda + Alper', status: 'active', date: 'From Aug 24' },
-  { name: 'Stakeholder Mapping & Intro Planning', format: 'Online', cadence: 'Milestone', yk: 'Optional', tenity: 'Eda', status: 'active', date: 'August 2026' },
-  { name: 'B&P Preparation Session', format: 'Online', cadence: 'Once', yk: 'Optional', tenity: 'Eda + Founders', status: 'upcoming', date: 'Sept 2026' },
-  { name: 'B&P On-site Coordination', format: 'Offline (Munich)', cadence: 'Daily', yk: 'Required', tenity: 'Eda (+ Sabina TBD)', status: 'upcoming', date: 'Sept 28-30' },
-  { name: 'Founder\'s Dinner / Networking', format: 'Offline (Munich)', cadence: 'Once', yk: 'Required if confirmed', tenity: 'Eda', status: 'upcoming', date: 'TBD during B&P' },
-  { name: 'Post-Event Follow-up', format: 'Online', cadence: 'Once', yk: 'Required', tenity: 'Eda + Sabina', status: 'upcoming', date: 'October 2026' },
-  { name: 'Exit Interviews with Startups', format: 'Online', cadence: 'Per startup', yk: 'Optional', tenity: 'Eda', status: 'upcoming', date: 'October 2026' },
+  { name: 'Masterclass Sessions (x4)', format: 'Online', cadence: 'Milestone', yk: 'Optional', tenity: 'Tenity + Guest', status: 'done', date: 'MC1 Aug 20 - MC2 Aug 26 - MC3 Aug 31 - MC4 Sep 8' },
+  { name: 'Kamu Destekleri (KOSGEB / EIC) session', format: 'Online', cadence: 'Once', yk: 'Required', tenity: 'Eda', status: 'done', date: 'Sept 11, 2026' },
+  { name: 'Pre-B&P investor intros + YK 1:1 briefings', format: 'Online', cadence: 'Per startup', yk: 'Required', tenity: 'Eda', status: 'done', date: 'Sept 9-18' },
+  { name: 'B&P Meeting Review (Forte Growth)', format: 'Online', cadence: 'Once', yk: 'Optional', tenity: 'Eda + Alper', status: 'done', date: 'Sept 21, 2026' },
+  { name: 'Cohort presentation event to YK', format: 'Online', cadence: 'Once', yk: 'Required', tenity: 'Eda + Sabina + Elif', status: 'done', date: 'Sept 23, 2026' },
+  { name: 'B&P On-site Coordination', format: 'Offline (Munich)', cadence: 'Daily', yk: 'Required', tenity: 'Eda + Sabina', status: 'done', date: 'Sept 28-30' },
+  { name: 'Oktoberfest side event', format: 'Offline (Munich)', cadence: 'Once', yk: 'Required', tenity: 'Eda + Sabina', status: 'done', date: 'Sept 29' },
+  { name: 'NVIDIA Inception AMA', format: 'Online', cadence: 'Once', yk: 'Optional', tenity: 'Eda', status: 'done', date: 'Oct 7, 2026' },
+  { name: 'Post-Event Follow-up (per startup)', format: 'Online', cadence: 'Ongoing', yk: 'Required', tenity: 'Eda', status: 'active', date: 'October 2026' },
+  { name: 'Exit Interviews with Startups', format: 'Online', cadence: 'Per startup', yk: 'Optional', tenity: 'Eda', status: 'upcoming', date: 'By Oct 30' },
+  { name: 'Demo Day Planning Syncs', format: 'Online', cadence: 'Bi-weekly', yk: 'Required', tenity: 'Eda + Elif', status: 'upcoming', date: 'Nov - Dec' },
   { name: 'Final Reporting Meeting', format: 'Online', cadence: 'Milestone', yk: 'Required', tenity: 'Eda + Sabina', status: 'upcoming', date: 'November 2026' },
-  { name: 'Istanbul Demo Day / Closing', format: 'Offline (Istanbul)', cadence: 'Once', yk: 'Required', tenity: 'Eda + Sabina + Kaan', status: 'upcoming', date: 'Oct/Nov 2026' },
+  { name: 'Istanbul Demo Day / Closing', format: 'Offline (Arter, Istanbul)', cadence: 'Once', yk: 'Required', tenity: 'Eda + Sabina + Elif', status: 'upcoming', date: 'Tue Dec 15, 2026' },
 ];
 
 // Updated from (PARTNER SHARED) Yapi Kredi FRWRD Program Mastersheet.xlsx - June 2026
@@ -1268,18 +2186,18 @@ const COMMS = [
   { month: 'June 2026', date: 'Jun 30', title: '"Final week to apply" - Last Call Posts', channels: ['ig','li'], status: 'done' },
   { month: 'June 2026', date: 'Jun 30', title: 'Final Call Email - applications close Jul 5', channels: ['em'], status: 'done' },
   { month: 'July 2026', date: 'Jul 5', title: 'Application Period Extended to Jul 12 - Social Posts', channels: ['ig','li'], status: 'done' },
-  { month: 'July 2026', date: 'Jul 12', title: 'Applications Closed', channels: ['ig'], status: 'upcoming', notes: 'Status blank in the mastersheet - confirm with Elif whether this went out' },
-  { month: 'July 2026', date: 'Jul 20', title: 'Selected Startups Announcement + Founder Highlights', channels: ['ig','li'], status: 'upcoming', notes: 'Status blank in the mastersheet. Caption still has placeholder names and lists 5 startups, not 7' },
-  { month: 'August 2026', date: 'Aug 25', title: 'Program Has Officially Started - Kickoff Post', channels: ['ig','li'], status: 'upcoming', notes: 'Use the kick-off photos and founder intro videos from Aug 18' },
-  { month: 'September 2026', date: 'Sep 8', title: 'Masterclasses & Preparation in Progress', channels: ['ig','li'], status: 'upcoming', notes: 'Carousel with photos and screenshots from the sessions' },
-  { month: 'September 2026', date: 'Sep 21', title: '"Munich is getting close" - B&P Preparation Post', channels: ['ig','li'], status: 'upcoming', notes: 'B&P branded hero visual' },
-  { month: 'September 2026', date: 'Sep 28-30', title: 'Event Day Stories - Live from B&P Munich', channels: ['ig'], status: 'upcoming', notes: 'Five story beats scripted in the mastersheet: arrival, meetings, founder moment, Munich energy, closing day' },
-  { month: 'October 2026', date: 'Post B&P', title: 'Event Recap - Photo Carousel', channels: ['ig','li'], status: 'upcoming', notes: '"Three days in Munich. Many conversations to follow up on."' },
-  { month: 'October 2026', date: 'October', title: 'Istanbul Demo Day Invitation Email', channels: ['em'], status: 'upcoming', notes: 'Venue, date and time still placeholders in the draft' },
-  { month: 'October 2026', date: 'Late Oct', title: '"Back to Istanbul for the final chapter" - Demo Day Prep', channels: ['ig','li'], status: 'upcoming' },
-  { month: 'November 2026', date: 'Early Nov', title: 'Istanbul Demo Day - Event Day Coverage', channels: ['ig','li'], status: 'upcoming' },
-  { month: 'November 2026', date: 'November', title: '"From Turkiye to Munich and back again" - Thank-you & Wrap-up Email', channels: ['em'], status: 'upcoming' },
-  { month: 'November 2026', date: 'November', title: 'Program Wrap-up - Final Social Posts', channels: ['ig','li'], status: 'upcoming' },
+  { month: 'July 2026', date: 'Jul 12', title: 'Applications Closed', channels: ['ig'], status: 'done' },
+  { month: 'July 2026', date: 'Jul 20', title: 'Selected Startups Announcement + Founder Highlights', channels: ['ig','li'], status: 'done' },
+  { month: 'August 2026', date: 'Aug 25', title: 'Program Has Officially Started - Kickoff Post', channels: ['ig','li'], status: 'done', notes: 'Use the kick-off photos and founder intro videos from Aug 18' },
+  { month: 'September 2026', date: 'Sep 8', title: 'Masterclasses & Preparation in Progress', channels: ['ig','li'], status: 'done', notes: 'Carousel with photos and screenshots from the sessions' },
+  { month: 'September 2026', date: 'Sep 21', title: '"Munich is getting close" - B&P Preparation Post', channels: ['ig','li'], status: 'done', notes: 'B&P branded hero visual' },
+  { month: 'September 2026', date: 'Sep 28-30', title: 'Event Day Stories - Live from B&P Munich', channels: ['ig'], status: 'done', notes: 'Five story beats scripted in the mastersheet: arrival, meetings, founder moment, Munich energy, closing day' },
+  { month: 'October 2026', date: 'Post B&P', title: 'Event Recap - Photo Carousel', channels: ['ig','li'], status: 'done', notes: '"Three days in Munich. Many conversations to follow up on." Use the 128-contact headline from the B&P report' },
+  { month: 'November 2026', date: 'Mid Nov', title: 'Istanbul Demo Day Invitation Email', channels: ['em'], status: 'upcoming', notes: 'Tue 15 Dec, Arter (Yenisehir, Irmak Cd. No:13, Beyoglu). Merve sends the calendar invite; 60+ curated guests' },
+  { month: 'November 2026', date: 'Late Nov', title: '"Back to Istanbul for the final chapter" - Demo Day Prep', channels: ['ig','li'], status: 'upcoming' },
+  { month: 'December 2026', date: 'Dec 15', title: 'Istanbul Demo Day - Event Day Coverage', channels: ['ig','li'], status: 'upcoming', notes: 'Live from Arter' },
+  { month: 'December 2026', date: 'December', title: '"From Turkiye to Munich and back again" - Thank-you & Wrap-up Email', channels: ['em'], status: 'upcoming' },
+  { month: 'December 2026', date: 'December', title: 'Program Wrap-up - Final Social Posts', channels: ['ig','li'], status: 'upcoming' },
 ];
 
 const CONTACTS = [
@@ -2933,64 +3851,94 @@ const PROGRAM_WEEKS = [
   {
     id: 'w2', label: 'Week 2 - Masterclass 2', range: 'Aug 24-28', startDate: '2026-08-24',
     events: [
-      { date: '2026-08-25', time: 'Group - 90 min - Elif Kocaoglu', title: 'Masterclass 2 - DACH Market Landscape & Competitive Positioning', desc: 'How to shape a compelling DACH value proposition: market structure, investor landscape, ecosystem players, regional business hubs, cultural expectations, growth blockers. Output: clear DACH value proposition, defined priority targets, B&P success KPIs.', type: 'masterclass' },
+      { date: '2026-08-26', time: 'Group - 87 min - Sebnem Elif Kocaoglu Ulbrich', title: 'Masterclass 2 - DACH Market Landscape & Competitive Positioning', desc: 'Germany as a segmented federal market needing regional strategies; building trust through localisation, certifications, local presence and GDPR-grade data security; long-term commitment and German-speaking sales presence as success factors. Recording shared.', type: 'masterclass' },
+      { date: '2026-08-28', time: '1:1 - Eda', title: 'Portuma check-in', desc: 'Stand and sponsorship plans for Munich, USD 8m round.', type: 'session' },
     ]
   },
   {
-    id: 'w3', label: 'Week 3 - Masterclasses 3 & 4', range: 'Aug 31 - Sep 4', startDate: '2026-08-31',
+    id: 'w3', label: 'Week 3 - Masterclass 3', range: 'Aug 31 - Sep 4', startDate: '2026-08-31',
     events: [
-      { date: '2026-08-31', time: 'Group - 90 min - Dimitri Archatow', title: 'Masterclass 3 - Investor Landscape (DACH focused)', desc: 'Investor outreach strategy and techniques, high-conversion communication styles, fundraising culture and success examples, dos and donts for foreign founders expanding into the region. Output: investor-ready pitch.', type: 'masterclass' },
-      { date: '2026-09-02', time: 'Group - LEXR + Ahmet Kilicarslan', title: 'Masterclass 4 - Regulatory & Compliance Red Flags', desc: 'Company setup and tax: DACH entity formation, tax structure and incentives, hiring landscape, legal readiness. Output: DACH operational readiness checklist, hiring and expansion roadmap, business etiquette. Note: the mastersheet says Sep 2, Lexr agreed Sep 8 on the Aug 20 call - date needs confirming.', type: 'masterclass' },
-      { date: '2026-09-03', time: 'Group - 45 min - Eda', title: 'Outreach Pipeline Review', desc: 'Mid-sprint check: who has replied, which targets are warm, which need new angles. Group session to share best-performing messages. Output: updated pipeline, revised messaging for cold targets.', type: 'session' },
+      { date: '2026-08-31', time: 'Group - 92 min - Dimitri Archatow', title: 'Masterclass 3 - DACH Investor Landscape & Fundraising Strategy', desc: 'German VC market (EUR 8.4bn in 2025), Austria and Switzerland; target 15 to 20 well-matched investors with a tiered A/B/C list, warm intros, concise emails, formal etiquette, follow-ups every 5 to 7 days, data room readiness. Recording and slides shared.', type: 'masterclass' },
+      { date: '2026-09-01', time: 'Online - 32 min', title: 'Yapi Kredi FRWRD <> Tenity Bi-Weekly', desc: 'Sector-specific matchmaking tracked in Airtable (Porsche Ventures, Novartis opened); visas and tickets in final stage; KOSGEB webinar planned.', type: 'session' },
     ]
   },
   {
-    id: 'w46', label: 'Weeks 4-6 - Outreach & B&P Matching', range: 'Sep 7-11', startDate: '2026-09-07',
+    id: 'w46', label: 'Week 4 - Masterclass 4 & Investor Intros', range: 'Sep 7-11', startDate: '2026-09-07',
     events: [
-      { date: '2026-09-07', time: 'Group - 90 min - Alper Yurder', title: 'B&P App Scraping & AI Matching', desc: 'B&P mobile app goes live. Scrape the attendee list together, use AI to identify the top relevant contacts per startup, assign outreach priorities for the final sprint. Output: top 40 B&P contact list per startup, automated outreach queued.', type: 'prep' },
-      { date: '2026-09-08', time: '1:1 - 10 min each - Eda', title: 'Pipeline Reviews - all startups', desc: 'Individual check-in per startup: reply rates, warm contacts, objection handling, adjust targeting. Output: revised outreach plan per startup.', type: 'session' },
+      { date: '2026-09-08', time: 'Online - 27 min', title: 'Yapi Kredi FRWRD <> Tenity Bi-Weekly', desc: 'Standing bi-weekly with Zeynep, Merve and Neslisah.', type: 'session' },
+      { date: '2026-09-08', time: 'Group - 94 min - Lexr (Leo Jedwab)', title: 'Masterclass 4 - Regulatory & Compliance Red Flags', desc: 'Entering Switzerland, Germany and Austria: entry options (cross-border, EOR, branch, subsidiary) and their VAT, payroll, tax and permanent establishment consequences; GDPR, FADP, AI Act, cybersecurity, IP and contracts checklist. 1:1 follow-ups with the Lexr lawyers via booking link.', type: 'masterclass' },
+      { date: '2026-09-10', time: 'Investor calls - Eda', title: 'smartIQ <> BlackFin, Rooca <> PAWAO', desc: 'Pre-B&P investor conversations. smartIQ with Nathalie Schwarzkopf (BlackFin); Rooca with Maren Frey (PAWAO family office), who takes Rooca to investment committee.', type: 'prep' },
+      { date: '2026-09-11', time: 'Investor call - Eda', title: 'Rooca <> BlackFin Investor Intro', desc: 'Rooca presented to BlackFin; technical DD playbook (32 questions) to follow; Rooca demo meetup planned for the Munich week.', type: 'prep' },
+      { date: '2026-09-11', time: 'Group - 3 hours - YK + KOSGEB', title: 'Kamu Destekleri Oturumu (public funding session)', desc: 'KOSGEB and EIC funding routes for the cohort: up to EUR 1m third-party technology transfer, pilots and commercialisation support; mentorship and readiness assessments.', type: 'masterclass' },
     ]
   },
   {
-    id: 'w7', label: 'Week 7 - Pre-Departure Prep', range: 'Sep 14-18', startDate: '2026-09-14',
+    id: 'w7', label: 'Week 5 - Pre-Departure 1:1s', range: 'Sep 14-18', startDate: '2026-09-14',
     events: [
-      { date: '2026-09-14', time: 'Group - 60 min - Eda', title: 'Meeting Pre-Scheduling Finalisation', desc: 'Coordinate with B&P matchmakers, review the confirmed meeting list per startup, fill gaps with last-minute outreach. Output: min 5 confirmed meetings per startup before travel.', type: 'prep' },
+      { date: '2026-09-15', time: 'Online - 38 min', title: 'Yapi Kredi FRWRD <> Tenity', desc: 'Munich planning with Merve and Zeynep, followed by FileOrbis and Rooca 1:1s the same afternoon.', type: 'session' },
+      { date: '2026-09-15', time: '1:1 - YK team + Eda', title: 'FileOrbis and Rooca pre-B&P 1:1s', desc: 'Meeting lists, logistics and opening lines for key Munich meetings.', type: 'session' },
+      { date: '2026-09-16', time: '3 x 30 min - YK FRWRD Ventures', title: 'YK FRWRD Ventures tanisma: Nextrain, ThinkSuite, Rooca', desc: 'Introduction calls with Sezgin Akyuz and Erim Fidan (Yapi Kredi FRWRD Ventures). Financial projections and due diligence readiness flagged by Merve.', type: 'session' },
+      { date: '2026-09-17', time: '1:1 - YK team + Eda', title: 'smartIQ pre-B&P 1:1', desc: 'Pre-departure briefing with Goktug.', type: 'session' },
+      { date: '2026-09-18', time: '1:1 - YK team + Eda', title: 'Portuma (3 hours, with Aydin Cankat and Adnetify) and Singularity 1:1s', desc: 'Pre-departure briefings; Portuma stand, sponsorship and campaign planning in depth.', type: 'session' },
     ]
   },
   {
-    id: 'w8', label: 'Week 8 - Logistics', range: 'Sep 21-25', startDate: '2026-09-21',
+    id: 'w8', label: 'Week 6 - Final Prep', range: 'Sep 21-25', startDate: '2026-09-21',
     events: [
-      { date: '2026-09-21', time: 'Group - 45 min - Eda', title: 'B&P Logistics Briefing', desc: 'Travel, accommodation, event registration, booth and badge logistics, schedule overview, emergency contacts. Output: Munich logistics pack sent to all founders.', type: 'prep' },
-      { date: '2026-09-22', time: 'Online - 30 min', title: 'Yapi Kredi FRWRD <> Tenity Bi-Weekly', desc: 'Last bi-weekly before Munich.', type: 'session' },
+      { date: '2026-09-21', time: 'Group - 54 min - Forte Growth', title: 'Bits & Pretzels Meeting Review', desc: 'Alper and Fatih on curiosity-driven networking, partner-specific follow-ups, one-page briefing per startup and a first-timer networking plan. Last group session before Munich.', type: 'prep' },
+      { date: '2026-09-21', time: '1:1 - Eda', title: 'ThinkSuite (Gulsah) and FileOrbis (with Maren Frey) calls', desc: 'FileOrbis pitched to Maren Frey for Swiss bank introductions; concise sales deck to follow.', type: 'session' },
+      { date: '2026-09-22', time: 'Online - 40 min', title: 'Yapi Kredi FRWRD <> Tenity Bi-Weekly', desc: 'Last bi-weekly before Munich, with Elif.', type: 'session' },
+      { date: '2026-09-23', time: 'Online - 83 min - all cohort + YK', title: 'FRWRD Global "Road to DACH Region" Programi Sunum Etkinligi', desc: 'All seven startups presented their DACH plans to the wider Yapi Kredi audience, including Artug Acarturk (Yapi Kredi Germany) and Itir Aydogan.', type: 'event' },
+      { date: '2026-09-24', time: 'Async', title: 'Oktoberfest booking opens - reminder to cohort', desc: 'Oktoberfest side event tables and table captains confirmed for the Munich week.', type: 'prep' },
     ]
   },
   {
     id: 'bp', label: 'Bits and Pretzels Munich', range: 'Sep 28-30', startDate: '2026-09-28',
     events: [
-      { date: '2026-09-28', time: 'Morning - 45 min', title: 'Day 1 - Startup Briefing & Warm-Up', desc: 'On-site briefing before the event opens: final schedule review, mindset setting, Tenity team assignments per startup.', type: 'event' },
-      { date: '2026-09-28', time: 'All day', title: 'Day 1 - Curated Investor Meetings', desc: 'Facilitated investor meetings with Tenity on-site coordination and a real-time debrief after each one. Output: meeting log with investor name, outcome, follow-up agreed.', type: 'event' },
-      { date: '2026-09-28', time: 'Evening', title: "Day 1 - Founder's Dinner (TBD)", desc: 'Intimate dinner with DACH ecosystem players, structured conversation format, co-hosted by YK Germany and Tenity.', type: 'event' },
-      { date: '2026-09-29', time: 'All day', title: 'Day 2 - Corporate & Partner Meetings', desc: 'Corporate innovation meetings and partnership conversations. Founders log every conversation. Output: meeting log with corporate name, use case discussed, next step.', type: 'event' },
-      { date: '2026-09-29', time: 'Evening', title: 'Day 2 - Peer-to-Peer Founder Roundtable', desc: 'Cohort-only dinner: share the day, celebrate momentum, identify who needs more support on Day 3. Oktoberfest side event also planned.', type: 'event' },
-      { date: '2026-09-30', time: 'All day', title: 'Day 3 - Final Meeting Push & Ecosystem Sessions', desc: 'Final investor and corporate meetings plus on-the-ground sessions with DACH ecosystem builders. Last chance to convert warm conversations.', type: 'event' },
-      { date: '2026-09-30', time: 'Same day - 60 min', title: 'Post-Event Wrap-Up', desc: 'Group debrief straight after B&P closes: capture hot leads while fresh, assign 24 hour follow-up actions per startup.', type: 'event' },
+      { date: '2026-09-28', time: 'All day', title: 'Day 1 - Investor and partner meetings', desc: 'On-site coordination by Tenity. Pre-scheduled meetings from the per-startup target lists (~40 contacts each) plus floor networking.', type: 'event' },
+      { date: '2026-09-29', time: 'All day', title: 'Day 2 - Corporate & partner meetings', desc: 'Corporate innovation and partnership conversations logged per startup in the Google Sheet meeting tracker (one tab per startup).', type: 'event' },
+      { date: '2026-09-29', time: 'Evening', title: 'Oktoberfest side event', desc: 'Cohort, YK team and invited guests at the Oktoberfest tables (table captains assigned).', type: 'event' },
+      { date: '2026-09-30', time: 'All day', title: 'Day 3 - Final meeting push & wrap-up', desc: 'Final investor and corporate meetings. Outcome across three days: 128 qualified contacts (60 investors and finance institutions, 32 customer/brand/corporate, 18 tech and GTM partners, 18 ecosystem).', type: 'event' },
     ]
   },
   {
     id: 'followup', label: 'Post-Munich Follow-up', range: 'Oct 5-9', startDate: '2026-10-05',
     events: [
-      { date: '2026-10-07', time: 'Group - 45 min', title: 'Post-B&P Follow-Up Check-In', desc: 'One week after Munich: share follow-up email outcomes, who replied, who went quiet, warm versus cold leads, group problem-solving. Output: pipeline status update per startup.', type: 'session' },
-      { date: '2026-10-08', time: '1:1 - 45 min each', title: 'Exit Interviews Begin', desc: 'Structured 1:1 per startup: B&P outcomes, what worked and what did not, DACH pipeline status, investment leads, 90-day post-program plan.', type: 'session' },
-      { date: '2026-10-09', time: 'Deliverable', title: 'Post-Program Report Drafted', desc: 'Full impact report: meetings held, intros made, investments progressed, DACH entities formed, YK collaborations. Due mid October.', type: 'session' },
+      { date: '2026-10-07', time: 'Group - 78 min - NVIDIA', title: 'Ask Me Anything with NVIDIA (Inception)', desc: 'Chris Brown (NVIDIA) with the full cohort and the YK team: Inception resources, NeMo, Morpheus, Nemotron and NIMs; data sovereignty and on-prem deployment themes. Founders to confirm Inception enrolment.', type: 'session' },
     ]
   },
   {
-    id: 'demoday', label: 'Istanbul Demo Day', range: 'Oct-Nov (TBD)', startDate: '2026-11-16',
+    id: 'report-week', label: 'B&P Report Week', range: 'Oct 12-16', startDate: '2026-10-12',
     events: [
-      { date: '2026-11-16', time: 'Online - 60 min', title: 'Demo Day Rehearsal - All Startups', desc: 'Run-through of all spotlight pitches with live feedback, each pitch timed to 3 minutes, final decks locked. Held the week before the event.', type: 'session' },
-      { date: '2026-11-19', time: '3 min per startup', title: 'Founder Spotlight Pitches', desc: 'Each startup pitches to 60+ guests at Galataport, followed by panel Q&A and investor and corporate scoring.', type: 'demo' },
-      { date: '2026-11-19', time: '15 min per meeting', title: 'Structured Matchmaking Sessions', desc: 'Pre-assigned 1:1 slots between founders and the 60+ guests. Output: business connections logged, follow-ups committed.', type: 'demo' },
-      { date: '2026-11-19', time: '2 hours', title: 'Networking Reception', desc: 'Open reception. Relationship building with Turkish investors, corporates and ecosystem leaders.', type: 'demo' },
+      { date: '2026-10-14', time: 'Deliverable - Eda', title: 'B&P 2026 Report shared with Yapi Kredi', desc: '26-page Turkish report dated 15 Oct: 128 qualified contacts (60 investors), per-startup meeting lists reconciled with the tracker, post-event developments and the road to Demo Day. Shared 14 Oct.', type: 'session' },
+    ]
+  },
+  {
+    id: 'exits', label: 'Exit Interviews', range: 'Oct 19-30', startDate: '2026-10-19',
+    events: [
+      { date: '2026-10-21', time: 'External', title: 'Nextrain on stage at Webrazzi Summit', desc: 'Accepted to the Webrazzi Summit stage.', type: 'event' },
+      { date: '2026-10-22', time: '1:1 - 45 min each - Eda', title: 'Exit Interviews - all 7 startups (to schedule)', desc: 'Structured 1:1 per startup: B&P outcomes, what worked and what did not, DACH pipeline status, investment leads, 90-day post-program plan. Target: all done by 30 Oct.', type: 'session' },
+    ]
+  },
+  {
+    id: 'report', label: 'Impact Report & Demo Day Prep', range: 'Nov 9-13', startDate: '2026-11-09',
+    events: [
+      { date: '2026-11-13', time: 'Deliverable - Eda', title: 'Post-Program Impact Report to YK', desc: 'Meetings held, intros made, investments progressed, partnerships initiated, YK collaborations. Feeds the Demo Day narrative.', type: 'session' },
+      { date: '2026-11-13', time: 'Async - Eda + Merve + Elif', title: 'Demo Day guest list and invitations', desc: 'Run of show agreed with Merve; 60+ curated guests (investors, corporates, ecosystem); invitation email and LinkedIn announcement out.', type: 'prep' },
+    ]
+  },
+  {
+    id: 'rehearsal', label: 'Demo Day Rehearsal', range: 'Dec 7-11', startDate: '2026-12-07',
+    events: [
+      { date: '2026-12-09', time: 'Online - 60 min', title: 'Demo Day Rehearsal - All Startups', desc: 'Run-through of all spotlight pitches with live feedback, each pitch timed to 3 minutes, final decks locked.', type: 'session' },
+    ]
+  },
+  {
+    id: 'demoday', label: 'Istanbul Demo Day', range: 'Tue Dec 15', startDate: '2026-12-14',
+    events: [
+      { date: '2026-12-15', time: 'Arter, Beyoglu - 3 min per startup', title: 'Founder Spotlight Pitches', desc: 'Each startup pitches to 60+ guests at Arter (Yenisehir, Irmak Cd. No:13, Beyoglu), followed by panel Q&A and investor and corporate scoring. Calendar invite from Merve.', type: 'demo' },
+      { date: '2026-12-15', time: '15 min per meeting', title: 'Structured Matchmaking Sessions', desc: 'Pre-assigned 1:1 slots between founders and the guests. Output: business connections logged, follow-ups committed.', type: 'demo' },
+      { date: '2026-12-15', time: 'Reception', title: 'Networking Reception & Program Close', desc: 'Open reception with Turkish investors, corporates and ecosystem leaders. Closing of the Road to DACH Region program.', type: 'demo' },
     ]
   },
 ];
@@ -3419,9 +4367,30 @@ function daysBetween(d1, d2) { return Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24
 function renderOverview() {
   const today = new Date();
   const appClose = new Date('2026-07-12');
-  const bpDate = new Date('2026-09-28');
-  // Applications closed July 12, 2026 - stat card shows static "Closed"
-  document.getElementById('days-to-bp').textContent = Math.max(0, daysBetween(today, bpDate));
+  // B&P Munich (28-30 Sep) is done; the countdown now points at Demo Day, Tue 15 Dec 2026 at Arter, Istanbul.
+  const demoDate = new Date('2026-12-15');
+  document.getElementById('days-to-bp').textContent = Math.max(0, daysBetween(today, demoDate));
+
+  // Bits & Pretzels outcomes per startup (source: B&P 2026 Report summary, 8 Oct 2026)
+  const bpEl = document.getElementById('bp-outcomes');
+  if (bpEl) {
+    const th = 'font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--border)';
+    const td = 'font-size:12px;padding:8px;border-bottom:1px solid var(--border);vertical-align:top';
+    const num = td + ';text-align:center;font-weight:600';
+    bpEl.innerHTML = '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse">'
+      + '<thead><tr><th style="' + th + '">Startup</th><th style="' + th + '">Funding status</th><th style="' + th + ';text-align:center">Investors</th><th style="' + th + ';text-align:center">Customer / Corp</th><th style="' + th + ';text-align:center">Partners</th><th style="' + th + ';text-align:center">Ecosystem</th><th style="' + th + ';text-align:center">Total</th><th style="' + th + '">Status</th></tr></thead><tbody>'
+      + BP_OUTCOMES.map(r => '<tr>'
+        + '<td style="' + td + ';font-weight:700">' + r.startup + '</td>'
+        + '<td style="' + td + '">' + r.funding + '</td>'
+        + '<td style="' + num + '">' + r.inv + '</td><td style="' + num + '">' + r.corp + '</td><td style="' + num + '">' + r.partner + '</td><td style="' + num + '">' + r.eco + '</td>'
+        + '<td style="' + num + ';color:var(--accent2)">' + r.total + '</td>'
+        + '<td style="' + td + ';color:var(--muted)">' + r.note + '</td>'
+        + '</tr>').join('')
+      + '<tr><td style="' + td + ';font-weight:700">Cohort</td><td style="' + td + '"></td>'
+      + '<td style="' + num + '">60</td><td style="' + num + '">32</td><td style="' + num + '">18</td><td style="' + num + '">18</td><td style="' + num + ';color:var(--accent2)">128</td>'
+      + '<td style="' + td + ';color:var(--muted)">Weak points: smartIQ in-event scheduling, fintech-investor vs HR-tech mismatch, FileOrbis reply rates, ThinkSuite 10-15 unproductive meetings a day</td></tr>'
+      + '</tbody></table></div>';
+  }
 
   // % completion from PHASES
   const allTasks = PHASES.flatMap(p => p.tasks);
@@ -3668,6 +4637,7 @@ function togglePhase(id) {
 function renderMeetings() {
   // Auto-load real synced meeting data on first render
   renderYKMeetings(YK_MEETINGS_SYNCED);
+  renderBpMeetingLog();
 
   document.getElementById('meetings-list').innerHTML = MEETINGS.map(m => {
     const fmtClass = m.format.includes('Online') ? 'format-online' : 'format-offline';
@@ -3680,6 +4650,32 @@ function renderMeetings() {
         <div class="meeting-cadence" style="margin-top:3px">YK: <strong>${m.yk}</strong> &nbsp;·&nbsp; Tenity: ${m.tenity}</div>
       </div>
     </div>`;
+  }).join('');
+}
+
+function renderBpMeetingLog() {
+  const el = document.getElementById('bp-meeting-log');
+  if (!el) return;
+  const typeColor = { 'Investor': '#2b6cb0', 'Corporate / Customer': '#276749', 'Partner / Channel': '#744210', 'Ecosystem / Other': '#4a5568', 'Media': '#702459' };
+  const th = 'font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);white-space:nowrap';
+  const td = 'font-size:12px;padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:top';
+  el.innerHTML = Object.keys(BP_MEETING_LOG).map(name => {
+    const rows = BP_MEETING_LOG[name];
+    const head = '<div style="display:flex;align-items:center;gap:10px;margin:18px 0 8px"><div style="font-size:14px;font-weight:700">' + name + '</div>'
+      + '<span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:10px;background:' + (rows.length ? '#ebf4ff;color:#2b6cb0' : '#edf2f7;color:#718096') + '">' + rows.length + ' meeting' + (rows.length === 1 ? '' : 's') + ' logged</span></div>';
+    if (!rows.length) return head + '<div style="font-size:12px;color:var(--muted);padding:6px 0 4px">Tab not filled in the tracker. Meetings for this startup were tracked elsewhere - see the B&P outcomes table on the Overview.</div>';
+    return head + '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse"><thead><tr>'
+      + '<th style="' + th + '">Slot</th><th style="' + th + '">Company / Organisation</th><th style="' + th + '">Contact</th><th style="' + th + '">Type</th><th style="' + th + '">Location</th><th style="' + th + '">Status</th><th style="' + th + '">Notes</th></tr></thead><tbody>'
+      + rows.map(m => '<tr>'
+        + '<td style="' + td + ';white-space:nowrap">' + m.date + (m.time ? ' · ' + m.time : '') + '</td>'
+        + '<td style="' + td + ';font-weight:600">' + escapeHtml(m.company) + '</td>'
+        + '<td style="' + td + '">' + escapeHtml(m.contact) + '</td>'
+        + '<td style="' + td + ';color:' + (typeColor[m.type] || 'var(--muted)') + ';font-weight:600;white-space:nowrap">' + escapeHtml(m.type || '-') + '</td>'
+        + '<td style="' + td + '">' + escapeHtml(m.loc || '-') + '</td>'
+        + '<td style="' + td + ';white-space:nowrap">' + (m.status ? '<span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:8px;background:' + (m.status === 'Confirmed' || m.status === 'Done' ? '#c6f6d5;color:#276749' : m.status === 'Cancelled' ? '#e2e8f0;color:#718096' : '#fefcbf;color:#744210') + '">' + m.status + '</span>' : '<span style="color:var(--muted)">-</span>') + '</td>'
+        + '<td style="' + td + ';color:var(--muted)">' + escapeHtml(m.notes || '') + '</td>'
+        + '</tr>').join('')
+      + '</tbody></table></div>';
   }).join('');
 }
 
@@ -3866,72 +4862,84 @@ const MENTORS = [
   },
 ];
 
-// Match angles: each shortlisted startup gets top mentor recommendations with rationale
+// Match angles: each cohort startup gets top mentor recommendations with rationale.
+// Updated 14 Oct 2026 for the final cohort of 7 (post-B&P: angles now point at follow-up and DACH entry, not Munich prep).
 const MENTOR_MATCHES = [
   {
-    startup: 'ThinkSuit', sector: 'HR Tech / Workforce SaaS', color: '#3182ce',
-    matches: [
-      { mentor: 'Daniel Ludwig', company: 'Sharpist', priority: 'high',
-        angle: 'Domain-exact match. Daniel coaches workforce transformation at scale - can validate ThinkSuit\'s ICP and position the product against incumbent HR suites in Germany.' },
-      { mentor: 'Ulrich Hoffmann', company: 'Zendesk', priority: 'high',
-        angle: 'DACH enterprise SaaS sales playbook. Can advise on how large German corporates evaluate and procure HR software - critical for cracking the first anchor customer.' },
-      { mentor: 'Sonja Moosburger', company: 'MediaMarkt Saturn', priority: 'med',
-        angle: 'Corporate buyer perspective from inside a 50,000-employee German company. Honest read on what procurement looks for before signing a workforce SaaS deal.' },
-    ]
-  },
-  {
-    startup: 'Vignetim', sector: 'Fintech / Cross-Border Mobility', color: '#0f3460',
+    startup: 'FileOrbis', sector: 'Enterprise Software / Content Governance / RegTech', color: '#065f46',
     matches: [
       { mentor: 'Thomas Höfter', company: 'Liquitekt', priority: 'high',
-        angle: 'FinTech product and DACH banking ecosystem knowledge. Key for embedding Vignetim into German banking rails and structuring a YK co-branded travel finance product.' },
-      { mentor: 'Sebnem Elif Kocaoglu Ulbrich', company: 'Contextual Solutions', priority: 'high',
-        angle: 'Turkish founder who built a DACH GTM from scratch. Can shortcut Vignetim\'s market-entry planning and flag the distribution pitfalls specific to consumer fintech in Germany.' },
-      { mentor: 'Mehmet Fatih Turan', company: 'Assistance Danışmanlık', priority: 'med',
-        angle: 'German-based Turkish network access. Direct channel to Turkish diaspora drivers who are Vignetim\'s natural early adopters in the DACH region.' },
-    ]
-  },
-  {
-    startup: 'Nakdin', sector: 'AI-Powered Cash Flow / SME Fintech', color: '#e94560',
-    matches: [
-      { mentor: 'Thomas Höfter', company: 'Liquitekt', priority: 'high',
-        angle: 'SME banking landscape in DACH and FinTech product expertise. Can map the German banking partner landscape and advise on API integration paths with local banks.' },
-      { mentor: 'Sonja Moosburger', company: 'MediaMarkt Saturn', priority: 'med',
-        angle: 'Large corporate buyer who manages SME supplier relationships. Can articulate what cash-flow pain points German corporates feel on behalf of their supplier networks.' },
-      { mentor: 'Ulrich Hoffmann', company: 'Zendesk', priority: 'med',
-        angle: 'B2B SaaS enterprise sales methodology in Germany - translating the Turkish SME success story into a credible pitch for DACH bank partnerships.' },
-    ]
-  },
-  {
-    startup: 'Mistikist', sector: 'AI Wellbeing / HealthTech', color: '#b83280',
-    matches: [
-      { mentor: 'Daniel Ludwig', company: 'Sharpist', priority: 'high',
-        angle: 'Sharpist literally sells employee wellbeing and coaching to German corporates. Daniel can make warm corporate introductions and co-validate Mistikist\'s B2B positioning.' },
-      { mentor: 'Sonja Moosburger', company: 'MediaMarkt Saturn', priority: 'high',
-        angle: 'HR decision-maker at a 50,000-person German company. Can give a direct yes/no on whether burnout-prevention apps make it past procurement - and what would need to change.' },
-      { mentor: 'Ulrich Hoffmann', company: 'Zendesk', priority: 'med',
-        angle: 'Enterprise DACH sales experience. Mistikist already has DenizBank and Allianz - Ulrich can advise on replicating that playbook with German banking and insurance clients.' },
-    ]
-  },
-  {
-    startup: 'Forg3t Protocol', sector: 'Enterprise AI Compliance / Governance', color: '#1a1a2e',
-    matches: [
+        angle: 'DACH banking sector insider. FileOrbis sells to Risk, Security and Compliance teams at regulated institutions - Thomas can open German bank IT and compliance doors and sanity-check the on-premise positioning.' },
       { mentor: 'Inna Amesheva', company: 'ESG Book', priority: 'high',
-        angle: 'Regulatory and data governance expertise in European financial institutions. Can validate the GDPR / EU AI Act compliance narrative and open doors to risk teams at German banks.' },
-      { mentor: 'Thomas Höfter', company: 'Liquitekt', priority: 'high',
-        angle: 'Banking-specific AI deployment context in DACH. Can stress-test the YK use case (RAG document revocation, AI copilot audit trails) and make warm intros to German bank IT teams.' },
-      { mentor: 'Yannik Heinze', company: 'softstack', priority: 'med',
-        angle: 'Enterprise tech product validation in Germany. Can assess the technical credibility of Forg3t\'s approach with an independent German engineering lens before investor meetings.' },
+        angle: 'EU regulatory frameworks and data governance in financial institutions. Ideal for sharpening the DORA / NIS2 / GDPR narrative that drives FileOrbis deals and for the Swiss bank intros started with Maren Frey.' },
+      { mentor: 'Ulrich Hoffmann', company: 'Zendesk', priority: 'med',
+        angle: 'Enterprise SaaS procurement in DACH. Low reply rates were the weak point in Munich - Ulrich can rework the outbound sequence for German enterprise buyers and the distributor channel.' },
     ]
   },
   {
-    startup: 'Text2Test', sector: 'AI Enterprise Software Testing', color: '#2c7a7b',
+    startup: 'smartIQ', sector: 'Fintech / AI Automotive Intelligence', color: '#9a3412',
+    matches: [
+      { mentor: 'Thomas Höfter', company: 'Liquitekt', priority: 'high',
+        angle: 'Banking and insurance are 80 percent of smartIQ revenue. Thomas knows how German banks and insurers evaluate embedded finance and data partners - key for the Allianz, AXA and HUK-Coburg type conversations.' },
+      { mentor: 'Sonja Moosburger', company: 'MediaMarkt Saturn', priority: 'med',
+        angle: 'Large German corporate buyer perspective. smartIQ needs a physical sales presence in Germany and Switzerland - Sonja can describe how big DACH corporates run vendor onboarding and pilots.' },
+      { mentor: 'Mehmet Fatih Turan', company: 'Assistance Danışmanlık', priority: 'med',
+        angle: 'Practical Germany market entry for a Turkish company: entity, hiring the first German sales people, Turkish diaspora dealer networks as early adopters.' },
+    ]
+  },
+  {
+    startup: 'Portuma', sector: 'AdTech / In-Game Advertising / Loyalty', color: '#3182ce',
+    matches: [
+      { mentor: 'Sonja Moosburger', company: 'MediaMarkt Saturn', priority: 'high',
+        angle: 'Portuma is not raising - it wants brands and gaming partners. Sonja sits inside one of Europe\'s largest retailers and can explain how a German brand marketing team buys a new ad channel and runs a pilot campaign.' },
+      { mentor: 'Gamze Izgi', company: 'Aposto.biz', priority: 'med',
+        angle: 'Media and community networks. Useful for the publisher side of Portuma Connect and for campaign ideas that travel from Turkish brands to European ones.' },
+      { mentor: 'Sebnem Elif Kocaoglu Ulbrich', company: 'Contextual Solutions', priority: 'med',
+        angle: 'Ran Masterclass 2. Can turn the Munich brand conversations (Deutsche Telekom, Zalando, N26 type targets) into a localised German go-to-market and messaging plan.' },
+    ]
+  },
+  {
+    startup: 'Rooca', sector: 'Enterprise Software / AIOps / Incident Intelligence', color: '#0f3460',
     matches: [
       { mentor: 'Yannik Heinze', company: 'softstack', priority: 'high',
-        angle: 'Enterprise software development expertise in Germany. Deepest technical peer on the mentor list - can validate the self-healing test framework and open German enterprise engineering contacts.' },
-      { mentor: 'Ulrich Hoffmann', company: 'Zendesk', priority: 'high',
-        angle: 'DACH enterprise software procurement playbook. Text2Test has a strong CV (Microsoft, EY team) - Ulrich can advise on translating that into a first German anchor deal in banking.' },
+        angle: 'Deepest technical peer on the roster. Can validate the Tribunal Dialectic Engine with a German engineering lens and open enterprise reliability and SRE contacts - the buyers Rooca needs beyond its energy trading reference.' },
+      { mentor: 'Marie Fabiunke', company: 'Cosmyc Partners', priority: 'high',
+        angle: 'Rooca is mid-raise on a USD 2m SAFE with 18 investor conversations from Munich. Marie can tighten the investor narrative, the DD playbook and the follow-up cadence with Senovo, Kibo, Redstone and BDC.' },
       { mentor: 'Thomas Höfter', company: 'Liquitekt', priority: 'med',
-        angle: 'Banking software delivery context in Germany. Can make introductions to CTO/engineering leads at DACH banks who own release quality and CI/CD pipelines.' },
+        angle: 'DACH banks as the next vertical: DORA-driven audit trails for incident response. Intros to core systems and IT operations leads at German banks.' },
+    ]
+  },
+  {
+    startup: 'Singularity', sector: 'Cybersecurity / AI-Native Security Ops', color: '#805ad5',
+    matches: [
+      { mentor: 'Inna Amesheva', company: 'ESG Book', priority: 'high',
+        angle: 'Regulatory and governance expertise in European financial institutions. Singularity sells AI security to banks, defence and sovereign cloud - Inna can shape the compliance narrative for CISO offices and regulated buyers.' },
+      { mentor: 'Yannik Heinze', company: 'softstack', priority: 'high',
+        angle: 'Technical credibility check with an independent German engineering view before the 22 investor follow-ups from Munich turn into due diligence.' },
+      { mentor: 'Timo Bey', company: '8 Impact GmbH', priority: 'med',
+        angle: 'Pan-European investor network. Singularity has USD 3.2m of a USD 4m pre-seed committed - Timo can help fill the round with German and European investors.' },
+    ]
+  },
+  {
+    startup: 'Nextrain', sector: 'HR Tech / AI-Native Enterprise Learning', color: '#1e40af',
+    matches: [
+      { mentor: 'Daniel Ludwig', company: 'Sharpist', priority: 'high',
+        angle: 'Sharpist sells learning and coaching to German corporates. Daniel can pressure-test the possible pivot and the Germany partner model, and make warm L&D introductions at corporates like Deutsche Bahn or DHL.' },
+      { mentor: 'Semra Memiş', company: 'Researchvlog', priority: 'med',
+        angle: 'Connections in both Turkish and German innovation communities - useful for partnership introductions while investor follow-ups are paused.' },
+      { mentor: 'Sonja Moosburger', company: 'MediaMarkt Saturn', priority: 'med',
+        angle: 'Corporate buyer view on how a 50,000-person German company procures an enterprise learning platform and what compliance training buyers expect.' },
+    ]
+  },
+  {
+    startup: 'ThinkSuite', sector: 'HR Tech / Workforce Management SaaS', color: '#38a169',
+    matches: [
+      { mentor: 'Daniel Ludwig', company: 'Sharpist', priority: 'high',
+        angle: 'Domain-exact match. Daniel coaches workforce transformation at scale - can validate ThinkSuite\'s ICP and position the product against SAP SuccessFactors and Personio in Germany and Austria.' },
+      { mentor: 'Ulrich Hoffmann', company: 'Zendesk', priority: 'high',
+        angle: 'DACH enterprise SaaS sales playbook. ThinkSuite had 10 to 15 unproductive meetings a day in Munich - Ulrich can help qualify the 269-prospect pool into a short list of real DACH buyers.' },
+      { mentor: 'Sonja Moosburger', company: 'MediaMarkt Saturn', priority: 'med',
+        angle: 'Corporate buyer perspective from a 50,000-employee German company. Honest read on what procurement looks for before signing a workforce SaaS deal.' },
     ]
   },
 ];
@@ -4024,7 +5032,7 @@ function renderMentorMatching() {
 // ============================================================
 const ONE_PAGERS = [
   {
-    "company": "portuma",
+    "company": "Portuma",
     "color": "#3182ce",
     "domain": "portuma.com",
     "vertical": "Fintech / AdTech, MarTech, Loyalty Platform, Gamification",
@@ -4037,7 +5045,7 @@ const ONE_PAGERS = [
     "incorporation": "turkey",
     "founded": "2021",
     "employees": "12",
-    "fundraising": "0",
+    "fundraising": "Not raising - USD 8m round closing",
     "mrr": "$50k - $100k",
     "useCase": "Portuma Connect enables brands to reach millions of gamers through native, reward-driven experiences instead of traditional advertising. Yapı Kredi could leverage the platform to promote banking products, loyalty campaigns, credit cards, digital wallets, and financial education initiatives through interactive in-game missions and rewards. This approach increases engagement, improves customer acquisition, strengthens loyalty, and provides measu...",
     "traction": "MRR: $50k - $100k · Portuma has established relationships with international game publishers and serves campaigns that reach global gaming audiences. Our platform supports advertisers targeting users across multiple regions, and we conti...",
@@ -4059,7 +5067,7 @@ const ONE_PAGERS = [
     "incorporation": "Canada",
     "founded": "2026",
     "employees": "5",
-    "fundraising": "0",
+    "fundraising": "Raising USD 2m SAFE (12m pre / 14m post)",
     "mrr": "$10-25k",
     "useCase": "Yes, and the fit is direct. Yapı Kredi is exactly the kind of organization Rooca is built for: a large, regulated financial institution running mission-critical, hybrid infrastructure where downtime carries both regulatory and customer-trust consequences. The most immediate collaboration is the bank as a design partner or customer for the Tribunal Dialectic Engine. Banking infrastructure spans both the application and hardware layers, and our...",
     "traction": "MRR: $10-25k · Germany, Canada. One customer live in Germany. 200K USD Revenue",
@@ -4081,7 +5089,7 @@ const ONE_PAGERS = [
     "incorporation": "Turkey, Estonia",
     "founded": "2024",
     "employees": "12",
-    "fundraising": "0",
+    "fundraising": "Not raising",
     "mrr": "$100k+",
     "useCase": "ThinkSuite can create value for Yapı Kredi and its corporate customers by helping organizations digitize workforce management, employee experience, and HR processes through a single integrated platform. Our solution improves operational efficiency, employee engagement, and productivity through AI-powered automation, performance management, internal communication, and workforce management tools. ThinkSuite can be offered as a value-added digita...",
     "traction": "MRR: $100k+",
@@ -4103,7 +5111,7 @@ const ONE_PAGERS = [
     "incorporation": "Türkiye and United States",
     "founded": "2025",
     "employees": "4",
-    "fundraising": "$2m+",
+    "fundraising": "Raising USD 4m pre-seed (3.2m committed)",
     "mrr": "Pre-revenue",
     "useCase": "Singularity could create value for Yapı Kredi by helping the bank move toward AI-native cyber resilience while keeping sensitive security operations under enterprise control. AutoSecOps could act as an AI security operator for Yapı Kredi’s SOC and security teams. It can help triage alerts, investigate incidents, identify real threats, prioritize remediation, and reduce manual workload across complex banking infrastructure. This could improve o...",
     "traction": "Yes. We are currently active outside Türkiye through early PoC / pilot and government-level conversations. These include sovereign and regulated cloud players in Europe, Ukraine defense-related stakeholders, and minis...",
@@ -4125,7 +5133,7 @@ const ONE_PAGERS = [
     "incorporation": "Izmir",
     "founded": "2019",
     "employees": "32",
-    "fundraising": "$500k - $2m",
+    "fundraising": "Raising USD 3.5m",
     "mrr": "$100k+",
     "useCase": "Yes. Yapı Kredi is already one of our valued customers, and we see significant potential to further expand our collaboration. Through the FRWRD Global Program, we would like to explore new use cases, develop Proof of Concept (PoC) projects, and identify additional opportunities where FileOrbis can create value across different business units. Beyond the existing relationship, we also see the program as an opportunity to build a long-term strat...",
     "traction": "MRR: $100k+ · FileOrbis currently operates in more than 25 countries. Our primary international markets include the United States, the United Kingdom, Azerbaijan, Jordan, and Kosovo, along with customers and partners across Europe,...",
@@ -4147,7 +5155,7 @@ const ONE_PAGERS = [
     "incorporation": "Turkiye",
     "founded": "2020",
     "employees": "32",
-    "fundraising": "0",
+    "fundraising": "Not raising (strategic capital only)",
     "mrr": "$100k+",
     "useCase": "smartIQ can create value for Yapı Kredi by helping the bank become part of the vehicle ownership journey much earlier, not only at the point of loan application. As Yapı Kredi’s solution partner in Türkiye, smartIQ supports an end-to-end ecosystem that connects vehicle owners with vehicle buying, selling, credit and insurance journeys. This creates a strong opportunity to increase automotive loan and insurance penetration, improve customer tim...",
     "traction": "MRR: $100k+ · Yes, we have started our international expansion through a recently signed agreement with Ford Trucks covering operations over 40 countries. The rollout will begin with six priority markets. Türkiye remains our main c...",
@@ -4169,7 +5177,7 @@ const ONE_PAGERS = [
     "incorporation": "USA",
     "founded": "2026",
     "employees": "2",
-    "fundraising": "0",
+    "fundraising": "Not raising - pivot under evaluation",
     "mrr": "$10-25k",
     "useCase": "There are two sides to this for us. Nextrain can create value inside Yapı Kredi as an enterprise itself, and it can become something Yapı Kredi offers to its own customers. Inside the bank, this is almost a perfect fit. A bank like Yapı Kredi has tens of thousands of employees and one of the heaviest training and compliance loads of any industry. Regulatory training, anti money laundering, ethics, KVKK and GDPR, product certifications, branch...",
     "traction": "MRR: $10-25k · First, market access. We want warm introductions to enterprise buyers in DACH, the large organizations whose European and global headquarters sit in that region. Getting in front of the right decision makers is the ha...",
@@ -4258,7 +5266,7 @@ function switchView(id) {
 // ============================================================
 // AIRTABLE LIVE SYNC
 // ============================================================
-const BUILD_ID = '2026-08-20-airtable-link';
+const BUILD_ID = '2026-10-14-comms-to-oct-done';
 // Self-update: if the server has a newer build than this cached copy, reload once.
 fetch(window.location.pathname + '?nocache=' + Date.now(), { cache: 'no-store' })
   .then(r => r.text())
